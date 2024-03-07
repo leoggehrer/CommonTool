@@ -9,3 +9,4 @@
 /Users/ggehrer/source/repos/leoggehrer/CommonTool/CommonTool/obj/Debug/net8.0/refint/CommonTool.dll
 /Users/ggehrer/source/repos/leoggehrer/CommonTool/CommonTool/obj/Debug/net8.0/CommonTool.pdb
 /Users/ggehrer/source/repos/leoggehrer/CommonTool/CommonTool/obj/Debug/net8.0/ref/CommonTool.dll
+/Users/ggehrer/source/repos/leoggehrer/CommonTool/CommonTool/obj/Debug/net8.0/CommonTool.sourcelink.json

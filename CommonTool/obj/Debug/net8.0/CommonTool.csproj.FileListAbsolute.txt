@@ -1,0 +1,11 @@
+/Users/ggehrer/source/repos/leoggehrer/CommonTool/CommonTool/obj/Debug/net8.0/CommonTool.GeneratedMSBuildEditorConfig.editorconfig
+/Users/ggehrer/source/repos/leoggehrer/CommonTool/CommonTool/obj/Debug/net8.0/CommonTool.AssemblyInfoInputs.cache
+/Users/ggehrer/source/repos/leoggehrer/CommonTool/CommonTool/obj/Debug/net8.0/CommonTool.AssemblyInfo.cs
+/Users/ggehrer/source/repos/leoggehrer/CommonTool/CommonTool/obj/Debug/net8.0/CommonTool.csproj.CoreCompileInputs.cache
+/Users/ggehrer/source/repos/leoggehrer/CommonTool/CommonTool/bin/Debug/net8.0/CommonTool.deps.json
+/Users/ggehrer/source/repos/leoggehrer/CommonTool/CommonTool/bin/Debug/net8.0/CommonTool.dll
+/Users/ggehrer/source/repos/leoggehrer/CommonTool/CommonTool/bin/Debug/net8.0/CommonTool.pdb
+/Users/ggehrer/source/repos/leoggehrer/CommonTool/CommonTool/obj/Debug/net8.0/CommonTool.dll
+/Users/ggehrer/source/repos/leoggehrer/CommonTool/CommonTool/obj/Debug/net8.0/refint/CommonTool.dll
+/Users/ggehrer/source/repos/leoggehrer/CommonTool/CommonTool/obj/Debug/net8.0/CommonTool.pdb
+/Users/ggehrer/source/repos/leoggehrer/CommonTool/CommonTool/obj/Debug/net8.0/ref/CommonTool.dll

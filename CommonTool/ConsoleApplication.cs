@@ -343,9 +343,23 @@ namespace CommonTool
 
         #region abstract and virtual methods
         /// <summary>
-        /// Prints the header.
+        /// Prints the header information for the console application.
         /// </summary>
-        protected abstract void PrintHeader();
+        protected virtual void PrintHeader()
+        {
+            var saveForeColor = ForegroundColor;
+            var solutionPath = GetCurrentSolutionPath();
+            var solutionName = TemplatePath.GetSolutionNameFromPath(solutionPath);
+
+            ForegroundColor = ConsoleColor.Green;
+
+            var count = PrintLine(solutionName);
+            PrintLine('=', count);
+            PrintLine();
+            ForegroundColor = saveForeColor;
+            PrintLine($"Force flag:     {Force}");
+            PrintLine();
+        }
         /// <summary>
         /// Creates an array of menu items.
         /// </summary>
@@ -471,9 +485,13 @@ namespace CommonTool
             return result.ToArray();
         }
         /// <summary>
-        /// Prints the footer.
+        /// Prints the footer of the console application.
         /// </summary>
-        protected abstract void PrintFooter();
+        protected virtual void PrintFooter()
+        {
+            PrintLine();
+            Print("Choose [n|n,n|a...all|x|X]: ");
+        }
         /// <summary>
         /// Prints the screen with the menu items.
         /// </summary>

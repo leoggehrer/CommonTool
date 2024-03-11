@@ -99,6 +99,14 @@ namespace CommonTool
 
         #region properties
         /// <summary>
+        /// The width of the menu key.
+        /// </summary>
+        protected const int MENU_KEY_WIDTH = 5;
+        /// <summary>
+        /// The width of the menu text.
+        /// </summary>
+        protected const int MENU_TEXT_WIDTH = 65;
+        /// <summary>
         /// Gets or sets the foreground color of the console.
         /// </summary>
         public static ConsoleColor ForegroundColor
@@ -366,19 +374,25 @@ namespace CommonTool
         /// <returns>An array of <see cref="MenuItem"/> objects.</returns>
         protected abstract MenuItem[] CreateMenuItems();
         /// <summary>
+        /// Represents a menu item in a console application.
+        /// </summary>
+        protected virtual MenuItem CreateMenuSeparator()
+        {
+            return new()
+            {
+                Key = new string('-', MENU_KEY_WIDTH),
+                Text = new string('-', MENU_TEXT_WIDTH),
+                Action = (self) => { },
+                ForegroundColor = ConsoleColor.DarkGreen,
+            };
+        }
+        /// <summary>
         /// Creates the exit menu items for the application.
         /// </summary>
         /// <returns>An array of MenuItem objects representing the exit menu items.</returns>
         protected virtual MenuItem[] CreateExitMenuItems()
         {
-            return [ new()
-                     {
-                        Key = "===",
-                        Text = new string('=', 65),
-                        Action = (self) => { },
-                        ForegroundColor = ConsoleColor.DarkGreen,
-                     },
-
+            return [ CreateMenuSeparator(),
                      new()
                      {
                         Key = "x|X",
@@ -387,7 +401,7 @@ namespace CommonTool
                      },
             ];
         }
-                /// <summary>
+        /// <summary>
         /// Creates an array of menu items for a given list of items, taking into account pagination.
         /// </summary>
         /// <typeparam name="T">The type of the items.</typeparam>
@@ -418,13 +432,7 @@ namespace CommonTool
                 }
                 var pageLabel = $"{(PageIndex * PageSize) + 1}..{Math.Min((PageIndex + 1) * PageSize, items.Length)}/{items.Length}";
 
-                result.Add(new()
-                {
-                    Key = "---",
-                    Text = new string('-', 65),
-                    Action = (self) => { },
-                    ForegroundColor = ConsoleColor.DarkGreen,
-                });
+                result.Add(CreateMenuSeparator());
                 result.Add(new()
                 {
                     Key = "",
@@ -432,13 +440,7 @@ namespace CommonTool
                     Action = (self) => { },
                     ForegroundColor = ConsoleColor.DarkGreen,
                 });
-                result.Add(new()
-                {
-                    Key = "---",
-                    Text = new string('-', 65),
-                    Action = (self) => { },
-                    ForegroundColor = ConsoleColor.DarkGreen,
-                });
+                result.Add(CreateMenuSeparator());
                 result.Add(new()
                 {
                     Key = "+",
@@ -505,8 +507,11 @@ namespace CommonTool
             PrintHeader();
             MenuItems.Where(mi => mi.IsDisplayed).ToList().ForEach(m =>
             {
+                var menu = m.Key;
+                
+                menu = m.OptionalKey.Length > 0 ? $"{m.OptionalKey}|{menu}" : menu;
                 ForegroundColor = m.ForegroundColor;
-                PrintLine($"[{m.Key,3}] {m.Text}");
+                PrintLine($"[{menu, MENU_KEY_WIDTH}] {m.Text}");
             });
             ForegroundColor = saveForegrondColor;
             PrintFooter();

@@ -1,7 +1,0 @@
-@startuml TemplatePath.GetParentDirectory
-title TemplatePath.GetParentDirectory
-start
-#LightBlue:var result = Directory.GetParent(path);
-#Lavender:return result != null ? result.FullName : path;
-stop
-@enduml

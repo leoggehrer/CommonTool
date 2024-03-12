@@ -1,5 +1,0 @@
-@startuml ConsoleApplication.BeforeRun
-title ConsoleApplication.BeforeRun
-start
-stop
-@enduml

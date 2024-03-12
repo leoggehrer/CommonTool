@@ -1,8 +1,0 @@
-@startuml ConsoleApplication.PrintLine
-title ConsoleApplication.PrintLine
-start
-#LightBlue:string message = new(chr, count);
-:PrintLine(message);
-#Lavender:return message.Length;
-stop
-@enduml

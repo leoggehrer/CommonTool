@@ -1,6 +1,0 @@
-@startuml TemplatePath.GetSubPaths
-title TemplatePath.GetSubPaths
-start
-#Lavender:return QueryDirectoryStructure(startPath, n => n.Contains('.') == false, "bin", "obj", "node_modules");
-stop
-@enduml

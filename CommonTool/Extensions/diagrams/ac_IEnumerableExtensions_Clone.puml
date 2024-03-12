@@ -1,6 +1,0 @@
-@startuml IEnumerableExtensions.Clone
-title IEnumerableExtensions.Clone
-start
-#Lavender:return new List<T>(source);
-stop
-@enduml

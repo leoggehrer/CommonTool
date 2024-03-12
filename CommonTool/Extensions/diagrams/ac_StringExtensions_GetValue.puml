@@ -1,6 +1,0 @@
-@startuml StringExtensions.GetValue
-title StringExtensions.GetValue
-start
-#Lavender:return string.IsNullOrEmpty(source) ? defaultValue : source;
-stop
-@enduml

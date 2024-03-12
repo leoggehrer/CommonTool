@@ -1,7 +1,0 @@
-@startuml ConsoleApplication.ReadLine
-title ConsoleApplication.ReadLine
-start
-:Print(message);
-#Lavender:return ReadLine();
-stop
-@enduml

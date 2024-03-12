@@ -1,6 +1,0 @@
-@startuml StringExtensions.Split
-title StringExtensions.Split
-start
-#Lavender:return source.Select(l => string.IsNullOrEmpty(l) ? [] : l.Split(separator));
-stop
-@enduml

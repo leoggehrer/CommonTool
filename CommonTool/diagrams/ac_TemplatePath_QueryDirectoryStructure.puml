@@ -1,9 +1,0 @@
-@startuml TemplatePath.QueryDirectoryStructure
-title TemplatePath.QueryDirectoryStructure
-start
-#LightBlue:var result = new List<string>()
-var directoryInfo = new DirectoryInfo(path);
-:GetDirectoriesWithoutHidden(filter, directoryInfo, result, Math.Max(nmaxDeep, 0), 0, excludeFolders);
-#Lavender:return [.. result];
-stop
-@enduml

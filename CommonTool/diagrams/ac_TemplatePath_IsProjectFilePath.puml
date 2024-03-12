@@ -1,7 +1,0 @@
-@startuml TemplatePath.IsProjectFilePath
-title TemplatePath.IsProjectFilePath
-start
-#LightBlue:var path = Path.GetDirectoryName(filePath);
-#Lavender:return IsProjectPath(path ?? string.Empty);
-stop
-@enduml

@@ -1,6 +1,0 @@
-@startuml TemplatePath.GetProjectNameFromPath
-title TemplatePath.GetProjectNameFromPath
-start
-#Lavender:return GetSolutionItemDataFromPath(path, ".csproj").Name;
-stop
-@enduml

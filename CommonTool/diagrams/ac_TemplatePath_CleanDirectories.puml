@@ -1,6 +1,0 @@
-@startuml TemplatePath.CleanDirectories
-title TemplatePath.CleanDirectories
-start
-:CleanDirectories(new DirectoryInfo(path), dropFolders);
-stop
-@enduml

@@ -1,6 +1,0 @@
-@startuml TemplatePath.GetSolutionNameFromPath
-title TemplatePath.GetSolutionNameFromPath
-start
-#Lavender:return GetSolutionItemDataFromPath(path, ".sln").Name;
-stop
-@enduml

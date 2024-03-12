@@ -1,6 +1,0 @@
-@startuml StringExtensions.SetIndent
-title StringExtensions.SetIndent
-start
-#Lavender:return lines.ToArray().SetIndent(count);
-stop
-@enduml

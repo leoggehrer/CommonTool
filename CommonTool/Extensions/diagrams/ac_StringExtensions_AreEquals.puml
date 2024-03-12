@@ -1,0 +1,6 @@
+@startuml StringExtensions.AreEquals
+title StringExtensions.AreEquals
+start
+#Lavender:return source == null && value == null || value != null && source != null && source.Equals(value, stringComparison);
+stop
+@enduml

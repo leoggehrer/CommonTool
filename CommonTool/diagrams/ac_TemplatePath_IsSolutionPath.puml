@@ -1,0 +1,6 @@
+@startuml TemplatePath.IsSolutionPath
+title TemplatePath.IsSolutionPath
+start
+#Lavender:return path.HasContent() && GetSolutionItemDataFromPath(path, ".sln").Name.HasContent();
+stop
+@enduml

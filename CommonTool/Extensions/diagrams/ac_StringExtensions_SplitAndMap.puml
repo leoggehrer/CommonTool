@@ -1,0 +1,8 @@
+@startuml StringExtensions.SplitAndMap
+title StringExtensions.SplitAndMap
+start
+#LightBlue:var splitSource = source.Split(separator)
+var header = splitSource.FirstOrDefault();
+#Lavender:return splitSource.Skip(1).Select(d => mapper(d, header ?? []));
+stop
+@enduml

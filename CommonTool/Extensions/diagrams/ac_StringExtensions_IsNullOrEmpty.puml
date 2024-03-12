@@ -1,0 +1,6 @@
+@startuml StringExtensions.IsNullOrEmpty
+title StringExtensions.IsNullOrEmpty
+start
+#Lavender:return string.IsNullOrEmpty(text);
+stop
+@enduml

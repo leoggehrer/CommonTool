@@ -1,0 +1,19 @@
+@startuml ConsoleApplication.PrintScreen
+title ConsoleApplication.PrintScreen
+start
+#LightBlue:var saveForegrondColor = ForegroundColor;
+:MenuItems = CreateMenuItems();
+:Clear();
+:ForegroundColor = saveForegrondColor;
+:PrintHeader();
+:MenuItems.Where(mi => mi.IsDisplayed).ToList().ForEach(m =>
+            {
+                var menuKey = m.Key;
+                
+                ForegroundColor = m.ForegroundColor;
+                PrintLine($"[{menuKey, MENU_KEY_WIDTH}] {m.Text}");
+            });
+:ForegroundColor = saveForegrondColor;
+:PrintFooter();
+stop
+@enduml

@@ -1,0 +1,11 @@
+@startuml TemplatePath.GetSolutionSubFilePath
+title TemplatePath.GetSolutionSubFilePath
+start
+#LightBlue:var subPath = GetSolutionItemDataFromPath(filePath, ".sln").SubPath
+var result = filePath!.Replace(subPath, string.Empty);
+if (result.StartsWith(Path.DirectorySeparatorChar)) then (<color:green>yes)
+    :result = result[1..];
+endif
+#Lavender:return result;
+stop
+@enduml

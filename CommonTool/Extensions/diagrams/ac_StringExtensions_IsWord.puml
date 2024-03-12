@@ -1,0 +1,12 @@
+@startuml StringExtensions.IsWord
+title StringExtensions.IsWord
+start
+#LightBlue:var result = text.IsNullOrEmpty() == false;
+#LightBlue:int i = 0;
+while (result && i < text.Length) is (<color:green>yes)
+    :result = char.IsLetter(text[i]);
+:i++;
+endwhile (<color:red>no)
+#Lavender:return result;
+stop
+@enduml

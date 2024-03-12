@@ -1,0 +1,13 @@
+@startuml ConsoleApplication.CreateExitMenuItems
+title ConsoleApplication.CreateExitMenuItems
+start
+#Lavender:return [ CreateMenuSeparator(),
+                     new()
+                     {
+                        Key = "x|X",
+                        Text = ToLabelText("Exit", "Exits the application"),
+                        Action = (self) => { RunApp = false; },
+                     },
+            ];
+stop
+@enduml

@@ -1,0 +1,6 @@
+@startuml ConsoleApplication.SetCursorPosition
+title ConsoleApplication.SetCursorPosition
+start
+:Console.SetCursorPosition(left, top);
+stop
+@enduml

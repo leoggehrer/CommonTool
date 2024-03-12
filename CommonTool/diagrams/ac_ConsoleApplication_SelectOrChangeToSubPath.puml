@@ -1,0 +1,39 @@
+@startuml ConsoleApplication.SelectOrChangeToSubPath
+title ConsoleApplication.SelectOrChangeToSubPath
+start
+#LightBlue:var result = currentPath
+var solutionPath = GetCurrentSolutionPath()
+var qtSolutionPaths = new List<string>()
+var saveForeColor = ForegroundColor;
+:queryPaths.ToList().ForEach(qp => TemplatePath.GetSubPaths(qp)
+                      .ToList().ForEach(s => qtSolutionPaths.Add(s)));
+if (qtSolutionPaths.Contains(solutionPath) == false && solutionPath != currentPath) then (<color:green>yes)
+    :qtSolutionPaths.Add(solutionPath);
+endif
+#LightBlue:var qtSelectSolutions = qtSolutionPaths.Distinct().OrderBy(e => e).ToArray();
+#LightBlue:int i = 0;
+while (i < qtSelectSolutions.Length) is (<color:green>yes)
+    if (i == 0) then (<color:green>yes)
+      :PrintLine();
+    endif
+    :ForegroundColor = i % 2 == 0 ? ConsoleColor.DarkYellow : saveForeColor;
+    :PrintLine($"[{i + 1,3}] Change path to: {qtSelectSolutions[i]}");
+:i++;
+endwhile (<color:red>no)
+:ForegroundColor = saveForeColor;
+:PrintLine();
+:Print("Select or enter target path: ");
+#LightBlue:var selectOrPath = ReadLine();
+if (Int32.TryParse(selectOrPath, out int number)) then (<color:green>yes)
+    if ((number - 1) >= 0 && (number - 1) < qtSelectSolutions.Length) then (<color:green>yes)
+        :result = qtSelectSolutions[number - 1];
+    endif
+  else (<color:red>no)
+    if (string.IsNullOrEmpty(selectOrPath) == false
+                     && Directory.Exists(selectOrPath)) then (<color:green>yes)
+        :result = selectOrPath;
+    endif
+endif
+#Lavender:return result;
+stop
+@enduml

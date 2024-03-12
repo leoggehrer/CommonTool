@@ -1,0 +1,6 @@
+@startuml StringExtensions.ContainsIgnoreCase
+title StringExtensions.ContainsIgnoreCase
+start
+#Lavender:return source.Contains(toCheck, StringComparison.OrdinalIgnoreCase);
+stop
+@enduml

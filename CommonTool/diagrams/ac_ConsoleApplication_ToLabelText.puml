@@ -1,0 +1,8 @@
+@startuml ConsoleApplication.ToLabelText
+title ConsoleApplication.ToLabelText
+start
+#LightBlue:var diff = width - label.Length
+var space = new string(chr, Math.Max(0, diff));
+#Lavender:return $"{label}{space}{text}";
+stop
+@enduml

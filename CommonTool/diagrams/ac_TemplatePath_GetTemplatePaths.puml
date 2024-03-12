@@ -1,0 +1,6 @@
+@startuml TemplatePath.GetTemplatePaths
+title TemplatePath.GetTemplatePaths
+start
+#Lavender:return QueryDirectoryStructure(startPath, n => n.StartsWith("QT") || n.Equals("QuickTemplate"), "bin", "obj", "node_modules");
+stop
+@enduml

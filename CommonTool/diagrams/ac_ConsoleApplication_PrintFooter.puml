@@ -1,0 +1,7 @@
+@startuml ConsoleApplication.PrintFooter
+title ConsoleApplication.PrintFooter
+start
+:PrintLine();
+:Print("Choose [n|n,n|a...all|x|X]: ");
+stop
+@enduml

@@ -415,11 +415,12 @@ namespace CommonTool
 
             if (items.Length > PageSize)
             {
-                for (int i = PageIndex * PageSize; i < items.Length && i < (PageIndex + 1) * PageSize; i++)
+                for (int i = 0; i < items.Length; i++)
                 {
                     var item = items[i];
                     var menuItem = new MenuItem
                     {
+                        IsDisplayed = i >= PageIndex * PageSize && i < (PageIndex + 1) * PageSize,
                         Key = (++mnuIdx).ToString(),
                         OptionalKey = "a", // it's for choose option all
                         Text = string.Empty,
@@ -507,11 +508,10 @@ namespace CommonTool
             PrintHeader();
             MenuItems.Where(mi => mi.IsDisplayed).ToList().ForEach(m =>
             {
-                var menu = m.Key;
+                var menuKey = m.Key;
                 
-                menu = m.OptionalKey.Length > 0 ? $"{m.OptionalKey}|{menu}" : menu;
                 ForegroundColor = m.ForegroundColor;
-                PrintLine($"[{menu, MENU_KEY_WIDTH}] {m.Text}");
+                PrintLine($"[{menuKey, MENU_KEY_WIDTH}] {m.Text}");
             });
             ForegroundColor = saveForegrondColor;
             PrintFooter();
@@ -550,7 +550,7 @@ namespace CommonTool
                 ForegroundColor = saveForegrondColor;
                 while (RunApp && chooseIterator.MoveNext())
                 {
-                    var actions = MenuItems.Where(m => m.Key.Equals(chooseIterator.Current) || m.OptionalKey.Equals(chooseIterator.Current));
+                    var actions = MenuItems.Where(m => m.IsDisplayed && (m.Key.Equals(chooseIterator.Current) || m.OptionalKey.Equals(chooseIterator.Current)));
                     var actionIterator = actions.GetEnumerator();
 
                     while (RunApp && actionIterator.MoveNext())

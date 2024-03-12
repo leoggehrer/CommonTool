@@ -1,0 +1,15 @@
+@startuml StringExtensions.ToLong
+title StringExtensions.ToLong
+start
+#LightBlue:long result = 0;
+:iterator = text.GetIterator();
+while (iterator.MoveNext()) is (<color:green>yes)
+:current = iterator.Current();
+      if (char.IsDigit(current)) then (<color:green>yes)
+          :result *= 10;
+          :result = result + current - '0';
+      endif
+endwhile (<color:red>no)
+#Lavender:return result;
+stop
+@enduml

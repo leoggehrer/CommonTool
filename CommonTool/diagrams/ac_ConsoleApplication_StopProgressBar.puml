@@ -1,0 +1,6 @@
+@startuml ConsoleApplication.StopProgressBar
+title ConsoleApplication.StopProgressBar
+start
+:RunProgressBar = false;
+stop
+@enduml

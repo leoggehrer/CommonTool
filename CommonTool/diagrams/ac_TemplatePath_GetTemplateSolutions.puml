@@ -1,0 +1,16 @@
+@startuml TemplatePath.GetTemplateSolutions
+title TemplatePath.GetTemplateSolutions
+start
+#LightBlue:var result = new List<string>()
+var qtPaths = GetTemplatePaths(startPath);
+:iterator = qtPaths.GetIterator();
+while (iterator.MoveNext()) is (<color:green>yes)
+:current = iterator.Current();
+      #LightBlue:var di = new DirectoryInfo(current);
+      if (di.GetFiles().Any(f => Path.GetExtension(f.Name).Equals(".sln", StringComparison.CurrentCultureIgnoreCase))) then (<color:green>yes)
+          :result.Add(current);
+      endif
+endwhile (<color:red>no)
+#Lavender:return [.. result];
+stop
+@enduml

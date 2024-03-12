@@ -1,0 +1,12 @@
+@startuml StringExtensions.ToText
+title StringExtensions.ToText
+start
+#LightBlue:StringBuilder sb = new();
+:iterator = lines.GetIterator();
+while (iterator.MoveNext()) is (<color:green>yes)
+:current = iterator.Current();
+      :sb.AppendLine(currentConvert == null ? current : currentConvert(current));
+endwhile (<color:red>no)
+#Lavender:return sb.ToString();
+stop
+@enduml

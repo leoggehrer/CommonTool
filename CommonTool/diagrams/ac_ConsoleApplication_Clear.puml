@@ -1,0 +1,5 @@
+@startuml ConsoleApplication.Clear
+title ConsoleApplication.Clear
+start
+stop
+@enduml

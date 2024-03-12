@@ -1,0 +1,14 @@
+@startuml StringExtensions.Partialstring
+title StringExtensions.Partialstring
+start
+#LightBlue:StringBuilder sb = new();
+if (string.IsNullOrEmpty(text) == false) then (<color:green>yes)
+    #LightBlue:int i = from;
+    while (i >= 0 && i <= to && i < text.Length) is (<color:green>yes)
+        :sb.Append(text[i]);
+    :i++;
+    endwhile (<color:red>no)
+endif
+#Lavender:return sb.ToString();
+stop
+@enduml

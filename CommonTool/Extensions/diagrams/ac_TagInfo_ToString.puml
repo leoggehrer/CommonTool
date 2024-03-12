@@ -1,0 +1,6 @@
+@startuml TagInfo.ToString
+title TagInfo.ToString
+start
+#Lavender:return FullText;
+stop
+@enduml

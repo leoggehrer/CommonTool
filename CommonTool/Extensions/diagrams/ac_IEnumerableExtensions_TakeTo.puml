@@ -1,0 +1,18 @@
+@startuml IEnumerableExtensions.TakeTo
+title IEnumerableExtensions.TakeTo
+start
+#LightBlue:var result = default(IEnumerable<T>);
+if (source != null) then (<color:green>yes)
+    #LightBlue:var end = false;
+    :result = source.Where(e =>
+                {
+                    if (end == false && predicate != null)
+                    {
+                        end = predicate(e);
+                    }
+                    return end == false;
+                });
+endif
+#Lavender:return result ?? [];
+stop
+@enduml

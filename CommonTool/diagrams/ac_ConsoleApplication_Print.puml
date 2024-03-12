@@ -1,0 +1,11 @@
+@startuml ConsoleApplication.Print
+title ConsoleApplication.Print
+start
+#LightBlue:int i = message.Length;
+while (i < length) is (<color:green>yes)
+    :Print(chr);
+:i++;
+endwhile (<color:red>no)
+:Print(message);
+stop
+@enduml

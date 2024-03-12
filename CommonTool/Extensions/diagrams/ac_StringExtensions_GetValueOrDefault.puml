@@ -1,0 +1,6 @@
+@startuml StringExtensions.GetValueOrDefault
+title StringExtensions.GetValueOrDefault
+start
+#Lavender:return string.IsNullOrEmpty(text) ? defaultValue : text;
+stop
+@enduml

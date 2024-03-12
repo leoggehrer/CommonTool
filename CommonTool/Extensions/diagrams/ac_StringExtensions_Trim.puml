@@ -1,0 +1,25 @@
+@startuml StringExtensions.Trim
+title StringExtensions.Trim
+start
+#LightBlue:var result = new List<string?>()
+var prvEmpty = true;
+:iterator = source.GetIterator();
+while (iterator.MoveNext()) is (<color:green>yes)
+:current = iterator.Current();
+      if (string.IsNullOrEmpty(current) && prvEmpty == false) then (<color:green>yes)
+          :result.Add(string.Empty);
+          :prvEmpty = true;
+        else (<color:red>no)
+          if (string.IsNullOrEmpty(current) == false) then (<color:green>yes)
+              :result.Add(current);
+              :prvEmpty = false;
+          endif
+      endif
+endwhile (<color:red>no)
+#LightBlue:var lastElem = result.LastOrDefault();
+if (string.IsNullOrEmpty(lastElem)) then (<color:green>yes)
+    :_ = result.Remove(lastElem);
+endif
+#Lavender:return result;
+stop
+@enduml

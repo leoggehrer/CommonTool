@@ -1,0 +1,16 @@
+@startuml StringExtensions.ReplaceBetween
+title StringExtensions.ReplaceBetween
+start
+#LightBlue:string result
+var sIdx = source.IndexOf(startText)
+var eIdx = source.IndexOf(endText);
+if (sIdx > -1 && eIdx > -1 && sIdx <= eIdx) then (<color:green>yes)
+    :result = source[..(sIdx + startText.Length)];
+    :result += replaceText;
+    :result += source[eIdx..];
+  else (<color:red>no)
+      :result = source;
+endif
+#Lavender:return result;
+stop
+@enduml

@@ -1,0 +1,171 @@
+@startuml CompleteActivityDiagram
+header
+generated on 12.03.2024 15:33:26
+end header
+title CompleteActivityDiagram
+start
+note right:  TemplatePath.GetSubPaths
+#Lavender:return QueryDirectoryStructure(startPath, n => n.Contains('.') == false, "bin", "obj", "node_modules");
+stop
+start
+note right:  TemplatePath.GetTemplatePaths
+#Lavender:return QueryDirectoryStructure(startPath, n => n.StartsWith("QT") || n.Equals("QuickTemplate"), "bin", "obj", "node_modules");
+stop
+start
+note right:  TemplatePath.GetTemplateSolutions
+#LightBlue:var result = new List<string>()
+var qtPaths = GetTemplatePaths(startPath);
+:iterator = qtPaths.GetIterator();
+while (iterator.MoveNext()) is (<color:green>yes)
+:current = iterator.Current();
+      #LightBlue:var di = new DirectoryInfo(current);
+      if (di.GetFiles().Any(f => Path.GetExtension(f.Name).Equals(".sln", StringComparison.CurrentCultureIgnoreCase))) then (<color:green>yes)
+          :result.Add(current);
+      endif
+endwhile (<color:red>no)
+#Lavender:return [.. result];
+stop
+start
+note right:  TemplatePath.QueryDirectoryStructure
+#LightBlue:var result = new List<string>()
+var directoryInfo = new DirectoryInfo(path);
+:GetDirectoriesWithoutHidden(filter, directoryInfo, result, Math.Max(nmaxDeep, 0), 0, excludeFolders);
+#Lavender:return [.. result];
+stop
+start
+note right:  TemplatePath.QueryDirectoryStructure
+#LightBlue:var result = new List<string>()
+var directoryInfo = new DirectoryInfo(path);
+:GetDirectoriesWithoutHidden(filter, directoryInfo, result, Math.Max(nmaxDeep, 0), 0, excludeFolders);
+#Lavender:return [.. result];
+stop
+start
+note right:  TemplatePath.GetTemplateParentPaths
+#LightBlue:var result = new List<string>()
+var qtProjects = GetTemplatePaths(startPath).Union(includePaths).ToArray()
+var qtPaths = qtProjects.Select(p => GetParentDirectory(p))
+                                    .Distinct()
+                                    .OrderBy(p => p);
+:iterator = qtPaths.GetIterator();
+while (iterator.MoveNext()) is (<color:green>yes)
+:current = iterator.Current();
+      if (result.Any(x => current.Length > x.Length && current.Contains(x)) == false) then (<color:green>yes)
+          :result.Add(current);
+      endif
+endwhile (<color:red>no)
+#Lavender:return [.. result];
+stop
+start
+note right:  TemplatePath.GetParentDirectory
+#LightBlue:var result = Directory.GetParent(path);
+#Lavender:return result != null ? result.FullName : path;
+stop
+start
+note right:  TemplatePath.IsSolutionPath
+#Lavender:return path.HasContent() && GetSolutionItemDataFromPath(path, ".sln").Name.HasContent();
+stop
+start
+note right:  TemplatePath.IsSolutionFilePath
+#LightBlue:var path = Path.GetDirectoryName(filePath);
+#Lavender:return IsProjectPath(path ?? string.Empty);
+stop
+start
+note right:  TemplatePath.GetSolutionNameFromPath
+#Lavender:return GetSolutionItemDataFromPath(path, ".sln").Name;
+stop
+start
+note right:  TemplatePath.IsProjectPath
+#Lavender:return path.HasContent() && GetSolutionItemDataFromPath(path, ".csproj").Name.HasContent();
+stop
+start
+note right:  TemplatePath.IsProjectFilePath
+#LightBlue:var path = Path.GetDirectoryName(filePath);
+#Lavender:return IsProjectPath(path ?? string.Empty);
+stop
+start
+note right:  TemplatePath.GetProjectNameFromPath
+#Lavender:return GetSolutionItemDataFromPath(path, ".csproj").Name;
+stop
+start
+note right:  TemplatePath.GetProjectSubFilePath
+#LightBlue:var subPath = GetSolutionItemDataFromPath(filePath, ".csproj").SubPath
+var result = filePath!.Replace(subPath, string.Empty);
+if (result.StartsWith(Path.DirectorySeparatorChar)) then (<color:green>yes)
+    :result = result[1..];
+endif
+#Lavender:return result;
+stop
+start
+note right:  TemplatePath.GetSolutionSubFilePath
+#LightBlue:var subPath = GetSolutionItemDataFromPath(filePath, ".sln").SubPath
+var result = filePath!.Replace(subPath, string.Empty);
+if (result.StartsWith(Path.DirectorySeparatorChar)) then (<color:green>yes)
+    :result = result[1..];
+endif
+#Lavender:return result;
+stop
+start
+note right:  TemplatePath.GetSolutionItemDataFromPath
+#LightBlue:var itemName = string.Empty
+var subPath = path.StartsWith(Path.DirectorySeparatorChar) ? Path.DirectorySeparatorChar.ToString() : string.Empty
+var itemsEnumerator = path.Split(Path.DirectorySeparatorChar, StringSplitOptions.RemoveEmptyEntries)
+                                      .GetEnumerator();
+while (itemName.IsNullOrEmpty() && itemsEnumerator.MoveNext()) is (<color:green>yes)
+    :subPath = Path.Combine(subPath, itemsEnumerator.Current.ToString()!);
+    #LightBlue:var filePath = Path.Combine(subPath, $"{itemsEnumerator.Current}{itemExtension}");
+    if (File.Exists(filePath)) then (<color:green>yes)
+        :itemName = itemsEnumerator.Current.ToString() ?? string.Empty;
+    endif
+endwhile (<color:red>no)
+#Lavender:return (itemName, subPath);
+stop
+start
+note right:  TemplatePath.GetPathFromPath
+#LightBlue:var result = string.Empty
+var checkPath = path.StartsWith(Path.DirectorySeparatorChar) ? Path.DirectorySeparatorChar.ToString() : string.Empty
+var data = path.Split(Path.DirectorySeparatorChar, StringSplitOptions.RemoveEmptyEntries);
+#LightBlue:int i = 0;
+while (i < data.Length && result == string.Empty) is (<color:green>yes)
+    :checkPath = Path.Combine(checkPath, data[i]);
+    #LightBlue:var projectFilePath = Path.Combine(checkPath, $"{data[i]}{checkFileExtension}");
+    if (File.Exists(projectFilePath)) then (<color:green>yes)
+        :result = checkPath;
+    endif
+:i++;
+endwhile (<color:red>no)
+#Lavender:return result;
+stop
+start
+note right:  TemplatePath.GetDirectoryNameFromPath
+#LightBlue:var result = string.Empty
+var checkPath = path.StartsWith(Path.DirectorySeparatorChar) ? Path.DirectorySeparatorChar.ToString() : string.Empty
+var data = path.Split(Path.DirectorySeparatorChar, StringSplitOptions.RemoveEmptyEntries);
+#LightBlue:int i = 0;
+while (i < data.Length && result == string.Empty) is (<color:green>yes)
+    :checkPath = Path.Combine(checkPath, data[i]);
+    #LightBlue:var projectFilePath = Path.Combine(checkPath, $"{data[i]}{checkFileExtension}");
+    if (File.Exists(projectFilePath)) then (<color:green>yes)
+        :result = data[i];
+    endif
+:i++;
+endwhile (<color:red>no)
+#Lavender:return result;
+stop
+start
+note right:  TemplatePath.CleanDirectories
+:CleanDirectories(new DirectoryInfo(path), dropFolders);
+stop
+start
+note right:  TemplatePath.OpenSolutionFolder
+if (Environment.OSVersion.Platform == PlatformID.Win32NT) then (<color:green>yes)
+    :Process.Start(new ProcessStartInfo()
+                {
+                    WorkingDirectory = solutionPath,
+                    FileName = "explorer",
+                    Arguments = solutionPath,
+                    CreateNoWindow = true,
+                });
+footer
+generated with the DiagramCreator by Prof.Gehrer
+end footer
+@enduml

@@ -1,0 +1,5 @@
+@startuml Application.ClassConstructing
+title Application.ClassConstructing
+start
+stop
+@enduml

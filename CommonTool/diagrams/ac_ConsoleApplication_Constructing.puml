@@ -1,0 +1,5 @@
+@startuml ConsoleApplication.Constructing
+title ConsoleApplication.Constructing
+start
+stop
+@enduml

@@ -1,0 +1,7 @@
+@startuml StringExtensions.CheckNotNullOrEmpty
+title StringExtensions.CheckNotNullOrEmpty
+start
+if (string.IsNullOrEmpty(source)) then (<color:green>yes)
+endif
+stop
+@enduml

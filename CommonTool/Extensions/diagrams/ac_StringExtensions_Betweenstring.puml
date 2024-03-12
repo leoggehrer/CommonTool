@@ -1,0 +1,12 @@
+@startuml StringExtensions.Betweenstring
+title StringExtensions.Betweenstring
+start
+#LightBlue:var result = default(string);
+if (text.HasContent()) then (<color:green>yes)
+    #LightBlue:int f = text.IndexOf(from) + from.Length;
+    #LightBlue:int t = text.IndexOf(to, f + 1) - 1;
+    :result = text.Partialstring(f, t);
+endif
+#Lavender:return result ?? String.Empty;
+stop
+@enduml

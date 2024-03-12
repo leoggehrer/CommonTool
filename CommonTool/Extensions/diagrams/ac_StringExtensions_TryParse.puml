@@ -1,0 +1,32 @@
+@startuml StringExtensions.TryParse
+title StringExtensions.TryParse
+start
+#LightBlue:bool result = false;
+if (value == null) then (<color:green>yes)
+    :result = true;
+    :typeValue = null;
+  else (<color:red>no)
+    if (type.IsEnum) then (<color:green>yes)
+        :result = Enum.TryParse(type, value, out typeValue);
+      else (<color:red>no)
+        if (type == typeof(TimeSpan)) then (<color:green>yes)
+            :typeValue = TimeSpan.Parse(value);
+            :result = true;
+          else (<color:red>no)
+            if (type == typeof(DateTime)) then (<color:green>yes)
+                :typeValue = DateTime.Parse(value);
+                :result = true;
+              else (<color:red>no)
+                if (type == typeof(string)) then (<color:green>yes)
+                    :typeValue = value;
+                  else (<color:red>no)
+                      :typeValue = Convert.ChangeType(value, type);
+                      :result = true;
+                endif
+            endif
+        endif
+    endif
+endif
+#Lavender:return result;
+stop
+@enduml

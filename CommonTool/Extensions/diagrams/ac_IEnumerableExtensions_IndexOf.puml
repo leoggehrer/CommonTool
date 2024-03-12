@@ -1,0 +1,10 @@
+@startuml IEnumerableExtensions.IndexOf
+title IEnumerableExtensions.IndexOf
+start
+#LightBlue:var result = -1;
+if (items != null) then (<color:green>yes)
+    :result = items.FindIndex(i => EqualityComparer<T>.Default.Equals(item, i));
+endif
+#Lavender:return result;
+stop
+@enduml

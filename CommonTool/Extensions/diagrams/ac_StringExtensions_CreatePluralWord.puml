@@ -1,0 +1,34 @@
+@startuml StringExtensions.CreatePluralWord
+title StringExtensions.CreatePluralWord
+start
+#LightBlue:string result = wordInSingular;
+if (wordInSingular.IsWord()) then (<color:green>yes)
+    if (wordInSingular.EndsWith("y", StringComparison.CurrentCultureIgnoreCase)) then (<color:green>yes)
+        :result = $"{wordInSingular[0..^1]}ies";
+      else (<color:red>no)
+        if (wordInSingular.EndsWith("h", StringComparison.CurrentCultureIgnoreCase)) then (<color:green>yes)
+            :result = $"{wordInSingular}es";
+          else (<color:red>no)
+            if (wordInSingular.EndsWith("x", StringComparison.CurrentCultureIgnoreCase)) then (<color:green>yes)
+                :result = $"{wordInSingular}es";
+              else (<color:red>no)
+                if (wordInSingular.EndsWith("f", StringComparison.CurrentCultureIgnoreCase)) then (<color:green>yes)
+                    :result = $"{wordInSingular[0..^1]}ves";
+                  else (<color:red>no)
+                    if (wordInSingular.EndsWith("ss", StringComparison.CurrentCultureIgnoreCase)) then (<color:green>yes)
+                        :result = $"{wordInSingular}es";
+                      else (<color:red>no)
+                        if (wordInSingular.EndsWith("s", StringComparison.CurrentCultureIgnoreCase)) then (<color:green>yes)
+                            :result = $"{wordInSingular}";
+                          else (<color:red>no)
+                              :result = $"{wordInSingular}s";
+                        endif
+                    endif
+                endif
+            endif
+        endif
+    endif
+endif
+#Lavender:return result;
+stop
+@enduml

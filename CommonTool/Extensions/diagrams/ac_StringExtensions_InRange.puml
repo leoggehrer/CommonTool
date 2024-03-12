@@ -1,0 +1,6 @@
+@startuml StringExtensions.InRange
+title StringExtensions.InRange
+start
+#Lavender:return source != null && index > -1 && index < source.Length;
+stop
+@enduml

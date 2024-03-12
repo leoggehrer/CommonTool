@@ -1,0 +1,14 @@
+@startuml StringExtensions.CuttingOut
+title StringExtensions.CuttingOut
+start
+#LightBlue:var result = new StringBuilder();
+#LightBlue:int i = 0;
+while (i < source.Length) is (<color:green>yes)
+    if (i < startIdx || i > endIdx) then (<color:green>yes)
+        :result.Append(source[i]);
+    endif
+:i++;
+endwhile (<color:red>no)
+#Lavender:return result.ToString();
+stop
+@enduml

@@ -152,6 +152,18 @@ namespace CommonTool
             }
             return result;
         }
+        /// <summary>
+        /// Retrieves the distinct directory paths of source code files that match the specified search patterns within the given path.
+        /// </summary>
+        /// <param name="path">The root path to search for source code files.</param>
+        /// <param name="searchPatterns">An array of search patterns to match against the names of the source code files.</param>
+        /// <returns>A list of distinct directory paths containing the source code files.</returns>
+        public static List<string> GetSourceCodePaths(string path, string[] searchPatterns)
+        {
+            var result = GetSourceCodeFiles(path, searchPatterns);
+
+            return result.Select(f => Path.GetDirectoryName(f) ?? string.Empty).Distinct().Order().ToList();
+        }
         #endregion methods for changing the properties
     }
 }

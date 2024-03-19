@@ -94,6 +94,10 @@ namespace CommonTool
             /// Gets or sets the foreground color of the console.
             /// </summary>
             public ConsoleColor ForegroundColor { get; set; } = ConsoleApplication.ForegroundColor;
+            /// <summary>
+            /// Gets or sets the tag for the console application.
+            /// </summary>
+            public string Tag { get; set; } = string.Empty;
         }
         #endregion menuitem
 
@@ -711,7 +715,7 @@ namespace CommonTool
             Print("Select or enter target path: ");
             var selectOrPath = ReadLine();
 
-            if (Int32.TryParse(selectOrPath, out int number))
+            if (int.TryParse(selectOrPath, out int number))
             {
                 if ((number - 1) >= 0 && (number - 1) < qtSelectSolutions.Length)
                 {

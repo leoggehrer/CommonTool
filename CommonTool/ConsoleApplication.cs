@@ -689,26 +689,26 @@ namespace CommonTool
         {
             var result = currentPath;
             var solutionPath = GetCurrentSolutionPath();
-            var qtSolutionPaths = new List<string>();
+            var subPaths = new List<string>();
             var saveForeColor = ForegroundColor;
 
             queryPaths.ToList().ForEach(qp => TemplatePath.GetSubPaths(qp)
-                      .ToList().ForEach(s => qtSolutionPaths.Add(s)));
+                      .ToList().ForEach(s => subPaths.Add(s)));
 
-            if (qtSolutionPaths.Contains(solutionPath) == false && solutionPath != currentPath)
+            if (subPaths.Contains(solutionPath) == false && solutionPath != currentPath)
             {
-                qtSolutionPaths.Add(solutionPath);
+                subPaths.Add(solutionPath);
             }
 
-            var qtSelectSolutions = qtSolutionPaths.Distinct().OrderBy(e => e).ToArray();
+            var selectionPaths = subPaths.Distinct().OrderBy(e => e).ToArray();
 
-            for (int i = 0; i < qtSelectSolutions.Length; i++)
+            for (int i = 0; i < selectionPaths.Length; i++)
             {
                 if (i == 0)
                     PrintLine();
 
                 ForegroundColor = i % 2 == 0 ? ConsoleColor.DarkYellow : saveForeColor;
-                PrintLine($"[{i + 1,3}] Change path to: {qtSelectSolutions[i]}");
+                PrintLine($"[{i + 1,3}] Change path to: {selectionPaths[i]}");
             }
             ForegroundColor = saveForeColor;
             PrintLine();
@@ -717,9 +717,9 @@ namespace CommonTool
 
             if (int.TryParse(selectOrPath, out int number))
             {
-                if ((number - 1) >= 0 && (number - 1) < qtSelectSolutions.Length)
+                if ((number - 1) >= 0 && (number - 1) < selectionPaths.Length)
                 {
-                    result = qtSelectSolutions[number - 1];
+                    result = selectionPaths[number - 1];
                 }
             }
             else if (string.IsNullOrEmpty(selectOrPath) == false

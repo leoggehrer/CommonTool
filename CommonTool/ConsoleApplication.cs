@@ -88,7 +88,7 @@ namespace CommonTool
             /// <summary>
             /// Gets or sets the parameters for the console application.
             /// </summary>
-            public Dictionary<string, object> Params { get; set; } = new Dictionary<string, object>();
+            public Dictionary<string, object> Params { get; set; } = [];
 
             /// <summary>
             /// Gets or sets the foreground color of the console.
@@ -415,7 +415,7 @@ namespace CommonTool
         /// <returns>An array of menu items.</returns>
         protected virtual MenuItem[] CreatePageMenuItems<T>(ref int mnuIdx, T[] items, Action<T, MenuItem> newMenuItemHandler)
         {
-            List<MenuItem> result = new();
+            List<MenuItem> result = [];
 
             if (items.Length > PageSize)
             {
@@ -489,7 +489,7 @@ namespace CommonTool
                     result.Add(menuItem);
                 }
             }
-            return result.ToArray();
+            return [.. result];
         }
         /// <summary>
         /// Prints the footer of the console application.

@@ -162,7 +162,7 @@ namespace CommonTool
         {
             var result = GetSourceCodeFiles(path, searchPatterns);
 
-            return result.Select(f => Path.GetDirectoryName(f) ?? string.Empty).Distinct().Order().ToList();
+            return [.. result.Select(f => Path.GetDirectoryName(f) ?? string.Empty).Distinct().Order()];
         }
         #endregion methods for changing the properties
     }

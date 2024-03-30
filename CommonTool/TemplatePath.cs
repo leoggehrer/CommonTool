@@ -32,6 +32,34 @@ namespace CommonTool
 
         #region methods
         /// <summary>
+        /// Checks if a directory contains files that match the specified search patterns.
+        /// </summary>
+        /// <param name="path">The path of the directory to search.</param>
+        /// <param name="searchPatterns">The search patterns to match against the file names.</param>
+        /// <returns><c>true</c> if the directory contains files that match any of the search patterns; otherwise, <c>false</c>.</returns>
+        public static bool ContainsFiles(string path, params string[] searchPatterns)
+        {
+            var result = false;
+
+            if (searchPatterns.Length == 0)
+            {
+                result = Directory.GetFiles(path).Length > 0;
+            }
+            else
+            {
+                var iterator = searchPatterns.GetEnumerator();
+
+                while (iterator.MoveNext() && result == false)
+                {
+                    if (Directory.GetFiles(path, iterator.Current?.ToString() ?? string.Empty).Length > 0)
+                    {
+                        result = true;
+                    }
+                }
+            }
+            return result;
+        }
+        /// <summary>
         /// Retrieves an array of sub-paths within the specified start path, up to the specified maximum depth.
         /// </summary>
         /// <param name="startPath">The starting path from which to retrieve sub-paths.</param>
@@ -370,14 +398,14 @@ namespace CommonTool
                         }
                         catch (Exception ex)
                         {
-                            System.Diagnostics.Debug.WriteLine($"Error in {System.Reflection.MethodBase.GetCurrentMethod()!.Name}: {ex.Message}");
+                            Debug.WriteLine($"Error in {System.Reflection.MethodBase.GetCurrentMethod()!.Name}: {ex.Message}");
                         }
                         result += fileCount;
                     }
                 }
                 catch (Exception ex)
                 {
-                    System.Diagnostics.Debug.WriteLine($"Error in {System.Reflection.MethodBase.GetCurrentMethod()!.Name}: {ex.Message}");
+                    Debug.WriteLine($"Error in {System.Reflection.MethodBase.GetCurrentMethod()!.Name}: {ex.Message}");
                 }
                 return result;
             }

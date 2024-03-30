@@ -32,38 +32,35 @@ namespace CommonTool
 
         #region methods
         /// <summary>
-        /// Retrieves the sub-paths within the specified start path.
+        /// Retrieves an array of sub-paths within the specified start path, up to the specified maximum depth.
         /// </summary>
-        /// <param name="startPath">The starting path.</param>
-        /// <returns>An array of sub-paths.</returns>
-        public static string[] GetSubPaths(string startPath)
+        /// <param name="startPath">The starting path from which to retrieve sub-paths.</param>
+        /// <param name="maxDepth">The maximum depth of sub-paths to retrieve.</param>
+        /// <returns>An array of sub-paths within the specified start path.</returns>
+        public static string[] GetSubPaths(string startPath, int maxDepth)
         {
-            return QueryDirectoryStructure(startPath, n => n.Contains('.') == false, "bin", "obj", "node_modules");
+            return QueryDirectoryStructure(startPath, n => n.StartsWith($"{Path.DirectorySeparatorChar}.") == false, maxDepth, "bin", "obj", "node_modules");
         }
         /// <summary>
-        /// Retrieves an array of quick template projects from the specified starting path.
+        /// Retrieves an array of template paths from the specified start path.
         /// </summary>
-        /// <param name="startPath">The starting path to search for quick template projects.</param>
-        /// <returns>An array of quick template projects.</returns>
-        /// <remarks>
-        /// Quick template projects are identified by their name starting with "QT" and will exclude
-        /// directories with names "bin", "obj", and "node_modules" from the search results.
-        /// </remarks>
-        public static string[] GetTemplatePaths(string startPath)
+        /// <param name="startPath">The starting path to search for templates.</param>
+        /// <param name="maxDepth">The maximum depth to search for templates.</param>
+        /// <returns>An array of template paths.</returns>
+        public static string[] GetTemplatePaths(string startPath, int maxDepth)
         {
-            return QueryDirectoryStructure(startPath, n => n.StartsWith("QT") || n.Equals("QuickTemplate"), "bin", "obj", "node_modules");
+            return QueryDirectoryStructure(startPath, n => n.StartsWith("QT") || n.Equals("QuickTemplate"), maxDepth, "bin", "obj", "node_modules");
         }
         /// <summary>
-        /// Retrieves an array of string values representing the paths to QuickTemplate solutions within a specified directory.
+        /// Retrieves an array of template solutions from the specified start path up to the specified maximum depth.
         /// </summary>
-        /// <param name="startPath">The starting directory path in which to search for QuickTemplate solutions.</param>
-        /// <returns>
-        /// An array of string value representing the paths to QuickTemplate solutions found in the specified directory.
-        /// </returns>
-        public static string[] GetTemplateSolutions(string startPath)
+        /// <param name="startPath">The starting path to search for template solutions.</param>
+        /// <param name="maxDepth">The maximum depth to search for template solutions.</param>
+        /// <returns>An array of template solutions found within the specified start path and maximum depth.</returns>
+        public static string[] GetTemplateSolutions(string startPath, int maxDepth)
         {
             var result = new List<string>();
-            var qtPaths = GetTemplatePaths(startPath);
+            var qtPaths = GetTemplatePaths(startPath, maxDepth);
 
             foreach (var qtPath in qtPaths)
             {
@@ -77,26 +74,14 @@ namespace CommonTool
             return [.. result];
         }
         /// <summary>
-        /// Retrieves the directory structure of a specified path.
-        /// </summary>
-        /// <param name="path">The path to the root directory.</param>
-        /// <param name="filter">The optional filter function to determine which directories to include.</param>
-        /// <param name="excludeFolders">The optional list of folder names to exclude from the directory structure.</param>
-        /// <returns>An array of strings representing the full paths of the directories in the directory structure.</returns>
-        public static string[] QueryDirectoryStructure(string path, Func<string, bool>? filter, params string[] excludeFolders)
-        {
-            return QueryDirectoryStructure(path, filter, 3, excludeFolders);
-        }
-
-        /// <summary>
         /// Queries the directory structure starting from the specified path and returns an array of directory paths that match the specified criteria.
         /// </summary>
         /// <param name="path">The root path from which to start querying the directory structure.</param>
         /// <param name="filter">An optional filter function to apply to each directory name. Only directories that satisfy the filter will be included in the result.</param>
-        /// <param name="nmaxDeep">The maximum depth of the directory structure to query.</param>
+        /// <param name="maxDepth">The maximum depth of the directory structure to query.</param>
         /// <param name="excludeFolders">An array of folder names to exclude from the result.</param>
         /// <returns>An array of directory paths that match the specified criteria.</returns>
-        public static string[] QueryDirectoryStructure(string path, Func<string, bool>? filter, int nmaxDeep, params string[] excludeFolders)
+        public static string[] QueryDirectoryStructure(string path, Func<string, bool>? filter, int maxDepth, params string[] excludeFolders)
         {
             static void GetDirectoriesWithoutHidden(Func<string, bool>? filter, DirectoryInfo directoryInfo, List<string> list, int maxDeep, int deep, params string[] excludeFolders)
             {
@@ -104,11 +89,11 @@ namespace CommonTool
                 {
                     if (directoryInfo.Attributes.HasFlag(FileAttributes.Hidden) == false)
                     {
-                        if ((filter == null || filter(directoryInfo.Name)))
+                        if (filter == null || filter(directoryInfo.Name))
                         {
                             list.Add(directoryInfo.FullName);
                         }
-                        if (deep < maxDeep)
+                        if (maxDeep < 0 || deep < maxDeep)
                         {
                             foreach (var di in directoryInfo.GetDirectories())
                             {
@@ -128,25 +113,21 @@ namespace CommonTool
             var result = new List<string>();
             var directoryInfo = new DirectoryInfo(path);
 
-            GetDirectoriesWithoutHidden(filter, directoryInfo, result, Math.Max(nmaxDeep, 0), 0, excludeFolders);
+            GetDirectoriesWithoutHidden(filter, directoryInfo, result, maxDepth, 0, excludeFolders);
             return [.. result];
         }
 
         /// <summary>
-        /// Retrieves an array of parent paths for quick template projects starting from a specified path, as well as any additional paths to include.
+        /// Retrieves the parent paths of the templates based on the start path and maximum depth.
         /// </summary>
-        /// <param name="startPath">The starting path to search for quick template projects.</param>
-        /// <param name="includePaths">The additional paths to include in the search.</param>
-        /// <returns>An array of parent paths for quick template projects.</returns>
-        /// <remarks>
-        /// The method retrieves quick template projects using the GetQuickTemplateProjects method with the specified start path and includes the additional paths provided in the includePaths parameter.
-        /// The method then determines the parent directory for each quick template project path and ensures that there are no duplicate or nested paths in the result.
-        /// The resulting parent paths are ordered alphabetically and returned as an array.
-        /// </remarks>
-        public static string[] GetTemplateParentPaths(string startPath, params string[] includePaths)
+        /// <param name="startPath">The starting path to search for templates.</param>
+        /// <param name="maxDepth">The maximum depth to search for templates.</param>
+        /// <param name="includePaths">Additional paths to include in the result.</param>
+        /// <returns>An array of parent paths of the templates.</returns>
+        public static string[] GetTemplateParentPaths(string startPath, int maxDepth, params string[] includePaths)
         {
             var result = new List<string>();
-            var qtProjects = GetTemplatePaths(startPath).Union(includePaths).ToArray();
+            var qtProjects = GetTemplatePaths(startPath, maxDepth).Union(includePaths).ToArray();
             var qtPaths = qtProjects.Select(p => GetParentDirectory(p))
                                     .Distinct()
                                     .OrderBy(p => p);

@@ -279,6 +279,10 @@ namespace CommonTool
         /// Gets or sets a value indicating whether the application should continue running.
         /// </summary>
         protected bool RunApp { get; set; } = false;
+        /// <summary>
+        /// Gets or sets the maximum subpath depth.
+        /// </summary>
+        protected int MaxSubPathDepth { get; set; } = 3;
         #endregion app-properties
 
         #region progressbar-methods
@@ -580,6 +584,20 @@ namespace CommonTool
 
         #region file and path methods
         /// <summary>
+        /// Changes the maximum subpath depth.
+        /// </summary>
+        public void ChangeMaxSubPathDepth()
+        {
+            PrintLine();
+            Print("Enter the maximum subpath depth: ");
+            var maxDepth = ReadLine();
+
+            if (int.TryParse(maxDepth, out int depth))
+            {
+                MaxSubPathDepth = depth;
+            }
+        }
+        /// <summary>
         /// Changes the source path for the solution.
         /// </summary>
         public static void ChangeSolutionPath()
@@ -630,19 +648,20 @@ namespace CommonTool
             return path;
         }
         /// <summary>
-        /// Changes the template solution path based on the current path and a list of query paths.
+        /// Changes the template solution path based on the provided parameters.
         /// </summary>
         /// <param name="currentPath">The current path.</param>
-        /// <param name="queryPaths">The query paths.</param>
-        /// <returns>The updated solution path.</returns>
-        public static string ChangeTemplateSolutionPath(string currentPath, params string[] queryPaths)
+        /// <param name="maxDeep">The maximum depth to search for template solutions.</param>
+        /// <param name="queryPaths">The query paths to search for template solutions.</param>
+        /// <returns>The updated template solution path.</returns>
+        public static string ChangeTemplateSolutionPath(string currentPath, int maxDeep, params string[] queryPaths)
         {
             var result = currentPath;
             var solutionPath = GetCurrentSolutionPath();
             var qtSolutionPaths = new List<string>();
             var saveForeColor = ForegroundColor;
 
-            queryPaths.ToList().ForEach(qp => TemplatePath.GetTemplateSolutions(qp)
+            queryPaths.ToList().ForEach(qp => TemplatePath.GetTemplateSolutions(qp, maxDeep)
                       .ToList().ForEach(s => qtSolutionPaths.Add(s)));
 
             if (qtSolutionPaths.Contains(solutionPath) == false && solutionPath != currentPath)
@@ -683,16 +702,17 @@ namespace CommonTool
         /// Selects or changes the current path to a subpath based on the provided query paths.
         /// </summary>
         /// <param name="currentPath">The current path.</param>
-        /// <param name="queryPaths">The query paths.</param>
-        /// <returns>The selected or changed path.</returns>
-        public static string SelectOrChangeToSubPath(string currentPath, params string[] queryPaths)
+        /// <param name="maxDepth">The maximum depth to search for subpaths.</param>
+        /// <param name="queryPaths">The query paths to search for subpaths.</param>
+        /// <returns>The selected or changed subpath.</returns>
+        public static string SelectOrChangeToSubPath(string currentPath, int maxDepth, params string[] queryPaths)
         {
             var result = currentPath;
             var solutionPath = GetCurrentSolutionPath();
             var subPaths = new List<string>();
             var saveForeColor = ForegroundColor;
 
-            queryPaths.ToList().ForEach(qp => TemplatePath.GetSubPaths(qp)
+            queryPaths.ToList().ForEach(qp => TemplatePath.GetSubPaths(qp, maxDepth)
                       .ToList().ForEach(s => subPaths.Add(s)));
 
             if (subPaths.Contains(solutionPath) == false && solutionPath != currentPath)

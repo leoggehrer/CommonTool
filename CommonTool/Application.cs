@@ -127,12 +127,37 @@ namespace CommonTool
         /// </summary>
         /// <param name="path">The path to get the parent directory of.</param>
         /// <returns>The parent directory of the specified path.</returns>
-        public static string GetParentDirectory(string path)
+        public static string GetParentFromPath(string path)
         {
             var result = Directory.GetParent(path);
 
             return result != null ? result.FullName : path;
         }
+
+        /// <summary>
+        /// Finds files from the specified path and its parent path that match the given search pattern.
+        /// </summary>
+        /// <param name="path">The path to search for files.</param>
+        /// <param name="searchPattern">The search pattern to match against the names of files in the specified path.</param>
+        /// <returns>A list of file paths that match the search pattern.</returns>
+        public static List<string> FindFilesFromPathAndParentPath(string path, string searchPattern)
+        {
+            var result = new List<string>();
+
+            if (Directory.Exists(path))
+            {
+                result.AddRange(Directory.GetFiles(path, searchPattern, SearchOption.TopDirectoryOnly));
+            }
+
+            var parentPath = GetParentFromPath(path);
+
+            if (Directory.Exists(parentPath))
+            {
+                result.AddRange(Directory.GetFiles(parentPath, searchPattern, SearchOption.TopDirectoryOnly));
+            }
+            return result;
+        }
+
         /// <summary>
         /// Retrieves a collection of source code files in the specified directory and its subdirectories based on the given search patterns.
         /// </summary>

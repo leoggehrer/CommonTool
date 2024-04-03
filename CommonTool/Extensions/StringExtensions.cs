@@ -1306,6 +1306,36 @@ namespace CommonTool.Extensions
             }
             return result;
         }
+
+                /// <summary>
+        /// Removes consecutive occurrences of a specified character from a string.
+        /// </summary>
+        /// <param name="source">The input string.</param>
+        /// <param name="charToRemove">The character to remove.</param>
+        /// <returns>A new string with consecutive occurrences of the specified character removed.</returns>
+        public static string Shrink(this string source, char charToRemove)
+        {
+            var result = new StringBuilder();
+            var hasFound = false;
+
+            foreach (char c in source)
+            {
+                if (c == charToRemove)
+                {
+                    if (hasFound == false)
+                    {
+                        hasFound = true;
+                        result.Append(c);
+                    }
+                }
+                else
+                {
+                    hasFound = false;
+                    result.Append(c);
+                }
+            }
+            return result.ToString();
+        }
     }
 }
 //MdEnd

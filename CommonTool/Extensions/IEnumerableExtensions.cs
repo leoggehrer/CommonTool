@@ -21,7 +21,7 @@ namespace CommonTool.Extensions
             var idx = 0;
             var result = -1;
             var enumerator = source.GetEnumerator();
-            
+
             while (result == -1 && enumerator.MoveNext())
             {
                 if (predicate(enumerator.Current))
@@ -44,13 +44,13 @@ namespace CommonTool.Extensions
         public static IEnumerable<ST> ToEnumerable<T, ST>(this IEnumerable<T> source, Func<T, ST> expandSelector)
         {
             List<ST> expandResult = [];
-            
+
             if (source != null && expandSelector != null)
             {
                 foreach (var item in source)
                 {
                     var subItem = expandSelector(item);
-                    
+
                     if (subItem != null)
                     {
                         expandResult.Add(subItem);
@@ -70,13 +70,13 @@ namespace CommonTool.Extensions
         public static IEnumerable<ST> Flatten<T, ST>(this IEnumerable<T> source, Func<T, IEnumerable<ST>> expandSelector)
         {
             List<ST> expandResult = [];
-            
+
             if (source != null && expandSelector != null)
             {
                 foreach (var item in source)
                 {
                     var subItems = expandSelector(item);
-                    
+
                     if (subItems != null)
                     {
                         expandResult.AddRange(subItems);
@@ -92,12 +92,12 @@ namespace CommonTool.Extensions
         public static int FindIndex<T>(this IEnumerable<T> items, Func<T, bool> predicate)
         {
             int retVal = 0;
-            
+
             foreach (var item in items)
             {
                 if (predicate(item))
-                return retVal;
-                
+                    return retVal;
+
                 retVal++;
             }
             return -1;
@@ -109,14 +109,14 @@ namespace CommonTool.Extensions
         public static int IndexOf<T>(this IEnumerable<T> items, T item)
         {
             var result = -1;
-            
+
             if (items != null)
             {
                 result = items.FindIndex(i => EqualityComparer<T>.Default.Equals(item, i));
             }
             return result;
         }
-        
+
         /// <summary>
         /// Returns elements from a sequence until the specified condition is met.
         /// </summary>
@@ -127,11 +127,11 @@ namespace CommonTool.Extensions
         public static IEnumerable<T> TakeTo<T>(this IEnumerable<T> source, Predicate<T> predicate)
         {
             var result = default(IEnumerable<T>);
-            
+
             if (source != null)
             {
                 var end = false;
-                
+
                 result = source.Where(e =>
                 {
                     if (end == false && predicate != null)
@@ -170,6 +170,40 @@ namespace CommonTool.Extensions
         public static IEnumerable<T> Clone<T>(this IEnumerable<T> source)
         {
             return new List<T>(source);
+        }
+
+        /// <summary>
+        /// Determines whether a sequence is a subsequence of another sequence.
+        /// </summary>
+        /// <typeparam name="T">The type of elements in the sequences.</typeparam>
+        /// <param name="sequence">The sequence to check.</param>
+        /// <param name="subsequence">The subsequence to check for.</param>
+        /// <returns><c>true</c> if the <paramref name="subsequence"/> is a subsequence of the <paramref name="sequence"/>; otherwise, <c>false</c>.</returns>
+        public static bool IsSubsequence<T>(this IEnumerable<T> sequence, IEnumerable<T> subsequence)
+        {
+            var start = false;
+            var equalsCounter = 0;
+            var subsequenceLength = 0;
+            using var sequenceEnumerator = sequence.GetEnumerator();
+            using var subsequenceEnumerator = subsequence.GetEnumerator();
+
+            while (subsequenceEnumerator.MoveNext())
+                subsequenceLength++;
+
+            subsequenceEnumerator.Reset();
+            if (subsequenceEnumerator.MoveNext())
+            {
+                while (start == false && sequenceEnumerator.MoveNext())
+                {
+                    start = Equals(sequenceEnumerator.Current, subsequenceEnumerator.Current);
+                }
+                equalsCounter = start ? 1 : equalsCounter;
+                while (start && sequenceEnumerator.MoveNext() && subsequenceEnumerator.MoveNext())
+                {
+                    equalsCounter = Equals(sequenceEnumerator.Current, subsequenceEnumerator.Current) ? equalsCounter + 1 : equalsCounter;
+                }
+            }
+            return equalsCounter == subsequenceLength;
         }
     }
 }

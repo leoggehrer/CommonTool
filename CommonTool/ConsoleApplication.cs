@@ -435,6 +435,7 @@ namespace CommonTool
                         Action = (self) =>
                         {
                         },
+                        ForegroundColor = i % 2 == 0 ? ForegroundColor : ConsoleColor.DarkYellow,
                     };
                     newMenuItemHandler?.Invoke(item, menuItem);
                     result.Add(menuItem);

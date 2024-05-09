@@ -132,7 +132,20 @@ namespace CommonTool
         /// <summary>
         /// Clears the console screen.
         /// </summary>
-        public static void Clear() => Console.Clear();
+        /// <summary>
+        /// Clears the console screen.
+        /// </summary>
+        public static void Clear()
+        {
+            var width = Console.BufferWidth;
+
+            Console.SetCursorPosition(0, 0);
+            for (int i = 0; i < Console.BufferHeight; i++)
+            {
+                Console.Write(new string(' ', width));
+            }
+            Console.SetCursorPosition(0, 0);
+        }
         /// <summary>
         /// Prints the specified message to the console.
         /// </summary>

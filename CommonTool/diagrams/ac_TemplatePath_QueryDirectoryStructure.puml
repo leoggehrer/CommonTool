@@ -1,0 +1,9 @@
+@startuml TemplatePath.QueryDirectoryStructure
+title TemplatePath.QueryDirectoryStructure
+start
+#LightGreen:Params(string path,Func<string, bool>? filter,int maxDepth,params string[] excludeFolders);
+#LightSkyBlue:var result = new List<string>()\nvar directoryInfo = new DirectoryInfo(path);
+#WhiteSmoke:GetDirectoriesWithoutHidden(filter, directoryInfo, result, maxDepth, 0, excludeFolders);
+#Lavender:return [.. result];
+stop
+@enduml

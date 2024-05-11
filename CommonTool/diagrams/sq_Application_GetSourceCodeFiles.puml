@@ -1,0 +1,11 @@
+@startuml Application.GetSourceCodeFiles
+title Application.GetSourceCodeFiles
+participant "GetSourceCodeFiles(string path,string[] searchPatterns)" as GetSourceCodeFiles_p0_p1 #LightYellow
+participant "result.AddRange(a0)" as result_AddRange_a0 #LightGreen
+autonumber
+loop#LightCoral searchPatterns
+    GetSourceCodeFiles_p0_p1 -[#grey]> result_AddRange_a0 : (Directory.GetFiles(path, searchPattern, SearchOption.AllDirectories)
+                      .Where(f => ignoreFolders.Any(e => f.Contains(e)) == false)
+                      .OrderBy(i => i))
+end
+@enduml

@@ -1,0 +1,30 @@
+@startuml TemplatePath
+title TemplatePath
+ class TemplatePath #GhostWhite {
+---
+---
+- {static} void ClassConstructing()
+- {static} void ClassConstructed()
++ {static} bool ContainsFiles(string path, string[] searchPatterns)
++ {static} List<string> GetFiles(string path, string[] searchPatterns, int maxDeep, string[] ignoreFolders)
++ {static} string[] GetSubPaths(string startPath, int maxDepth)
++ {static} string[] GetTemplatePaths(string startPath, int maxDepth)
++ {static} string[] GetTemplateSolutions(string startPath, int maxDepth)
++ {static} string[] QueryDirectoryStructure(string path, Func<string, bool>? filter, int maxDepth, string[] excludeFolders)
++ {static} string[] GetTemplateParentPaths(string startPath, int maxDepth, string[] includePaths)
++ {static} string GetParentDirectory(string path)
++ {static} bool IsSolutionPath(string path)
++ {static} bool IsSolutionFilePath(string filePath)
++ {static} string GetSolutionNameFromPath(string path)
++ {static} bool IsProjectPath(string path)
++ {static} bool IsProjectFilePath(string filePath)
++ {static} string GetProjectNameFromPath(string path)
++ {static} string GetProjectSubFilePath(string filePath)
++ {static} string GetSolutionSubFilePath(string filePath)
++ {static} (string Name, string SubPath) GetSolutionItemDataFromPath(string path, string itemExtension)
++ {static} string GetPathFromPath(string path, string checkFileExtension)
++ {static} string GetDirectoryNameFromPath(string path, string checkFileExtension)
++ {static} void CleanDirectories(string path, string[] dropFolders)
++ {static} void OpenSolutionFolder(string solutionPath)
+}
+@enduml

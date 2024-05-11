@@ -1,0 +1,158 @@
+@startuml CompleteClassDiagram
+title CompleteClassDiagram
+abstract class Application #White {
+- {static} bool _force
+- {static} string? _homepath
+- {static} string _userpath
+- {static} string _sourcepath
+- {static} string _solutionpath
+---
++ {static} bool getForce()
++ {static} Void setForce(bool value)
++ {static} string? getHomePath()
++ {static} Void setHomePath(string? value)
++ {static} string getUserPath()
++ {static} Void setUserPath(string value)
++ {static} string getSourcePath()
++ {static} Void setSourcePath(string value)
++ {static} string getSolutionPath()
++ {static} Void setSolutionPath(string value)
+---
+- {static} void ClassConstructing()
+- {static} void ClassConstructed()
+- void Constructing()
+- void Constructed()
++ {static} void ChangeForce()
++ {static} string GetCurrentSolutionPath()
++ {static} string GetParentFromPath(string path)
++ {static} List<string> FindFilesFromPathAndParentPath(string path, string searchPattern)
++ {static} List<string> GetSourceCodeFiles(string path, string[] searchPatterns)
++ {static} List<string> GetSourceCodePaths(string path, string[] searchPatterns)
++ {static} List<string> GetSourceCodeFiles(string path, string[] searchPatterns, int maxDeep)
+}
+abstract class ConsoleApplication #White {
+- int _pageindex
+- int _pagesize
+- {static} ConsoleColor _progressbarforegroundcolor
+- {static} bool _runprogressbar
+- {static} bool _canprogressbarprint
+- MenuItem[] _menuitems
+- bool _runapp
+- int _maxsubpathdepth
+# {const} int MENU_KEY_WIDTH = 5
+# {const} int MENU_TEXT_WIDTH = 65
+---
++ {static} ConsoleColor getForegroundColor()
++ {static} Void setForegroundColor(ConsoleColor value)
+# int getPageIndex()
+# Void setPageIndex(int value)
+# int getPageSize()
+# Void setPageSize(int value)
++ {static} ConsoleColor getProgressBarForegroundColor()
++ {static} Void setProgressBarForegroundColor(ConsoleColor value)
+- {static} bool getRunProgressBar()
+- {static} Void setRunProgressBar(bool value)
++ {static} bool getCanProgressBarPrint()
++ {static} Void setCanProgressBarPrint(bool value)
+# MenuItem[] getMenuItems()
+# Void setMenuItems(MenuItem[] value)
+# bool getRunApp()
+# Void setRunApp(bool value)
+# int getMaxSubPathDepth()
+# Void setMaxSubPathDepth(int value)
+---
+- {static} void ClassConstructing()
+- {static} void ClassConstructed()
+- void Constructing()
+- void Constructed()
++ {static} void Clear()
++ {static} int Print(string message)
++ {static} void Print(char chr, string message, int length)
++ {static} void PrintLine()
++ {static} int PrintLine(string message)
++ {static} int PrintLine(char chr, int count)
++ {static} string ReadLine()
++ {static} string ReadLine(string message)
++ {static} (int Left, int Top) GetCursorPosition()
++ {static} void SetCursorPosition(int left, int top)
++ {static} string ToLabelText(string label, string text)
++ {static} string ToLabelText(string label, string text, int width, char chr)
++ {static} void StartProgressBar()
++ {static} void StopProgressBar()
+# void PrintHeader()
+# abstract MenuItem[] CreateMenuItems()
+# MenuItem CreateMenuSeparator()
+# MenuItem[] CreateExitMenuItems()
+# MenuItem[] CreatePageMenuItems(int mnuIdx, T[] items, Action<T, MenuItem> newMenuItemHandler)
+# void PrintFooter()
+# void PrintScreen()
+# void BeforeRun(string[] args)
+# void BeforeExecution()
++ void Run(string[] args)
+# void AfterExecution()
+# void AfterRun()
++ void ChangeMaxSubPathDepth()
++ {static} void ChangeSolutionPath()
++ {static} void ChangeSourcePath()
++ {static} string ChangePath(string path)
++ {static} string ChangePath(string title, string path)
++ {static} string ChangeTemplateSolutionPath(string currentPath, int maxDeep, string[] queryPaths)
++ {static} string SelectOrChangeToSubPath(string currentPath, int maxDepth, string[] queryPaths)
+}
+ class MenuItem #GhostWhite {
+- bool _isdisplayed
+- string _key
+- string _optionalkey
+- string _text
+- Action<MenuItem> _action
+- Dictionary<string, object> _params
+- ConsoleColor _foregroundcolor
+- string _tag
+---
++ bool getIsDisplayed()
++ Void setIsDisplayed(bool value)
++ string getKey()
++ Void setKey(string value)
++ string getOptionalKey()
++ Void setOptionalKey(string value)
++ string getText()
++ Void setText(string value)
++ Action<MenuItem> getAction()
++ Void setAction(Action<MenuItem> value)
++ Dictionary<string, object> getParams()
++ Void setParams(Dictionary<string, object> value)
++ ConsoleColor getForegroundColor()
++ Void setForegroundColor(ConsoleColor value)
++ string getTag()
++ Void setTag(string value)
+---
+}
+ class TemplatePath #GhostWhite {
+---
+---
+- {static} void ClassConstructing()
+- {static} void ClassConstructed()
++ {static} bool ContainsFiles(string path, string[] searchPatterns)
++ {static} List<string> GetFiles(string path, string[] searchPatterns, int maxDeep, string[] ignoreFolders)
++ {static} string[] GetSubPaths(string startPath, int maxDepth)
++ {static} string[] GetTemplatePaths(string startPath, int maxDepth)
++ {static} string[] GetTemplateSolutions(string startPath, int maxDepth)
++ {static} string[] QueryDirectoryStructure(string path, Func<string, bool>? filter, int maxDepth, string[] excludeFolders)
++ {static} string[] GetTemplateParentPaths(string startPath, int maxDepth, string[] includePaths)
++ {static} string GetParentDirectory(string path)
++ {static} bool IsSolutionPath(string path)
++ {static} bool IsSolutionFilePath(string filePath)
++ {static} string GetSolutionNameFromPath(string path)
++ {static} bool IsProjectPath(string path)
++ {static} bool IsProjectFilePath(string filePath)
++ {static} string GetProjectNameFromPath(string path)
++ {static} string GetProjectSubFilePath(string filePath)
++ {static} string GetSolutionSubFilePath(string filePath)
++ {static} (string Name, string SubPath) GetSolutionItemDataFromPath(string path, string itemExtension)
++ {static} string GetPathFromPath(string path, string checkFileExtension)
++ {static} string GetDirectoryNameFromPath(string path, string checkFileExtension)
++ {static} void CleanDirectories(string path, string[] dropFolders)
++ {static} void OpenSolutionFolder(string solutionPath)
+}
+ConsoleApplication <|-- Application
+@enduml

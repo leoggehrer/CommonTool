@@ -59,6 +59,32 @@ namespace CommonTool
             }
             return result;
         }
+
+        /// <summary>
+        /// Retrieves a list of files from the specified path and its subdirectories, based on the provided search patterns.
+        /// </summary>
+        /// <param name="path">The root path to search for files.</param>
+        /// <param name="searchPatterns">An array of search patterns to match against the names of files.</param>
+        /// <param name="maxDeep">The maximum depth of subdirectories to search.</param>
+        /// <param name="ignoreFolders">An optional array of folder names to ignore during the search.</param>
+        /// <returns>A list of file paths that match the search patterns.</returns>
+        public static List<string> GetFiles(string path, string[] searchPatterns, int maxDeep, params string[] ignoreFolders)
+        {
+            var result = new List<string>();
+            var sourcePaths = GetSubPaths(path, maxDeep);
+
+            foreach (var sourcePath in sourcePaths)
+            {
+                foreach (var searchPattern in searchPatterns)
+                {
+                    result.AddRange(Directory.GetFiles(sourcePath, searchPattern, SearchOption.TopDirectoryOnly)
+                          .Where(f => ignoreFolders.Any(e => f.Contains(e)) == false)
+                          .OrderBy(i => i));
+                }
+            }
+            return result;
+        }
+
         /// <summary>
         /// Retrieves an array of sub-paths within the specified start path, up to the specified maximum depth.
         /// </summary>

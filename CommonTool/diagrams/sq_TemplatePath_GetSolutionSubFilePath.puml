@@ -1,0 +1,15 @@
+@startuml TemplatePath.GetSolutionSubFilePath
+title TemplatePath.GetSolutionSubFilePath
+participant "GetSolutionSubFilePath(string filePath)" as GetSolutionSubFilePath_p0 #LightYellow
+participant "GetSolutionItemDataFromPath(a0,a1)" as GetSolutionItemDataFromPath_a0_a1 #LightGreen
+participant "filePath!.Replace(a0,a1)" as filePath_Replace_a0_a1 #LightGreen
+participant "result.StartsWith(a0)" as result_StartsWith_a0 #LightGreen
+autonumber
+GetSolutionSubFilePath_p0 -[#grey]> GetSolutionItemDataFromPath_a0_a1 : (filePath, ".sln")
+GetSolutionItemDataFromPath_a0_a1 -[#blue]-> GetSolutionSubFilePath_p0 : result
+GetSolutionSubFilePath_p0 -[#grey]> filePath_Replace_a0_a1 : (subPath, string.Empty)
+filePath_Replace_a0_a1 -[#blue]-> GetSolutionSubFilePath_p0 : result
+alt#LightBlue result.StartsWith(Path.DirectorySeparatorChar)
+    GetSolutionSubFilePath_p0 -[#grey]> result_StartsWith_a0 : (Path.DirectorySeparatorChar)
+end
+@enduml

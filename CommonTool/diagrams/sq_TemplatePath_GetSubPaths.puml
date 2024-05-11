@@ -1,0 +1,8 @@
+@startuml TemplatePath.GetSubPaths
+title TemplatePath.GetSubPaths
+participant "GetSubPaths(string startPath,int maxDepth)" as GetSubPaths_p0_p1 #LightYellow
+participant "QueryDirectoryStructure(a0,a1,a2,a3,a4,a5)" as QueryDirectoryStructure_a0_a1_a2_a3_a4_a5 #LightGreen
+autonumber
+GetSubPaths_p0_p1 -[#grey]> QueryDirectoryStructure_a0_a1_a2_a3_a4_a5 : (startPath, n => n.StartsWith($"{Path.DirectorySeparatorChar}.") == false, maxDepth, "bin", "obj", "node_modules")
+QueryDirectoryStructure_a0_a1_a2_a3_a4_a5 -[#blue]-> GetSubPaths_p0_p1 : result
+@enduml

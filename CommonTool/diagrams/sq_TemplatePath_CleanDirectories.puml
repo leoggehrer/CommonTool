@@ -1,0 +1,28 @@
+@startuml TemplatePath.CleanDirectories
+title TemplatePath.CleanDirectories
+participant "CleanDirectories(string path,params string[] dropFolders)" as CleanDirectories_p0_p1 #LightYellow
+participant "dirInfo.GetDirectories()" as dirInfo_GetDirectories #LightGreen
+participant "CleanDirectories(a0,a1)" as CleanDirectories_a0_a1 #LightGreen
+participant "item.Delete()" as item_Delete #LightGreen
+participant "dropFolders.FirstOrDefault(a0)" as dropFolders_FirstOrDefault_a0 #LightGreen
+participant "item.Delete(a0)" as item_Delete_a0 #LightGreen
+participant "Debug.WriteLine(a0)" as Debug_WriteLine_a0 #LightGreen
+autonumber
+loop#LightCoral dirInfo.GetDirectories()
+    CleanDirectories_p0_p1 -[#grey]> dirInfo_GetDirectories
+    CleanDirectories_p0_p1 -[#grey]> CleanDirectories_a0_a1 : (item, dropFolders)
+    CleanDirectories_a0_a1 -[#blue]-> CleanDirectories_p0_p1 : fileCount
+    alt#LightBlue fileCount == 0
+        CleanDirectories_p0_p1 -[#grey]> item_Delete
+        else
+            alt#LightBlue (dropFolders.FirstOrDefault(df => item.FullName.EndsWith(df))) != null
+                CleanDirectories_p0_p1 -[#grey]> dropFolders_FirstOrDefault_a0 : (df => item.FullName.EndsWith(df))
+                CleanDirectories_p0_p1 -[#grey]> item_Delete_a0 : (true)
+            end
+    end
+    CleanDirectories_p0_p1 -[#grey]> Debug_WriteLine_a0 : ($"Error in {System.Reflection.MethodBase.GetCurrentMethod()!.Name}: {ex.Message}")
+end
+CleanDirectories_p0_p1 -[#grey]> Debug_WriteLine_a0 : ($"Error in {System.Reflection.MethodBase.GetCurrentMethod()!.Name}: {ex.Message}")
+CleanDirectories_p0_p1 -[#grey]> CleanDirectories_a0_a1 : (new DirectoryInfo(path), dropFolders)
+CleanDirectories_a0_a1 -[#blue]-> CleanDirectories_p0_p1 : result
+@enduml

@@ -1,0 +1,16 @@
+@startuml TemplatePath.GetTemplateSolutions
+title TemplatePath.GetTemplateSolutions
+start
+#LightGreen:Params(string startPath,int maxDepth);
+#LightSkyBlue:var result = new List<string>()\nvar qtPaths = GetTemplatePaths(startPath, maxDepth);
+:iterator = qtPaths.GetIterator();
+while (iterator.MoveNext()) is (<color:green>yes)
+:qtPath = iterator.Current();
+            #LightSkyBlue:var di = new DirectoryInfo(qtPath);
+            #LightYellow:if (di.GetFiles().Any(f => Path.GetExtension(f.Name).Equals(".sln", StringComparison.CurrentCultureIgnoreCase))) then (<color:green>yes)
+                    #WhiteSmoke:result.Add(qtPath);
+            endif
+endwhile (<color:red>no)
+#Lavender:return [.. result];
+stop
+@enduml

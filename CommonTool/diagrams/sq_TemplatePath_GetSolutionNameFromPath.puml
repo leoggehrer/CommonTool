@@ -1,0 +1,8 @@
+@startuml TemplatePath.GetSolutionNameFromPath
+title TemplatePath.GetSolutionNameFromPath
+participant "GetSolutionNameFromPath(string path)" as GetSolutionNameFromPath_p0 #LightYellow
+participant "GetSolutionItemDataFromPath(a0,a1)" as GetSolutionItemDataFromPath_a0_a1 #LightGreen
+autonumber
+GetSolutionNameFromPath_p0 -[#grey]> GetSolutionItemDataFromPath_a0_a1 : (path, ".sln")
+GetSolutionItemDataFromPath_a0_a1 -[#blue]-> GetSolutionNameFromPath_p0 : result
+@enduml

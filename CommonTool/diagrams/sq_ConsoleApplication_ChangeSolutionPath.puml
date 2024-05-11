@@ -1,0 +1,17 @@
+@startuml ConsoleApplication.ChangeSolutionPath
+title ConsoleApplication.ChangeSolutionPath
+participant "ChangeSolutionPath" as ChangeSolutionPath #LightYellow
+participant "PrintLine()" as PrintLine #LightGreen
+participant "Print(a0)" as Print_a0 #LightGreen
+participant "ReadLine()" as ReadLine #LightGreen
+participant "Directory.Exists(a0)" as Directory_Exists_a0 #LightGreen
+autonumber
+ChangeSolutionPath -[#grey]> PrintLine
+ChangeSolutionPath -[#grey]> Print_a0 : ("Enter solution path: ")
+Print_a0 -[#blue]-> ChangeSolutionPath : result
+ChangeSolutionPath -[#grey]> ReadLine
+ReadLine -[#blue]-> ChangeSolutionPath : newPath
+alt#LightBlue Directory.Exists(newPath)
+    ChangeSolutionPath -[#grey]> Directory_Exists_a0 : (newPath)
+end
+@enduml

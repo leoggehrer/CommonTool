@@ -1,0 +1,9 @@
+@startuml TemplatePath.IsSolutionPath
+title TemplatePath.IsSolutionPath
+participant "IsSolutionPath(string path)" as IsSolutionPath_p0 #LightYellow
+participant "path.HasContent()" as path_HasContent #LightGreen
+participant "GetSolutionItemDataFromPath(path,".sln").Name.HasContent()" as GetSolutionItemDataFromPath_path_sln_Name_HasContent #LightGreen
+autonumber
+IsSolutionPath_p0 -[#grey]> path_HasContent
+IsSolutionPath_p0 -[#grey]> GetSolutionItemDataFromPath_path_sln_Name_HasContent
+@enduml

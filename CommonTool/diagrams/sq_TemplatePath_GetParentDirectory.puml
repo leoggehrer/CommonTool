@@ -1,0 +1,8 @@
+@startuml TemplatePath.GetParentDirectory
+title TemplatePath.GetParentDirectory
+participant "GetParentDirectory(string path)" as GetParentDirectory_p0 #LightYellow
+participant "Directory.GetParent(a0)" as Directory_GetParent_a0 #LightGreen
+autonumber
+GetParentDirectory_p0 -[#grey]> Directory_GetParent_a0 : (path)
+Directory_GetParent_a0 -[#blue]-> GetParentDirectory_p0 : result
+@enduml

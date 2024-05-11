@@ -1,0 +1,575 @@
+@startuml CompleteActivityDiagram
+header
+generated on 11/05/2024 10:43:31
+end header
+title CompleteActivityDiagram
+start
+note right:  Application.GetCurrentSolutionPath
+#LightSkyBlue:var result = string.Empty\nvar paths = AppContext.BaseDirectory.Split(Path.DirectorySeparatorChar)\nvar checkPath = paths.Length > 0 && paths[0].IsNullOrEmpty() ? $"{Path.DirectorySeparatorChar}" : string.Empty\nvar index = paths.Length > 0 && paths[0].IsNullOrEmpty() ? 1 : 0;
+while (result.IsNullOrEmpty() && index < paths.Length) is (<color:green>yes)
+        #LightSkyBlue:var folder = paths[index++];
+        #LightSkyBlue:var fileName = $"{folder}.sln";
+        #WhiteSmoke:checkPath = Path.Combine(checkPath, folder);
+        #LightSkyBlue:var filePath = Path.Combine(checkPath, fileName);
+        #LightYellow:if (File.Exists(filePath)) then (<color:green>yes)
+                #WhiteSmoke:result = checkPath;
+        endif
+endwhile (<color:red>no)
+#Lavender:return result;
+stop
+start
+note right:  Application.GetParentFromPath
+#LightGreen:Params(string path);
+#LightSkyBlue:var result = Directory.GetParent(path);
+#Lavender:return result != null ? result.FullName : path;
+stop
+start
+note right:  Application.FindFilesFromPathAndParentPath
+#LightGreen:Params(string path,string searchPattern);
+#LightSkyBlue:var result = new List<string>();
+#LightYellow:if (Directory.Exists(path)) then (<color:green>yes)
+        #WhiteSmoke:result.AddRange(Directory.GetFiles(path, searchPattern, SearchOption.TopDirectoryOnly));
+endif
+#LightSkyBlue:var parentPath = GetParentFromPath(path);
+#LightYellow:if (Directory.Exists(parentPath)) then (<color:green>yes)
+        #WhiteSmoke:result.AddRange(Directory.GetFiles(parentPath, searchPattern, SearchOption.TopDirectoryOnly));
+endif
+#Lavender:return result;
+stop
+start
+note right:  Application.GetSourceCodeFiles
+#LightGreen:Params(string path,string[] searchPatterns);
+#LightSkyBlue:var result = new List<string>()\nvar ignoreFolders = new string[] { $"{Path.DirectorySeparatorChar}bin{Path.DirectorySeparatorChar}", $"{Path.DirectorySeparatorChar}obj{Path.DirectorySeparatorChar}" };
+:iterator = searchPatterns.GetIterator();
+while (iterator.MoveNext()) is (<color:green>yes)
+:searchPattern = iterator.Current();
+            #WhiteSmoke:result.AddRange(Directory.GetFiles(path, searchPattern, SearchOption.AllDirectories)
+                      .Where(f => ignoreFolders.Any(e => f.Contains(e)) == false)
+                      .OrderBy(i => i));
+endwhile (<color:red>no)
+#Lavender:return result;
+stop
+start
+note right:  Application.GetSourceCodePaths
+#LightGreen:Params(string path,string[] searchPatterns);
+#LightSkyBlue:var result = GetSourceCodeFiles(path, searchPatterns);
+#Lavender:return [.. result.Select(f => Path.GetDirectoryName(f) ?? string.Empty).Distinct().Order()];
+stop
+start
+note right:  Application.GetSourceCodeFiles
+#LightGreen:Params(string path,string[] searchPatterns,int maxDeep);
+#LightSkyBlue:var ignoreFolders = new string[] { $"{Path.DirectorySeparatorChar}bin{Path.DirectorySeparatorChar}", $"{Path.DirectorySeparatorChar}obj{Path.DirectorySeparatorChar}" };
+#Lavender:return TemplatePath.GetFiles(path, searchPatterns, maxDeep, ignoreFolders);
+stop
+start
+note right:  ConsoleApplication.Clear
+#LightYellow:if (Environment.OSVersion.Platform == PlatformID.Win32NT) then (<color:green>yes)
+        #WhiteSmoke:Console.Clear();
+    else (<color:red>no)
+            #LightSkyBlue:var width = Console.BufferWidth;
+            #LightSkyBlue:var height = Console.BufferHeight;
+            #WhiteSmoke:Console.SetCursorPosition(0, 0);
+            #LightSkyBlue:int i = 0;
+            while (i < height) is (<color:green>yes)
+                    #WhiteSmoke:Print(new string(' ', width));
+            :i++;
+            endwhile (<color:red>no)
+            #WhiteSmoke:Console.SetCursorPosition(0, 0);
+endif
+stop
+start
+note right:  ConsoleApplication.Print
+#LightGreen:Params(string message);
+#WhiteSmoke:Print(message);
+#Lavender:return message.Length;
+stop
+start
+note right:  ConsoleApplication.Print
+#LightGreen:Params(char chr,string message,int length);
+#LightSkyBlue:int i = message.Length;
+while (i < length) is (<color:green>yes)
+        #WhiteSmoke:Print(chr);
+:i++;
+endwhile (<color:red>no)
+#WhiteSmoke:Print(message);
+stop
+start
+note right:  ConsoleApplication.PrintLine
+#WhiteSmoke:PrintLine();
+stop
+start
+note right:  ConsoleApplication.PrintLine
+#LightGreen:Params(string message);
+#WhiteSmoke:PrintLine(message);
+#Lavender:return message.Length;
+stop
+start
+note right:  ConsoleApplication.PrintLine
+#LightGreen:Params(char chr,int count);
+#LightSkyBlue:string message = new(chr, count);
+#WhiteSmoke:PrintLine(message);
+#Lavender:return message.Length;
+stop
+start
+note right:  ConsoleApplication.ReadLine
+#Lavender:return Console.ReadLine() ?? string.Empty;
+stop
+start
+note right:  ConsoleApplication.ReadLine
+#LightGreen:Params(string message);
+#WhiteSmoke:Print(message);
+#Lavender:return ReadLine();
+stop
+start
+note right:  ConsoleApplication.GetCursorPosition
+#Lavender:return (Console.CursorLeft, Console.CursorTop);
+stop
+start
+note right:  ConsoleApplication.SetCursorPosition
+#LightGreen:Params(int left,int top);
+#WhiteSmoke:Console.SetCursorPosition(left, top);
+stop
+start
+note right:  ConsoleApplication.ToLabelText
+#LightGreen:Params(string label,string text);
+#Lavender:return ToLabelText(label, text, 20, '.');
+stop
+start
+note right:  ConsoleApplication.ToLabelText
+#LightGreen:Params(string label,string text,int width,char chr);
+#LightSkyBlue:var diff = width - label.Length\nvar space = new string(chr, Math.Max(0, diff));
+#Lavender:return $"{label}{space}{text}";
+stop
+start
+note right:  ConsoleApplication.StartProgressBar
+#LightYellow:if (RunProgressBar == false) then (<color:green>yes)
+        #LightSkyBlue:var head = '>';
+        #LightSkyBlue:var runSign = '=';
+        #LightSkyBlue:var counter = 0;
+        #WhiteSmoke:RunProgressBar = true;
+        #WhiteSmoke:PrintLine();
+        #WhiteSmoke:var (Left, Top) = GetCursorPosition();
+        #WhiteSmoke:PrintLine();
+        #WhiteSmoke:PrintLine();
+        #WhiteSmoke:Task.Factory.StartNew(async () =>
+                {
+                    while (RunProgressBar)
+                    {
+                        if (CanProgressBarPrint)
+                        {
+                            if (Left > 65)
+                            {
+                                var timeInSec = counter / 5;
+
+                                for (int i = 0; i <= Left; i++)
+                                {
+                                    Write(i, Top, " ");
+                                }
+start
+note right:  ConsoleApplication.StopProgressBar
+#WhiteSmoke:RunProgressBar = false;
+stop
+start
+note right:  ConsoleApplication.PrintHeader
+#LightSkyBlue:var saveForeColor = ForegroundColor\nvar solutionPath = GetCurrentSolutionPath()\nvar solutionName = TemplatePath.GetSolutionNameFromPath(solutionPath);
+#WhiteSmoke:ForegroundColor = ConsoleColor.Green;
+#LightSkyBlue:var count = PrintLine(solutionName);
+#WhiteSmoke:PrintLine('=', count);
+#WhiteSmoke:PrintLine();
+#WhiteSmoke:ForegroundColor = saveForeColor;
+#WhiteSmoke:PrintLine($"Force flag:     {Force}");
+#WhiteSmoke:PrintLine();
+stop
+start
+note right:  ConsoleApplication.CreateMenuSeparator
+#Lavender:return new()
+            {
+                Key = new string('-', MENU_KEY_WIDTH),
+                Text = new string('-', MENU_TEXT_WIDTH),
+                Action = (self) => { },
+                ForegroundColor = ConsoleColor.DarkGreen,
+            };
+start
+note right:  ConsoleApplication.CreateExitMenuItems
+#Lavender:return [ CreateMenuSeparator(),
+                     new()
+                     {
+                        Key = "x|X",
+                        Text = ToLabelText("Exit", "Exits the application"),
+                        Action = (self) => { RunApp = false; },
+                     },
+start
+note right:  ConsoleApplication.CreatePageMenuItems
+#LightGreen:Params(ref int mnuIdx,T[] items,Action<T, MenuItem> newMenuItemHandler);
+#LightSkyBlue:List<MenuItem> result = [];
+#LightYellow:if (items.Length > PageSize) then (<color:green>yes)
+        #LightSkyBlue:int i = 0;
+        while (i < items.Length) is (<color:green>yes)
+                #LightSkyBlue:var item = items[i];
+                #LightSkyBlue:var menuItem = new MenuItem
+                    {
+                        IsDisplayed = i >= PageIndex * PageSize && i < (PageIndex + 1) * PageSize,
+                        Key = (++mnuIdx).ToString(),
+                        OptionalKey = "a", // it's for choose option all
+                        Text = string.Empty,
+                        Action = (self) =>
+                        {
+                        },
+start
+note right:  ConsoleApplication.PrintFooter
+#WhiteSmoke:PrintLine();
+#WhiteSmoke:Print("Choose [n|n,n|a...all|x|X]: ");
+stop
+start
+note right:  ConsoleApplication.PrintScreen
+#LightSkyBlue:var saveForegrondColor = ForegroundColor;
+#WhiteSmoke:MenuItems = CreateMenuItems();
+#WhiteSmoke:Clear();
+#WhiteSmoke:ForegroundColor = saveForegrondColor;
+#WhiteSmoke:PrintHeader();
+#WhiteSmoke:MenuItems.Where(mi => mi.IsDisplayed).ToList().ForEach(m =>
+            {
+                var menuKey = m.Key;
+
+                ForegroundColor = m.ForegroundColor;
+                PrintLine($"[{menuKey,MENU_KEY_WIDTH}] {m.Text}");
+            });
+start
+note right:  ConsoleApplication.BeforeRun
+#LightGreen:Params(string[] args);
+stop
+start
+note right:  ConsoleApplication.Run
+#LightGreen:Params(string[] args);
+#LightSkyBlue:var choose = default(string[])\nvar saveForegrondColor = ForegroundColor;
+#WhiteSmoke:BeforeRun(args);
+#WhiteSmoke:RunApp = true;
+repeat
+        #WhiteSmoke:PrintScreen();
+        #WhiteSmoke:choose = ReadLine().ToLower().Split(',', StringSplitOptions.RemoveEmptyEntries);
+        #LightSkyBlue:var chooseIterator = choose.GetEnumerator();
+        #WhiteSmoke:BeforeExecution();
+        #WhiteSmoke:ForegroundColor = saveForegrondColor;
+        while (RunApp && chooseIterator.MoveNext()) is (<color:green>yes)
+                #LightSkyBlue:var actions = MenuItems.Where(m => m.IsDisplayed && (m.Key.Equals(chooseIterator.Current) || m.OptionalKey.Equals(chooseIterator.Current)));
+                #LightSkyBlue:var actionIterator = actions.GetEnumerator();
+                while (RunApp && actionIterator.MoveNext()) is (<color:green>yes)
+                        #WhiteSmoke:actionIterator.Current?.Action(actionIterator.Current);
+                endwhile (<color:red>no)
+                #WhiteSmoke:RunApp = RunApp && chooseIterator.Current.Equals("x") == false;
+                #WhiteSmoke:StopProgressBar();
+        endwhile (<color:red>no)
+        #WhiteSmoke:AfterExecution();
+repeat while (RunApp) is (<color:green>yes)
+#WhiteSmoke:AfterRun();
+stop
+start
+note right:  ConsoleApplication.ChangeMaxSubPathDepth
+#WhiteSmoke:PrintLine();
+#WhiteSmoke:Print("Enter the maximum subpath depth: ");
+#LightSkyBlue:var maxDepth = ReadLine();
+#LightYellow:if (int.TryParse(maxDepth, out int depth)) then (<color:green>yes)
+        #WhiteSmoke:MaxSubPathDepth = depth;
+endif
+stop
+start
+note right:  ConsoleApplication.ChangeSolutionPath
+#WhiteSmoke:PrintLine();
+#WhiteSmoke:Print("Enter solution path: ");
+#LightSkyBlue:var newPath = ReadLine();
+#LightYellow:if (Directory.Exists(newPath)) then (<color:green>yes)
+        #WhiteSmoke:SolutionPath = newPath;
+endif
+stop
+start
+note right:  ConsoleApplication.ChangeSourcePath
+#WhiteSmoke:PrintLine();
+#WhiteSmoke:Print("Enter source path: ");
+#LightSkyBlue:var newPath = ReadLine();
+#LightYellow:if (Directory.Exists(newPath)) then (<color:green>yes)
+        #WhiteSmoke:SourcePath = newPath;
+endif
+stop
+start
+note right:  ConsoleApplication.ChangePath
+#LightGreen:Params(string path);
+#Lavender:return ChangePath("Enter path: ", path);
+stop
+start
+note right:  ConsoleApplication.ChangePath
+#LightGreen:Params(string title,string path);
+#WhiteSmoke:PrintLine();
+#WhiteSmoke:Print(title);
+#LightSkyBlue:var newPath = ReadLine();
+#LightYellow:if (Directory.Exists(newPath)) then (<color:green>yes)
+        #WhiteSmoke:path = newPath;
+endif
+#Lavender:return path;
+stop
+start
+note right:  ConsoleApplication.ChangeTemplateSolutionPath
+#LightGreen:Params(string currentPath,int maxDeep,params string[] queryPaths);
+#LightSkyBlue:var result = currentPath\nvar solutionPath = GetCurrentSolutionPath()\nvar qtSolutionPaths = new List<string>()\nvar saveForeColor = ForegroundColor;
+#WhiteSmoke:queryPaths.ToList().ForEach(qp => TemplatePath.GetTemplateSolutions(qp, maxDeep)
+                      .ToList().ForEach(s => qtSolutionPaths.Add(s)));
+#LightYellow:if (qtSolutionPaths.Contains(solutionPath) == false && solutionPath != currentPath) then (<color:green>yes)
+        #WhiteSmoke:qtSolutionPaths.Add(solutionPath);
+endif
+#LightSkyBlue:var qtSelectSolutions = qtSolutionPaths.Distinct().OrderBy(e => e).ToArray();
+#LightSkyBlue:int i = 0;
+while (i < qtSelectSolutions.Length) is (<color:green>yes)
+        #LightYellow:if (i == 0) then (<color:green>yes)
+            #WhiteSmoke:PrintLine();
+        endif
+        #WhiteSmoke:ForegroundColor = i % 2 == 0 ? ConsoleColor.DarkYellow : saveForeColor;
+        #WhiteSmoke:PrintLine($"[{i + 1,3}] Change path to: {qtSelectSolutions[i]}");
+:i++;
+endwhile (<color:red>no)
+#WhiteSmoke:ForegroundColor = saveForeColor;
+#WhiteSmoke:PrintLine();
+#WhiteSmoke:Print("Select or enter source path: ");
+#LightSkyBlue:var selectOrPath = ReadLine();
+#LightYellow:if (int.TryParse(selectOrPath, out int number)) then (<color:green>yes)
+        #LightYellow:if ((number - 1) >= 0 && (number - 1) < qtSelectSolutions.Length) then (<color:green>yes)
+                #WhiteSmoke:result = qtSelectSolutions[number - 1];
+        endif
+    else (<color:red>no)
+        #LightYellow:if (string.IsNullOrEmpty(selectOrPath) == false && Directory.Exists(selectOrPath)) then (<color:green>yes)
+                #WhiteSmoke:result = selectOrPath;
+        endif
+endif
+#Lavender:return result;
+stop
+start
+note right:  ConsoleApplication.SelectOrChangeToSubPath
+#LightGreen:Params(string currentPath,int maxDepth,params string[] queryPaths);
+#LightSkyBlue:var result = currentPath\nvar solutionPath = GetCurrentSolutionPath()\nvar subPaths = new List<string>()\nvar saveForeColor = ForegroundColor;
+#WhiteSmoke:queryPaths.ToList().ForEach(qp => TemplatePath.GetSubPaths(qp, maxDepth)
+                      .ToList().ForEach(s => subPaths.Add(s)));
+#LightYellow:if (subPaths.Contains(solutionPath) == false && solutionPath != currentPath) then (<color:green>yes)
+        #WhiteSmoke:subPaths.Add(solutionPath);
+endif
+#LightSkyBlue:var selectionPaths = subPaths.Distinct().OrderBy(e => e).ToArray();
+#LightSkyBlue:int i = 0;
+while (i < selectionPaths.Length) is (<color:green>yes)
+        #LightYellow:if (i == 0) then (<color:green>yes)
+            #WhiteSmoke:PrintLine();
+        endif
+        #WhiteSmoke:ForegroundColor = i % 2 == 0 ? ConsoleColor.DarkYellow : saveForeColor;
+        #WhiteSmoke:PrintLine($"[{i + 1,3}] Change path to: {selectionPaths[i]}");
+:i++;
+endwhile (<color:red>no)
+#WhiteSmoke:ForegroundColor = saveForeColor;
+#WhiteSmoke:PrintLine();
+#WhiteSmoke:Print("Select or enter target path: ");
+#LightSkyBlue:var selectOrPath = ReadLine();
+#LightYellow:if (int.TryParse(selectOrPath, out int number)) then (<color:green>yes)
+        #LightYellow:if ((number - 1) >= 0 && (number - 1) < selectionPaths.Length) then (<color:green>yes)
+                #WhiteSmoke:result = selectionPaths[number - 1];
+        endif
+    else (<color:red>no)
+        #LightYellow:if (string.IsNullOrEmpty(selectOrPath) == false && Directory.Exists(selectOrPath)) then (<color:green>yes)
+                #WhiteSmoke:result = selectOrPath;
+        endif
+endif
+#Lavender:return result;
+stop
+start
+note right:  TemplatePath.ContainsFiles
+#LightGreen:Params(string path,params string[] searchPatterns);
+#LightSkyBlue:var result = false;
+#LightYellow:if (searchPatterns.Length == 0) then (<color:green>yes)
+        #WhiteSmoke:result = Directory.GetFiles(path).Length > 0;
+    else (<color:red>no)
+            #LightSkyBlue:var iterator = searchPatterns.GetEnumerator();
+            while (iterator.MoveNext() && result == false) is (<color:green>yes)
+                    #LightYellow:if (Directory.GetFiles(path, iterator.Current?.ToString() ?? string.Empty).Length > 0) then (<color:green>yes)
+                            #WhiteSmoke:result = true;
+                    endif
+            endwhile (<color:red>no)
+endif
+#Lavender:return result;
+stop
+start
+note right:  TemplatePath.GetFiles
+#LightGreen:Params(string path,string[] searchPatterns,int maxDeep,params string[] ignoreFolders);
+#LightSkyBlue:var result = new List<string>()\nvar sourcePaths = GetSubPaths(path, maxDeep);
+:iterator = sourcePaths.GetIterator();
+while (iterator.MoveNext()) is (<color:green>yes)
+:sourcePath = iterator.Current();
+            :iterator = searchPatterns.GetIterator();
+            while (iterator.MoveNext()) is (<color:green>yes)
+            :searchPattern = iterator.Current();
+                                #WhiteSmoke:result.AddRange(Directory.GetFiles(sourcePath, searchPattern, SearchOption.TopDirectoryOnly)
+                          .Where(f => ignoreFolders.Any(e => f.Contains(e)) == false)
+                          .OrderBy(i => i));
+            endwhile (<color:red>no)
+endwhile (<color:red>no)
+#Lavender:return result;
+stop
+start
+note right:  TemplatePath.GetSubPaths
+#LightGreen:Params(string startPath,int maxDepth);
+#Lavender:return QueryDirectoryStructure(startPath, n => n.StartsWith($"{Path.DirectorySeparatorChar}.") == false, maxDepth, "bin", "obj", "node_modules");
+stop
+start
+note right:  TemplatePath.GetTemplatePaths
+#LightGreen:Params(string startPath,int maxDepth);
+#Lavender:return QueryDirectoryStructure(startPath, n => n.StartsWith("QT") || n.Equals("QuickTemplate"), maxDepth, "bin", "obj", "node_modules");
+stop
+start
+note right:  TemplatePath.GetTemplateSolutions
+#LightGreen:Params(string startPath,int maxDepth);
+#LightSkyBlue:var result = new List<string>()\nvar qtPaths = GetTemplatePaths(startPath, maxDepth);
+:iterator = qtPaths.GetIterator();
+while (iterator.MoveNext()) is (<color:green>yes)
+:qtPath = iterator.Current();
+            #LightSkyBlue:var di = new DirectoryInfo(qtPath);
+            #LightYellow:if (di.GetFiles().Any(f => Path.GetExtension(f.Name).Equals(".sln", StringComparison.CurrentCultureIgnoreCase))) then (<color:green>yes)
+                    #WhiteSmoke:result.Add(qtPath);
+            endif
+endwhile (<color:red>no)
+#Lavender:return [.. result];
+stop
+start
+note right:  TemplatePath.QueryDirectoryStructure
+#LightGreen:Params(string path,Func<string, bool>? filter,int maxDepth,params string[] excludeFolders);
+#LightSkyBlue:var result = new List<string>()\nvar directoryInfo = new DirectoryInfo(path);
+#WhiteSmoke:GetDirectoriesWithoutHidden(filter, directoryInfo, result, maxDepth, 0, excludeFolders);
+#Lavender:return [.. result];
+stop
+start
+note right:  TemplatePath.GetTemplateParentPaths
+#LightGreen:Params(string startPath,int maxDepth,params string[] includePaths);
+#LightSkyBlue:var result = new List<string>()\nvar qtProjects = GetTemplatePaths(startPath, maxDepth).Union(includePaths).ToArray()\nvar qtPaths = qtProjects.Select(p => GetParentDirectory(p))
+                                    .Distinct()
+                                    .OrderBy(p => p);
+:iterator = qtPaths.GetIterator();
+while (iterator.MoveNext()) is (<color:green>yes)
+:qtPath = iterator.Current();
+            #LightYellow:if (result.Any(x => qtPath.Length > x.Length && qtPath.Contains(x)) == false) then (<color:green>yes)
+                    #WhiteSmoke:result.Add(qtPath);
+            endif
+endwhile (<color:red>no)
+#Lavender:return [.. result];
+stop
+start
+note right:  TemplatePath.GetParentDirectory
+#LightGreen:Params(string path);
+#LightSkyBlue:var result = Directory.GetParent(path);
+#Lavender:return result != null ? result.FullName : path;
+stop
+start
+note right:  TemplatePath.IsSolutionPath
+#LightGreen:Params(string path);
+#Lavender:return path.HasContent() && GetSolutionItemDataFromPath(path, ".sln").Name.HasContent();
+stop
+start
+note right:  TemplatePath.IsSolutionFilePath
+#LightGreen:Params(string filePath);
+#LightSkyBlue:var path = Path.GetDirectoryName(filePath);
+#Lavender:return IsProjectPath(path ?? string.Empty);
+stop
+start
+note right:  TemplatePath.GetSolutionNameFromPath
+#LightGreen:Params(string path);
+#Lavender:return GetSolutionItemDataFromPath(path, ".sln").Name;
+stop
+start
+note right:  TemplatePath.IsProjectPath
+#LightGreen:Params(string path);
+#Lavender:return path.HasContent() && GetSolutionItemDataFromPath(path, ".csproj").Name.HasContent();
+stop
+start
+note right:  TemplatePath.IsProjectFilePath
+#LightGreen:Params(string filePath);
+#LightSkyBlue:var path = Path.GetDirectoryName(filePath);
+#Lavender:return IsProjectPath(path ?? string.Empty);
+stop
+start
+note right:  TemplatePath.GetProjectNameFromPath
+#LightGreen:Params(string path);
+#Lavender:return GetSolutionItemDataFromPath(path, ".csproj").Name;
+stop
+start
+note right:  TemplatePath.GetProjectSubFilePath
+#LightGreen:Params(string filePath);
+#LightSkyBlue:var subPath = GetSolutionItemDataFromPath(filePath, ".csproj").SubPath\nvar result = filePath!.Replace(subPath, string.Empty);
+#LightYellow:if (result.StartsWith(Path.DirectorySeparatorChar)) then (<color:green>yes)
+        #WhiteSmoke:result = result[1..];
+endif
+#Lavender:return result;
+stop
+start
+note right:  TemplatePath.GetSolutionSubFilePath
+#LightGreen:Params(string filePath);
+#LightSkyBlue:var subPath = GetSolutionItemDataFromPath(filePath, ".sln").SubPath\nvar result = filePath!.Replace(subPath, string.Empty);
+#LightYellow:if (result.StartsWith(Path.DirectorySeparatorChar)) then (<color:green>yes)
+        #WhiteSmoke:result = result[1..];
+endif
+#Lavender:return result;
+stop
+start
+note right:  TemplatePath.GetSolutionItemDataFromPath
+#LightGreen:Params(string path,string itemExtension);
+#LightSkyBlue:var itemName = string.Empty\nvar subPath = path.StartsWith(Path.DirectorySeparatorChar) ? Path.DirectorySeparatorChar.ToString() : string.Empty\nvar itemsEnumerator = path.Split(Path.DirectorySeparatorChar, StringSplitOptions.RemoveEmptyEntries)
+                                      .GetEnumerator();
+while (itemName.IsNullOrEmpty() && itemsEnumerator.MoveNext()) is (<color:green>yes)
+        #WhiteSmoke:subPath = Path.Combine(subPath, itemsEnumerator.Current.ToString()!);
+        #LightSkyBlue:var filePath = Path.Combine(subPath, $"{itemsEnumerator.Current}{itemExtension}");
+        #LightYellow:if (File.Exists(filePath)) then (<color:green>yes)
+                #WhiteSmoke:itemName = itemsEnumerator.Current.ToString() ?? string.Empty;
+        endif
+endwhile (<color:red>no)
+#Lavender:return (itemName, subPath);
+stop
+start
+note right:  TemplatePath.GetPathFromPath
+#LightGreen:Params(string path,string checkFileExtension);
+#LightSkyBlue:var result = string.Empty\nvar checkPath = path.StartsWith(Path.DirectorySeparatorChar) ? Path.DirectorySeparatorChar.ToString() : string.Empty\nvar data = path.Split(Path.DirectorySeparatorChar, StringSplitOptions.RemoveEmptyEntries);
+#LightSkyBlue:int i = 0;
+while (i < data.Length && result == string.Empty) is (<color:green>yes)
+        #WhiteSmoke:checkPath = Path.Combine(checkPath, data[i]);
+        #LightSkyBlue:var projectFilePath = Path.Combine(checkPath, $"{data[i]}{checkFileExtension}");
+        #LightYellow:if (File.Exists(projectFilePath)) then (<color:green>yes)
+                #WhiteSmoke:result = checkPath;
+        endif
+:i++;
+endwhile (<color:red>no)
+#Lavender:return result;
+stop
+start
+note right:  TemplatePath.GetDirectoryNameFromPath
+#LightGreen:Params(string path,string checkFileExtension);
+#LightSkyBlue:var result = string.Empty\nvar checkPath = path.StartsWith(Path.DirectorySeparatorChar) ? Path.DirectorySeparatorChar.ToString() : string.Empty\nvar data = path.Split(Path.DirectorySeparatorChar, StringSplitOptions.RemoveEmptyEntries);
+#LightSkyBlue:int i = 0;
+while (i < data.Length && result == string.Empty) is (<color:green>yes)
+        #WhiteSmoke:checkPath = Path.Combine(checkPath, data[i]);
+        #LightSkyBlue:var projectFilePath = Path.Combine(checkPath, $"{data[i]}{checkFileExtension}");
+        #LightYellow:if (File.Exists(projectFilePath)) then (<color:green>yes)
+                #WhiteSmoke:result = data[i];
+        endif
+:i++;
+endwhile (<color:red>no)
+#Lavender:return result;
+stop
+start
+note right:  TemplatePath.CleanDirectories
+#LightGreen:Params(string path,params string[] dropFolders);
+#WhiteSmoke:CleanDirectories(new DirectoryInfo(path), dropFolders);
+stop
+start
+note right:  TemplatePath.OpenSolutionFolder
+#LightGreen:Params(string solutionPath);
+#LightYellow:if (Environment.OSVersion.Platform == PlatformID.Win32NT) then (<color:green>yes)
+        #WhiteSmoke:Process.Start(new ProcessStartInfo()
+                {
+                    WorkingDirectory = solutionPath,
+                    FileName = "explorer",
+                    Arguments = solutionPath,
+                    CreateNoWindow = true,
+                });
+footer
+generated with the DiagramCreator by Prof.Gehrer
+end footer
+@enduml

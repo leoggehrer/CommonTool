@@ -1,0 +1,51 @@
+@startuml ConsoleApplication.StartProgressBar
+title ConsoleApplication.StartProgressBar
+participant "StartProgressBar" as StartProgressBar #LightYellow
+participant "SetCursorPosition(a0,a1)" as SetCursorPosition_a0_a1 #LightGreen
+participant "Print(a0)" as Print_a0 #LightGreen
+participant "PrintLine()" as PrintLine #LightGreen
+participant "GetCursorPosition()" as GetCursorPosition #LightGreen
+participant "Task.Factory.StartNew(a0)" as Task_Factory_StartNew_a0 #LightGreen
+autonumber
+StartProgressBar -[#grey]> SetCursorPosition_a0_a1 : (cursorLeft, cursorTop)
+StartProgressBar -[#grey]> Print_a0 : (output)
+Print_a0 -[#blue]-> StartProgressBar : result
+StartProgressBar -[#grey]> SetCursorPosition_a0_a1 : (saveCursorLeft, saveCursorTop)
+alt#LightBlue RunProgressBar == false
+    StartProgressBar -[#grey]> PrintLine
+    StartProgressBar -[#grey]> GetCursorPosition
+    GetCursorPosition -[#blue]-> StartProgressBar : var (Left, Top)
+    StartProgressBar -[#grey]> PrintLine
+    StartProgressBar -[#grey]> PrintLine
+    StartProgressBar -[#grey]> Task_Factory_StartNew_a0 : (async () =>
+                {
+                    while (RunProgressBar)
+                    {
+                        if (CanProgressBarPrint)
+                        {
+                            if (Left > 65)
+                            {
+                                var timeInSec = counter / 5;
+
+                                for (int i = 0; i <= Left; i++)
+                                {
+                                    Write(i, Top, " ");
+                                }
+                                Left = 0;
+                            }
+                            else
+                            {
+                                Write(Left++, Top, $"{runSign}{head}");
+                            }
+
+                            if (counter % 5 == 0)
+                            {
+                                Write(65, Top, $"{counter / 5,5} [sec]");
+                            }
+                        }
+                        counter++;
+                        await Task.Delay(200);
+                    }
+                })
+end
+@enduml

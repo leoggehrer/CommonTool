@@ -1,0 +1,11 @@
+@startuml Application.GetSourceCodePaths
+title Application.GetSourceCodePaths
+participant "GetSourceCodePaths(string path,string[] searchPatterns)" as GetSourceCodePaths_p0_p1 #LightYellow
+participant "GetSourceCodeFiles(a0,a1)" as GetSourceCodeFiles_a0_a1 #LightGreen
+participant "result.Select(f=>Path.GetDirectoryName(f)??string.Empty).Distinct().Order()" as result_Select_f_Path_GetDirectoryName_f_string_Empty_Distinct_Order #LightGreen
+participant "result.Select(f=>Path.GetDirectoryName(f)??string.Empty).Distinct()" as result_Select_f_Path_GetDirectoryName_f_string_Empty_Distinct #LightGreen
+autonumber
+GetSourceCodePaths_p0_p1 -[#grey]> GetSourceCodeFiles_a0_a1 : (path, searchPatterns)
+GetSourceCodeFiles_a0_a1 -[#blue]-> GetSourceCodePaths_p0_p1 : result
+GetSourceCodePaths_p0_p1 -[#grey]> result_Select_f_Path_GetDirectoryName_f_string_Empty_Distinct_Order
+@enduml

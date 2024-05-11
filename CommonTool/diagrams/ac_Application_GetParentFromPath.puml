@@ -1,0 +1,8 @@
+@startuml Application.GetParentFromPath
+title Application.GetParentFromPath
+start
+#LightGreen:Params(string path);
+#LightSkyBlue:var result = Directory.GetParent(path);
+#Lavender:return result != null ? result.FullName : path;
+stop
+@enduml

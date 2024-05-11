@@ -1,0 +1,7 @@
+@startuml ConsoleApplication.ToLabelText
+title ConsoleApplication.ToLabelText
+participant "ToLabelText(string label,string text,int width,char chr)" as ToLabelText_p0_p1_p2_p3 #LightYellow
+participant "Math.Max(a0,a1)" as Math_Max_a0_a1 #LightGreen
+autonumber
+ToLabelText_p0_p1_p2_p3 -[#grey]> Math_Max_a0_a1 : (0, diff)
+@enduml

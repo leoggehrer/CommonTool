@@ -1,0 +1,11 @@
+@startuml ConsoleApplication.ChangeMaxSubPathDepth
+title ConsoleApplication.ChangeMaxSubPathDepth
+start
+#WhiteSmoke:PrintLine();
+#WhiteSmoke:Print("Enter the maximum subpath depth: ");
+#LightSkyBlue:var maxDepth = ReadLine();
+#LightYellow:if (int.TryParse(maxDepth, out int depth)) then (<color:green>yes)
+        #WhiteSmoke:MaxSubPathDepth = depth;
+endif
+stop
+@enduml

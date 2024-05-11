@@ -1,0 +1,8 @@
+title:Application (CD)
+fileName:cd_Application.puml
+title:ConsoleApplication (CD)
+fileName:cd_ConsoleApplication.puml
+title:MenuItem (CD)
+fileName:cd_MenuItem.puml
+title:TemplatePath (CD)
+fileName:cd_TemplatePath.puml

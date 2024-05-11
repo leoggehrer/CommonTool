@@ -1,0 +1,7 @@
+@startuml ConsoleApplication.SetCursorPosition
+title ConsoleApplication.SetCursorPosition
+start
+#LightGreen:Params(int left,int top);
+#WhiteSmoke:Console.SetCursorPosition(left, top);
+stop
+@enduml

@@ -1,0 +1,15 @@
+@startuml TemplatePath.OpenSolutionFolder
+title TemplatePath.OpenSolutionFolder
+start
+#LightGreen:Params(string solutionPath);
+#LightYellow:if (Environment.OSVersion.Platform == PlatformID.Win32NT) then (<color:green>yes)
+        #WhiteSmoke:Process.Start(new ProcessStartInfo()
+                {
+                    WorkingDirectory = solutionPath,
+                    FileName = "explorer",
+                    Arguments = solutionPath,
+                    CreateNoWindow = true,
+                });
+endif
+stop
+@enduml

@@ -1,0 +1,7 @@
+@startuml ConsoleApplication.ToLabelText
+title ConsoleApplication.ToLabelText
+start
+#LightGreen:Params(string label,string text);
+#Lavender:return ToLabelText(label, text, 20, '.');
+stop
+@enduml

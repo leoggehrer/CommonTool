@@ -1,0 +1,26 @@
+@startuml TemplatePath.GetSolutionItemDataFromPath
+title TemplatePath.GetSolutionItemDataFromPath
+participant "GetSolutionItemDataFromPath(string path,string itemExtension)" as GetSolutionItemDataFromPath_p0_p1 #LightYellow
+participant "path.StartsWith(a0)" as path_StartsWith_a0 #LightGreen
+participant "path.Split(Path.DirectorySeparatorChar,StringSplitOptions.RemoveEmptyEntries).GetEnumerator()" as path_Split_Path_DirectorySeparatorChar_StringSplitOptions_RemoveEmptyEntries_GetEnumerator #LightGreen
+participant "itemName.IsNullOrEmpty()" as itemName_IsNullOrEmpty #LightGreen
+participant "itemsEnumerator.MoveNext()" as itemsEnumerator_MoveNext #LightGreen
+participant "Path.Combine(a0,a1)" as Path_Combine_a0_a1 #LightGreen
+participant "File.Exists(a0)" as File_Exists_a0 #LightGreen
+autonumber
+GetSolutionItemDataFromPath_p0_p1 -[#grey]> path_StartsWith_a0 : (Path.DirectorySeparatorChar)
+GetSolutionItemDataFromPath_p0_p1 -[#grey]> path_Split_Path_DirectorySeparatorChar_StringSplitOptions_RemoveEmptyEntries_GetEnumerator
+path_Split_Path_DirectorySeparatorChar_StringSplitOptions_RemoveEmptyEntries_GetEnumerator -[#blue]-> GetSolutionItemDataFromPath_p0_p1 : itemsEnumerator
+loop#LightCoral itemName.IsNullOrEmpty() && itemsEnumerator.MoveNext()
+    GetSolutionItemDataFromPath_p0_p1 -[#grey]> itemName_IsNullOrEmpty
+    GetSolutionItemDataFromPath_p0_p1 -[#grey]> itemsEnumerator_MoveNext
+    itemsEnumerator_MoveNext -[#blue]-> GetSolutionItemDataFromPath_p0_p1 : result
+    GetSolutionItemDataFromPath_p0_p1 -[#grey]> Path_Combine_a0_a1 : (subPath, itemsEnumerator.Current.ToString()!)
+    Path_Combine_a0_a1 -[#blue]-> GetSolutionItemDataFromPath_p0_p1 : subPath
+    GetSolutionItemDataFromPath_p0_p1 -[#grey]> Path_Combine_a0_a1 : (subPath, $"{itemsEnumerator.Current}{itemExtension}")
+    Path_Combine_a0_a1 -[#blue]-> GetSolutionItemDataFromPath_p0_p1 : filePath
+    alt#LightBlue File.Exists(filePath)
+        GetSolutionItemDataFromPath_p0_p1 -[#grey]> File_Exists_a0 : (filePath)
+    end
+end
+@enduml

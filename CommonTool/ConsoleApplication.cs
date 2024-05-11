@@ -132,7 +132,25 @@ namespace CommonTool
         /// <summary>
         /// Clears the console screen.
         /// </summary>
-        public static void Clear() => Console.Clear();
+        public static void Clear()
+        {
+            if (Environment.OSVersion.Platform == PlatformID.Win32NT)
+            {
+                Console.Clear();
+            }
+            else
+            {
+                var width = Console.BufferWidth;
+                var height = Console.BufferHeight;
+
+                Console.SetCursorPosition(0, 0);
+                for (int i = 0; i < height; i++)
+                {
+                    Console.Write(new string(' ', width));
+                }
+                Console.SetCursorPosition(0, 0);
+            }
+        }
         /// <summary>
         /// Prints the specified message to the console.
         /// </summary>
@@ -518,9 +536,9 @@ namespace CommonTool
             MenuItems.Where(mi => mi.IsDisplayed).ToList().ForEach(m =>
             {
                 var menuKey = m.Key;
-                
+
                 ForegroundColor = m.ForegroundColor;
-                PrintLine($"[{menuKey, MENU_KEY_WIDTH}] {m.Text}");
+                PrintLine($"[{menuKey,MENU_KEY_WIDTH}] {m.Text}");
             });
             ForegroundColor = saveForegrondColor;
             PrintFooter();

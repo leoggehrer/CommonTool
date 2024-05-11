@@ -1,0 +1,8 @@
+@startuml ConsoleApplication.ReadLine
+title ConsoleApplication.ReadLine
+start
+#LightGreen:Params(string message);
+#WhiteSmoke:Print(message);
+#Lavender:return ReadLine();
+stop
+@enduml

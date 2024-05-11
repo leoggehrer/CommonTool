@@ -1,0 +1,21 @@
+@startuml TemplatePath.ContainsFiles
+title TemplatePath.ContainsFiles
+participant "ContainsFiles(string path,params string[] searchPatterns)" as ContainsFiles_p0_p1 #LightYellow
+participant "Directory.GetFiles(a0)" as Directory_GetFiles_a0 #LightGreen
+participant "searchPatterns.GetEnumerator()" as searchPatterns_GetEnumerator #LightGreen
+participant "iterator.MoveNext()" as iterator_MoveNext #LightGreen
+participant "Directory.GetFiles(a0,a1)" as Directory_GetFiles_a0_a1 #LightGreen
+autonumber
+alt#LightBlue searchPatterns.Length == 0
+    else
+        ContainsFiles_p0_p1 -[#grey]> searchPatterns_GetEnumerator
+        searchPatterns_GetEnumerator -[#blue]-> ContainsFiles_p0_p1 : iterator
+        loop#LightCoral iterator.MoveNext() && result == false
+            ContainsFiles_p0_p1 -[#grey]> iterator_MoveNext
+            iterator_MoveNext -[#blue]-> ContainsFiles_p0_p1 : result
+            alt#LightBlue Directory.GetFiles(path, iterator.Current?.ToString() ?? string.Empty).Length > 0
+                ContainsFiles_p0_p1 -[#grey]> Directory_GetFiles_a0_a1 : (path, iterator.Current?.ToString() ?? string.Empty)
+            end
+        end
+end
+@enduml

@@ -1,0 +1,11 @@
+@startuml ConsoleApplication.ChangeSolutionPath
+title ConsoleApplication.ChangeSolutionPath
+start
+#WhiteSmoke:PrintLine();
+#WhiteSmoke:Print("Enter solution path: ");
+#LightSkyBlue:var newPath = ReadLine();
+#LightYellow:if (Directory.Exists(newPath)) then (<color:green>yes)
+        #WhiteSmoke:SolutionPath = newPath;
+endif
+stop
+@enduml

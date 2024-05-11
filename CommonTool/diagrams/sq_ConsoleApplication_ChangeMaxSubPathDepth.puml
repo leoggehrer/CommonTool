@@ -1,0 +1,18 @@
+@startuml ConsoleApplication.ChangeMaxSubPathDepth
+title ConsoleApplication.ChangeMaxSubPathDepth
+participant "ChangeMaxSubPathDepth" as ChangeMaxSubPathDepth #LightYellow
+participant "PrintLine()" as PrintLine #LightGreen
+participant "Print(a0)" as Print_a0 #LightGreen
+participant "ReadLine()" as ReadLine #LightGreen
+participant "int.TryParse(a0,a1)" as int_TryParse_a0_a1 #LightGreen
+autonumber
+ChangeMaxSubPathDepth -[#grey]> PrintLine
+ChangeMaxSubPathDepth -[#grey]> Print_a0 : ("Enter the maximum subpath depth: ")
+Print_a0 -[#blue]-> ChangeMaxSubPathDepth : result
+ChangeMaxSubPathDepth -[#grey]> ReadLine
+ReadLine -[#blue]-> ChangeMaxSubPathDepth : maxDepth
+alt#LightBlue int.TryParse(maxDepth, out int depth)
+    ChangeMaxSubPathDepth -[#grey]> int_TryParse_a0_a1 : (maxDepth, out int depth)
+    int_TryParse_a0_a1 -[#blue]-> ChangeMaxSubPathDepth : result
+end
+@enduml

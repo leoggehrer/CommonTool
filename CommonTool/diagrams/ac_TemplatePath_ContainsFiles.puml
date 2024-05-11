@@ -1,0 +1,18 @@
+@startuml TemplatePath.ContainsFiles
+title TemplatePath.ContainsFiles
+start
+#LightGreen:Params(string path,params string[] searchPatterns);
+#LightSkyBlue:var result = false;
+#LightYellow:if (searchPatterns.Length == 0) then (<color:green>yes)
+        #WhiteSmoke:result = Directory.GetFiles(path).Length > 0;
+    else (<color:red>no)
+            #LightSkyBlue:var iterator = searchPatterns.GetEnumerator();
+            while (iterator.MoveNext() && result == false) is (<color:green>yes)
+                    #LightYellow:if (Directory.GetFiles(path, iterator.Current?.ToString() ?? string.Empty).Length > 0) then (<color:green>yes)
+                            #WhiteSmoke:result = true;
+                    endif
+            endwhile (<color:red>no)
+endif
+#Lavender:return result;
+stop
+@enduml

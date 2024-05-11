@@ -1,0 +1,8 @@
+@startuml Application.GetSourceCodeFiles
+title Application.GetSourceCodeFiles
+participant "GetSourceCodeFiles(string path,string[] searchPatterns,int maxDeep)" as GetSourceCodeFiles_p0_p1_p2 #LightYellow
+participant "TemplatePath.GetFiles(a0,a1,a2,a3)" as TemplatePath_GetFiles_a0_a1_a2_a3 #LightGreen
+autonumber
+GetSourceCodeFiles_p0_p1_p2 -[#grey]> TemplatePath_GetFiles_a0_a1_a2_a3 : (path, searchPatterns, maxDeep, ignoreFolders)
+TemplatePath_GetFiles_a0_a1_a2_a3 -[#blue]-> GetSourceCodeFiles_p0_p1_p2 : result
+@enduml

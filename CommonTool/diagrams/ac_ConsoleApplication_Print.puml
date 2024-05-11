@@ -1,0 +1,8 @@
+@startuml ConsoleApplication.Print
+title ConsoleApplication.Print
+start
+#LightGreen:Params(string message);
+#WhiteSmoke:Print(message);
+#Lavender:return message.Length;
+stop
+@enduml

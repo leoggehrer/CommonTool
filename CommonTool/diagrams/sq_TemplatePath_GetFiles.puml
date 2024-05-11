@@ -1,0 +1,16 @@
+@startuml TemplatePath.GetFiles
+title TemplatePath.GetFiles
+participant "GetFiles(string path,string[] searchPatterns,int maxDeep,params string[] ignoreFolders)" as GetFiles_p0_p1_p2_p3 #LightYellow
+participant "GetSubPaths(a0,a1)" as GetSubPaths_a0_a1 #LightGreen
+participant "result.AddRange(a0)" as result_AddRange_a0 #LightGreen
+autonumber
+GetFiles_p0_p1_p2_p3 -[#grey]> GetSubPaths_a0_a1 : (path, maxDeep)
+GetSubPaths_a0_a1 -[#blue]-> GetFiles_p0_p1_p2_p3 : sourcePaths
+loop#LightCoral sourcePaths
+    loop#LightCoral searchPatterns
+        GetFiles_p0_p1_p2_p3 -[#grey]> result_AddRange_a0 : (Directory.GetFiles(sourcePath, searchPattern, SearchOption.TopDirectoryOnly)
+                          .Where(f => ignoreFolders.Any(e => f.Contains(e)) == false)
+                          .OrderBy(i => i))
+    end
+end
+@enduml

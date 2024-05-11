@@ -1,0 +1,5 @@
+@startuml TemplatePath.ClassConstructed
+title TemplatePath.ClassConstructed
+start
+stop
+@enduml

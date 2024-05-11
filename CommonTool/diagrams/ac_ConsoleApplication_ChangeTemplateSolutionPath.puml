@@ -1,0 +1,36 @@
+@startuml ConsoleApplication.ChangeTemplateSolutionPath
+title ConsoleApplication.ChangeTemplateSolutionPath
+start
+#LightGreen:Params(string currentPath,int maxDeep,params string[] queryPaths);
+#LightSkyBlue:var result = currentPath\nvar solutionPath = GetCurrentSolutionPath()\nvar qtSolutionPaths = new List<string>()\nvar saveForeColor = ForegroundColor;
+#WhiteSmoke:queryPaths.ToList().ForEach(qp => TemplatePath.GetTemplateSolutions(qp, maxDeep)
+                      .ToList().ForEach(s => qtSolutionPaths.Add(s)));
+#LightYellow:if (qtSolutionPaths.Contains(solutionPath) == false && solutionPath != currentPath) then (<color:green>yes)
+        #WhiteSmoke:qtSolutionPaths.Add(solutionPath);
+endif
+#LightSkyBlue:var qtSelectSolutions = qtSolutionPaths.Distinct().OrderBy(e => e).ToArray();
+#LightSkyBlue:int i = 0;
+while (i < qtSelectSolutions.Length) is (<color:green>yes)
+        #LightYellow:if (i == 0) then (<color:green>yes)
+            #WhiteSmoke:PrintLine();
+        endif
+        #WhiteSmoke:ForegroundColor = i % 2 == 0 ? ConsoleColor.DarkYellow : saveForeColor;
+        #WhiteSmoke:PrintLine($"[{i + 1,3}] Change path to: {qtSelectSolutions[i]}");
+:i++;
+endwhile (<color:red>no)
+#WhiteSmoke:ForegroundColor = saveForeColor;
+#WhiteSmoke:PrintLine();
+#WhiteSmoke:Print("Select or enter source path: ");
+#LightSkyBlue:var selectOrPath = ReadLine();
+#LightYellow:if (int.TryParse(selectOrPath, out int number)) then (<color:green>yes)
+        #LightYellow:if ((number - 1) >= 0 && (number - 1) < qtSelectSolutions.Length) then (<color:green>yes)
+                #WhiteSmoke:result = qtSelectSolutions[number - 1];
+        endif
+    else (<color:red>no)
+        #LightYellow:if (string.IsNullOrEmpty(selectOrPath) == false && Directory.Exists(selectOrPath)) then (<color:green>yes)
+                #WhiteSmoke:result = selectOrPath;
+        endif
+endif
+#Lavender:return result;
+stop
+@enduml

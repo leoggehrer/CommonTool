@@ -1,0 +1,17 @@
+@startuml TemplatePath.GetPathFromPath
+title TemplatePath.GetPathFromPath
+start
+#LightGreen:Params(string path,string checkFileExtension);
+#LightSkyBlue:var result = string.Empty\nvar checkPath = path.StartsWith(Path.DirectorySeparatorChar) ? Path.DirectorySeparatorChar.ToString() : string.Empty\nvar data = path.Split(Path.DirectorySeparatorChar, StringSplitOptions.RemoveEmptyEntries);
+#LightSkyBlue:int i = 0;
+while (i < data.Length && result == string.Empty) is (<color:green>yes)
+        #WhiteSmoke:checkPath = Path.Combine(checkPath, data[i]);
+        #LightSkyBlue:var projectFilePath = Path.Combine(checkPath, $"{data[i]}{checkFileExtension}");
+        #LightYellow:if (File.Exists(projectFilePath)) then (<color:green>yes)
+                #WhiteSmoke:result = checkPath;
+        endif
+:i++;
+endwhile (<color:red>no)
+#Lavender:return result;
+stop
+@enduml

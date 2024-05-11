@@ -1,0 +1,15 @@
+@startuml Application.FindFilesFromPathAndParentPath
+title Application.FindFilesFromPathAndParentPath
+start
+#LightGreen:Params(string path,string searchPattern);
+#LightSkyBlue:var result = new List<string>();
+#LightYellow:if (Directory.Exists(path)) then (<color:green>yes)
+        #WhiteSmoke:result.AddRange(Directory.GetFiles(path, searchPattern, SearchOption.TopDirectoryOnly));
+endif
+#LightSkyBlue:var parentPath = GetParentFromPath(path);
+#LightYellow:if (Directory.Exists(parentPath)) then (<color:green>yes)
+        #WhiteSmoke:result.AddRange(Directory.GetFiles(parentPath, searchPattern, SearchOption.TopDirectoryOnly));
+endif
+#Lavender:return result;
+stop
+@enduml

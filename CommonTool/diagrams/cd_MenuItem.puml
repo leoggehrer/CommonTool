@@ -1,0 +1,31 @@
+@startuml MenuItem
+title MenuItem
+ class MenuItem #GhostWhite {
+- bool _isdisplayed
+- string _key
+- string _optionalkey
+- string _text
+- Action<MenuItem> _action
+- Dictionary<string, object> _params
+- ConsoleColor _foregroundcolor
+- string _tag
+---
++ bool getIsDisplayed()
++ Void setIsDisplayed(bool value)
++ string getKey()
++ Void setKey(string value)
++ string getOptionalKey()
++ Void setOptionalKey(string value)
++ string getText()
++ Void setText(string value)
++ Action<MenuItem> getAction()
++ Void setAction(Action<MenuItem> value)
++ Dictionary<string, object> getParams()
++ Void setParams(Dictionary<string, object> value)
++ ConsoleColor getForegroundColor()
++ Void setForegroundColor(ConsoleColor value)
++ string getTag()
++ Void setTag(string value)
+---
+}
+@enduml

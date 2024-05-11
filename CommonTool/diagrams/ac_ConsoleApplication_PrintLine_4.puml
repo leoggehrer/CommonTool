@@ -1,0 +1,9 @@
+@startuml ConsoleApplication.PrintLine
+title ConsoleApplication.PrintLine
+start
+#LightGreen:Params(char chr,int count);
+#LightSkyBlue:string message = new(chr, count);
+#WhiteSmoke:PrintLine(message);
+#Lavender:return message.Length;
+stop
+@enduml

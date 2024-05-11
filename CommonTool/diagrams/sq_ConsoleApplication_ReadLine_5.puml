@@ -1,0 +1,11 @@
+@startuml ConsoleApplication.ReadLine
+title ConsoleApplication.ReadLine
+participant "ReadLine(string message)" as ReadLine_p0 #LightYellow
+participant "Print(a0)" as Print_a0 #LightGreen
+participant "ReadLine()" as ReadLine #LightGreen
+autonumber
+ReadLine_p0 -[#grey]> Print_a0 : (message)
+Print_a0 -[#blue]-> ReadLine_p0 : result
+ReadLine_p0 -[#grey]> ReadLine
+ReadLine -[#blue]-> ReadLine_p0 : result
+@enduml

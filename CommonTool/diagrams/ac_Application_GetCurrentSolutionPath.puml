@@ -1,0 +1,16 @@
+@startuml Application.GetCurrentSolutionPath
+title Application.GetCurrentSolutionPath
+start
+#LightSkyBlue:var result = string.Empty\nvar paths = AppContext.BaseDirectory.Split(Path.DirectorySeparatorChar)\nvar checkPath = paths.Length > 0 && paths[0].IsNullOrEmpty() ? $"{Path.DirectorySeparatorChar}" : string.Empty\nvar index = paths.Length > 0 && paths[0].IsNullOrEmpty() ? 1 : 0;
+while (result.IsNullOrEmpty() && index < paths.Length) is (<color:green>yes)
+        #LightSkyBlue:var folder = paths[index++];
+        #LightSkyBlue:var fileName = $"{folder}.sln";
+        #WhiteSmoke:checkPath = Path.Combine(checkPath, folder);
+        #LightSkyBlue:var filePath = Path.Combine(checkPath, fileName);
+        #LightYellow:if (File.Exists(filePath)) then (<color:green>yes)
+                #WhiteSmoke:result = checkPath;
+        endif
+endwhile (<color:red>no)
+#Lavender:return result;
+stop
+@enduml

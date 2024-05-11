@@ -1,0 +1,8 @@
+@startuml TemplatePath.GetTemplatePaths
+title TemplatePath.GetTemplatePaths
+participant "GetTemplatePaths(string startPath,int maxDepth)" as GetTemplatePaths_p0_p1 #LightYellow
+participant "QueryDirectoryStructure(a0,a1,a2,a3,a4,a5)" as QueryDirectoryStructure_a0_a1_a2_a3_a4_a5 #LightGreen
+autonumber
+GetTemplatePaths_p0_p1 -[#grey]> QueryDirectoryStructure_a0_a1_a2_a3_a4_a5 : (startPath, n => n.StartsWith("QT") || n.Equals("QuickTemplate"), maxDepth, "bin", "obj", "node_modules")
+QueryDirectoryStructure_a0_a1_a2_a3_a4_a5 -[#blue]-> GetTemplatePaths_p0_p1 : result
+@enduml

@@ -1,0 +1,7 @@
+@startuml ConsoleApplication.PrintLine
+title ConsoleApplication.PrintLine
+participant "PrintLine(char chr,int count)" as PrintLine_p0_p1 #LightYellow
+participant "Console.WriteLine(a0)" as Console_WriteLine_a0 #LightGreen
+autonumber
+PrintLine_p0_p1 -[#grey]> Console_WriteLine_a0 : (message)
+@enduml

@@ -1,0 +1,8 @@
+@startuml ConsoleApplication.ToLabelText
+title ConsoleApplication.ToLabelText
+participant "ToLabelText(string label,string text)" as ToLabelText_p0_p1 #LightYellow
+participant "ToLabelText(a0,a1,a2,a3)" as ToLabelText_a0_a1_a2_a3 #LightGreen
+autonumber
+ToLabelText_p0_p1 -[#grey]> ToLabelText_a0_a1_a2_a3 : (label, text, 20, '.')
+ToLabelText_a0_a1_a2_a3 -[#blue]-> ToLabelText_p0_p1 : result
+@enduml

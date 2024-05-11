@@ -1,0 +1,11 @@
+@startuml TemplatePath.IsProjectFilePath
+title TemplatePath.IsProjectFilePath
+participant "IsProjectFilePath(string filePath)" as IsProjectFilePath_p0 #LightYellow
+participant "Path.GetDirectoryName(a0)" as Path_GetDirectoryName_a0 #LightGreen
+participant "IsProjectPath(a0)" as IsProjectPath_a0 #LightGreen
+autonumber
+IsProjectFilePath_p0 -[#grey]> Path_GetDirectoryName_a0 : (filePath)
+Path_GetDirectoryName_a0 -[#blue]-> IsProjectFilePath_p0 : path
+IsProjectFilePath_p0 -[#grey]> IsProjectPath_a0 : (path ?? string.Empty)
+IsProjectPath_a0 -[#blue]-> IsProjectFilePath_p0 : result
+@enduml

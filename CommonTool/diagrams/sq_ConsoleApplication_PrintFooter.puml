@@ -1,0 +1,10 @@
+@startuml ConsoleApplication.PrintFooter
+title ConsoleApplication.PrintFooter
+participant "PrintFooter" as PrintFooter #LightYellow
+participant "PrintLine()" as PrintLine #LightGreen
+participant "Print(a0)" as Print_a0 #LightGreen
+autonumber
+PrintFooter -[#grey]> PrintLine
+PrintFooter -[#grey]> Print_a0 : ("Choose [n|n,n|a...all|x|X]: ")
+Print_a0 -[#blue]-> PrintFooter : result
+@enduml

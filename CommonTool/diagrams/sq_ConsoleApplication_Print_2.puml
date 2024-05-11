@@ -1,0 +1,10 @@
+@startuml ConsoleApplication.Print
+title ConsoleApplication.Print
+participant "Print(char chr,string message,int length)" as Print_p0_p1_p2 #LightYellow
+participant "Console.Write(a0)" as Console_Write_a0 #LightGreen
+autonumber
+loop#LightCoral i < length
+    Print_p0_p1_p2 -[#grey]> Console_Write_a0 : (chr)
+end
+Print_p0_p1_p2 -[#grey]> Console_Write_a0 : (message)
+@enduml

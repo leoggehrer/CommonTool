@@ -1,0 +1,11 @@
+@startuml ConsoleApplication.CreateExitMenuItems
+title ConsoleApplication.CreateExitMenuItems
+participant "CreateExitMenuItems" as CreateExitMenuItems #LightYellow
+participant "CreateMenuSeparator()" as CreateMenuSeparator #LightGreen
+participant "ToLabelText(a0,a1)" as ToLabelText_a0_a1 #LightGreen
+autonumber
+CreateExitMenuItems -[#grey]> CreateMenuSeparator
+CreateMenuSeparator -[#blue]-> CreateExitMenuItems : result
+CreateExitMenuItems -[#grey]> ToLabelText_a0_a1 : ("Exit", "Exits the application")
+ToLabelText_a0_a1 -[#blue]-> CreateExitMenuItems : Text
+@enduml

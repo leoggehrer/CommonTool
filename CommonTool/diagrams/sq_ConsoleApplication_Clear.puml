@@ -1,0 +1,17 @@
+@startuml ConsoleApplication.Clear
+title ConsoleApplication.Clear
+participant "Clear" as Clear #LightYellow
+participant "Console.Clear()" as Console_Clear #LightGreen
+participant "Console.SetCursorPosition(a0,a1)" as Console_SetCursorPosition_a0_a1 #LightGreen
+participant "Console.Write(a0)" as Console_Write_a0 #LightGreen
+autonumber
+alt#LightBlue Environment.OSVersion.Platform == PlatformID.Win32NT
+    Clear -[#grey]> Console_Clear
+    else
+        Clear -[#grey]> Console_SetCursorPosition_a0_a1 : (0, 0)
+        loop#LightCoral i < height
+            Clear -[#grey]> Console_Write_a0 : (new string(' ', width))
+        end
+        Clear -[#grey]> Console_SetCursorPosition_a0_a1 : (0, 0)
+end
+@enduml

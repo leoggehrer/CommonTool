@@ -1,0 +1,13 @@
+@startuml ConsoleApplication.ChangePath
+title ConsoleApplication.ChangePath
+start
+#LightGreen:Params(string title,string path);
+#WhiteSmoke:PrintLine();
+#WhiteSmoke:Print(title);
+#LightSkyBlue:var newPath = ReadLine();
+#LightYellow:if (Directory.Exists(newPath)) then (<color:green>yes)
+        #WhiteSmoke:path = newPath;
+endif
+#Lavender:return path;
+stop
+@enduml

@@ -1,0 +1,13 @@
+@startuml ConsoleApplication.PrintHeader
+title ConsoleApplication.PrintHeader
+start
+#LightSkyBlue:var saveForeColor = ForegroundColor\nvar solutionPath = GetCurrentSolutionPath()\nvar solutionName = TemplatePath.GetSolutionNameFromPath(solutionPath);
+#WhiteSmoke:ForegroundColor = ConsoleColor.Green;
+#LightSkyBlue:var count = PrintLine(solutionName);
+#WhiteSmoke:PrintLine('=', count);
+#WhiteSmoke:PrintLine();
+#WhiteSmoke:ForegroundColor = saveForeColor;
+#WhiteSmoke:PrintLine($"Force flag:     {Force}");
+#WhiteSmoke:PrintLine();
+stop
+@enduml

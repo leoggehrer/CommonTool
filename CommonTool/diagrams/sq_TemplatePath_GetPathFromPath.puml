@@ -1,0 +1,21 @@
+@startuml TemplatePath.GetPathFromPath
+title TemplatePath.GetPathFromPath
+participant "GetPathFromPath(string path,string checkFileExtension)" as GetPathFromPath_p0_p1 #LightYellow
+participant "path.StartsWith(a0)" as path_StartsWith_a0 #LightGreen
+participant "path.Split(a0,a1)" as path_Split_a0_a1 #LightGreen
+participant "Path.Combine(a0,a1)" as Path_Combine_a0_a1 #LightGreen
+participant "File.Exists(a0)" as File_Exists_a0 #LightGreen
+autonumber
+GetPathFromPath_p0_p1 -[#grey]> path_StartsWith_a0 : (Path.DirectorySeparatorChar)
+GetPathFromPath_p0_p1 -[#grey]> path_Split_a0_a1 : (Path.DirectorySeparatorChar, StringSplitOptions.RemoveEmptyEntries)
+path_Split_a0_a1 -[#blue]-> GetPathFromPath_p0_p1 : data
+loop#LightCoral i < data.Length && result == string.Empty
+    GetPathFromPath_p0_p1 -[#grey]> Path_Combine_a0_a1 : (checkPath, data[i])
+    Path_Combine_a0_a1 -[#blue]-> GetPathFromPath_p0_p1 : checkPath
+    GetPathFromPath_p0_p1 -[#grey]> Path_Combine_a0_a1 : (checkPath, $"{data[i]}{checkFileExtension}")
+    Path_Combine_a0_a1 -[#blue]-> GetPathFromPath_p0_p1 : projectFilePath
+    alt#LightBlue File.Exists(projectFilePath)
+        GetPathFromPath_p0_p1 -[#grey]> File_Exists_a0 : (projectFilePath)
+    end
+end
+@enduml

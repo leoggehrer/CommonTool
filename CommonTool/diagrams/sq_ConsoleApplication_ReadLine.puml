@@ -1,0 +1,7 @@
+@startuml ConsoleApplication.ReadLine
+title ConsoleApplication.ReadLine
+participant "ReadLine" as ReadLine #LightYellow
+participant "Console.ReadLine()" as Console_ReadLine #LightGreen
+autonumber
+ReadLine -[#grey]> Console_ReadLine
+@enduml

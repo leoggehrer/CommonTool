@@ -1,0 +1,5 @@
+@startuml Application.Constructed
+title Application.Constructed
+start
+stop
+@enduml

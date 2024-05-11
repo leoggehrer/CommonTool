@@ -1,6 +1,6 @@
 @startuml CompleteActivityDiagram
 header
-generated on 11/05/2024 10:43:31
+generated on 11/05/2024 16:18:02
 end header
 title CompleteActivityDiagram
 start
@@ -43,9 +43,7 @@ note right:  Application.GetSourceCodeFiles
 :iterator = searchPatterns.GetIterator();
 while (iterator.MoveNext()) is (<color:green>yes)
 :searchPattern = iterator.Current();
-            #WhiteSmoke:result.AddRange(Directory.GetFiles(path, searchPattern, SearchOption.AllDirectories)
-                      .Where(f => ignoreFolders.Any(e => f.Contains(e)) == false)
-                      .OrderBy(i => i));
+            #WhiteSmoke:result.AddRange(Directory.GetFiles(path, searchPattern, SearchOption.AllDirectories) .Where(f => ignoreFolders.Any(e => f.Contains(e)) == false) .OrderBy(i => i));
 endwhile (<color:red>no)
 #Lavender:return result;
 stop
@@ -151,20 +149,9 @@ note right:  ConsoleApplication.StartProgressBar
         #WhiteSmoke:var (Left, Top) = GetCursorPosition();
         #WhiteSmoke:PrintLine();
         #WhiteSmoke:PrintLine();
-        #WhiteSmoke:Task.Factory.StartNew(async () =>
-                {
-                    while (RunProgressBar)
-                    {
-                        if (CanProgressBarPrint)
-                        {
-                            if (Left > 65)
-                            {
-                                var timeInSec = counter / 5;
-
-                                for (int i = 0; i <= Left; i++)
-                                {
-                                    Write(i, Top, " ");
-                                }
+        #WhiteSmoke:Task.Factory.StartNew(async () => { while (RunProgressBar) { if (CanProgressBarPrint) { if (Left > 65) { var timeInSec = counter / 5; for (int i = 0; i <= Left; i++) { Write(i, Top, " "); } Left = 0; } else { Write(Left++, Top, $"{runSign}{head}"); } if (counter % 5 == 0) { Write(65, Top, $"{counter / 5,5} [sec]"); } } counter++; await Task.Delay(200); } });
+endif
+stop
 start
 note right:  ConsoleApplication.StopProgressBar
 #WhiteSmoke:RunProgressBar = false;
@@ -177,27 +164,17 @@ note right:  ConsoleApplication.PrintHeader
 #WhiteSmoke:PrintLine('=', count);
 #WhiteSmoke:PrintLine();
 #WhiteSmoke:ForegroundColor = saveForeColor;
-#WhiteSmoke:PrintLine($"Force flag:     {Force}");
+#WhiteSmoke:PrintLine($"Force flag: {Force}");
 #WhiteSmoke:PrintLine();
 stop
 start
 note right:  ConsoleApplication.CreateMenuSeparator
-#Lavender:return new()
-            {
-                Key = new string('-', MENU_KEY_WIDTH),
-                Text = new string('-', MENU_TEXT_WIDTH),
-                Action = (self) => { },
-                ForegroundColor = ConsoleColor.DarkGreen,
-            };
+#Lavender:return new() { Key = new string('-', MENU_KEY_WIDTH), Text = new string('-', MENU_TEXT_WIDTH), Action = (self) => { }, ForegroundColor = ConsoleColor.DarkGreen, };
+stop
 start
 note right:  ConsoleApplication.CreateExitMenuItems
-#Lavender:return [ CreateMenuSeparator(),
-                     new()
-                     {
-                        Key = "x|X",
-                        Text = ToLabelText("Exit", "Exits the application"),
-                        Action = (self) => { RunApp = false; },
-                     },
+#Lavender:return [ CreateMenuSeparator(), new() { Key = "x|X", Text = ToLabelText("Exit", "Exits the application"), Action = (self) => { RunApp = false; }, }, ];
+stop
 start
 note right:  ConsoleApplication.CreatePageMenuItems
 #LightGreen:Params(ref int mnuIdx,T[] items,Action<T, MenuItem> newMenuItemHandler);
@@ -206,15 +183,30 @@ note right:  ConsoleApplication.CreatePageMenuItems
         #LightSkyBlue:int i = 0;
         while (i < items.Length) is (<color:green>yes)
                 #LightSkyBlue:var item = items[i];
-                #LightSkyBlue:var menuItem = new MenuItem
-                    {
-                        IsDisplayed = i >= PageIndex * PageSize && i < (PageIndex + 1) * PageSize,
-                        Key = (++mnuIdx).ToString(),
-                        OptionalKey = "a", // it's for choose option all
-                        Text = string.Empty,
-                        Action = (self) =>
-                        {
-                        },
+                #LightSkyBlue:var menuItem = new MenuItem { IsDisplayed = i >= PageIndex * PageSize && i < (PageIndex + 1) * PageSize, Key = (++mnuIdx).ToString(), OptionalKey = "a", // it's for choose option all Text = string.Empty, Action = (self) => { }, ForegroundColor = i % 2 == 0 ? ForegroundColor : ConsoleColor.DarkYellow, };
+                #WhiteSmoke:newMenuItemHandler?.Invoke(item, menuItem);
+                #WhiteSmoke:result.Add(menuItem);
+        :i++;
+        endwhile (<color:red>no)
+        #LightSkyBlue:var pageLabel = $"{(PageIndex * PageSize) + 1}..{Math.Min((PageIndex + 1) * PageSize, items.Length)}/{items.Length}";
+        #WhiteSmoke:result.Add(CreateMenuSeparator());
+        #WhiteSmoke:result.Add(new() { Key = "", Text = ToLabelText(pageLabel, string.Empty, 20, ' '), Action = (self) => { }, ForegroundColor = ConsoleColor.DarkGreen, });
+        #WhiteSmoke:result.Add(CreateMenuSeparator());
+        #WhiteSmoke:result.Add(new() { Key = "+", Text = ToLabelText("Next", "Load next page"), Action = (self) => { PageIndex = (PageIndex + 1) * PageSize < items.Length ? PageIndex + 1 : PageIndex; PrintScreen(); }, ForegroundColor = ConsoleColor.DarkGreen, });
+        #WhiteSmoke:result.Add(new() { Key = "-", Text = ToLabelText("Previous", "Load previous page"), Action = (self) => { PageIndex = Math.Max(0, PageIndex - 1); PrintScreen(); }, ForegroundColor = ConsoleColor.DarkGreen, });
+    else (<color:red>no)
+            #WhiteSmoke:PageIndex = 0;
+            #LightSkyBlue:int i = 0;
+            while (i < items.Length) is (<color:green>yes)
+                    #LightSkyBlue:var item = items[i];
+                    #LightSkyBlue:var menuItem = new MenuItem { Key = (++mnuIdx).ToString(), OptionalKey = "a", // it's for choose option all Text = string.Empty, Action = (self) => { }, };
+                    #WhiteSmoke:newMenuItemHandler?.Invoke(item, menuItem);
+                    #WhiteSmoke:result.Add(menuItem);
+            :i++;
+            endwhile (<color:red>no)
+endif
+#Lavender:return [.. result];
+stop
 start
 note right:  ConsoleApplication.PrintFooter
 #WhiteSmoke:PrintLine();
@@ -227,13 +219,10 @@ note right:  ConsoleApplication.PrintScreen
 #WhiteSmoke:Clear();
 #WhiteSmoke:ForegroundColor = saveForegrondColor;
 #WhiteSmoke:PrintHeader();
-#WhiteSmoke:MenuItems.Where(mi => mi.IsDisplayed).ToList().ForEach(m =>
-            {
-                var menuKey = m.Key;
-
-                ForegroundColor = m.ForegroundColor;
-                PrintLine($"[{menuKey,MENU_KEY_WIDTH}] {m.Text}");
-            });
+#WhiteSmoke:MenuItems.Where(mi => mi.IsDisplayed).ToList().ForEach(m => { var menuKey = m.Key; ForegroundColor = m.ForegroundColor; PrintLine($"[{menuKey,MENU_KEY_WIDTH}] {m.Text}"); });
+#WhiteSmoke:ForegroundColor = saveForegrondColor;
+#WhiteSmoke:PrintFooter();
+stop
 start
 note right:  ConsoleApplication.BeforeRun
 #LightGreen:Params(string[] args);
@@ -310,8 +299,7 @@ start
 note right:  ConsoleApplication.ChangeTemplateSolutionPath
 #LightGreen:Params(string currentPath,int maxDeep,params string[] queryPaths);
 #LightSkyBlue:var result = currentPath\nvar solutionPath = GetCurrentSolutionPath()\nvar qtSolutionPaths = new List<string>()\nvar saveForeColor = ForegroundColor;
-#WhiteSmoke:queryPaths.ToList().ForEach(qp => TemplatePath.GetTemplateSolutions(qp, maxDeep)
-                      .ToList().ForEach(s => qtSolutionPaths.Add(s)));
+#WhiteSmoke:queryPaths.ToList().ForEach(qp => TemplatePath.GetTemplateSolutions(qp, maxDeep) .ToList().ForEach(s => qtSolutionPaths.Add(s)));
 #LightYellow:if (qtSolutionPaths.Contains(solutionPath) == false && solutionPath != currentPath) then (<color:green>yes)
         #WhiteSmoke:qtSolutionPaths.Add(solutionPath);
 endif
@@ -344,8 +332,7 @@ start
 note right:  ConsoleApplication.SelectOrChangeToSubPath
 #LightGreen:Params(string currentPath,int maxDepth,params string[] queryPaths);
 #LightSkyBlue:var result = currentPath\nvar solutionPath = GetCurrentSolutionPath()\nvar subPaths = new List<string>()\nvar saveForeColor = ForegroundColor;
-#WhiteSmoke:queryPaths.ToList().ForEach(qp => TemplatePath.GetSubPaths(qp, maxDepth)
-                      .ToList().ForEach(s => subPaths.Add(s)));
+#WhiteSmoke:queryPaths.ToList().ForEach(qp => TemplatePath.GetSubPaths(qp, maxDepth) .ToList().ForEach(s => subPaths.Add(s)));
 #LightYellow:if (subPaths.Contains(solutionPath) == false && solutionPath != currentPath) then (<color:green>yes)
         #WhiteSmoke:subPaths.Add(solutionPath);
 endif
@@ -400,9 +387,7 @@ while (iterator.MoveNext()) is (<color:green>yes)
             :iterator = searchPatterns.GetIterator();
             while (iterator.MoveNext()) is (<color:green>yes)
             :searchPattern = iterator.Current();
-                                #WhiteSmoke:result.AddRange(Directory.GetFiles(sourcePath, searchPattern, SearchOption.TopDirectoryOnly)
-                          .Where(f => ignoreFolders.Any(e => f.Contains(e)) == false)
-                          .OrderBy(i => i));
+                                #WhiteSmoke:result.AddRange(Directory.GetFiles(sourcePath, searchPattern, SearchOption.TopDirectoryOnly) .Where(f => ignoreFolders.Any(e => f.Contains(e)) == false) .OrderBy(i => i));
             endwhile (<color:red>no)
 endwhile (<color:red>no)
 #Lavender:return result;
@@ -441,9 +426,7 @@ stop
 start
 note right:  TemplatePath.GetTemplateParentPaths
 #LightGreen:Params(string startPath,int maxDepth,params string[] includePaths);
-#LightSkyBlue:var result = new List<string>()\nvar qtProjects = GetTemplatePaths(startPath, maxDepth).Union(includePaths).ToArray()\nvar qtPaths = qtProjects.Select(p => GetParentDirectory(p))
-                                    .Distinct()
-                                    .OrderBy(p => p);
+#LightSkyBlue:var result = new List<string>()\nvar qtProjects = GetTemplatePaths(startPath, maxDepth).Union(includePaths).ToArray()\nvar qtPaths = qtProjects.Select(p => GetParentDirectory(p)) .Distinct() .OrderBy(p => p);
 :iterator = qtPaths.GetIterator();
 while (iterator.MoveNext()) is (<color:green>yes)
 :qtPath = iterator.Current();
@@ -512,8 +495,7 @@ stop
 start
 note right:  TemplatePath.GetSolutionItemDataFromPath
 #LightGreen:Params(string path,string itemExtension);
-#LightSkyBlue:var itemName = string.Empty\nvar subPath = path.StartsWith(Path.DirectorySeparatorChar) ? Path.DirectorySeparatorChar.ToString() : string.Empty\nvar itemsEnumerator = path.Split(Path.DirectorySeparatorChar, StringSplitOptions.RemoveEmptyEntries)
-                                      .GetEnumerator();
+#LightSkyBlue:var itemName = string.Empty\nvar subPath = path.StartsWith(Path.DirectorySeparatorChar) ? Path.DirectorySeparatorChar.ToString() : string.Empty\nvar itemsEnumerator = path.Split(Path.DirectorySeparatorChar, StringSplitOptions.RemoveEmptyEntries) .GetEnumerator();
 while (itemName.IsNullOrEmpty() && itemsEnumerator.MoveNext()) is (<color:green>yes)
         #WhiteSmoke:subPath = Path.Combine(subPath, itemsEnumerator.Current.ToString()!);
         #LightSkyBlue:var filePath = Path.Combine(subPath, $"{itemsEnumerator.Current}{itemExtension}");
@@ -562,13 +544,9 @@ start
 note right:  TemplatePath.OpenSolutionFolder
 #LightGreen:Params(string solutionPath);
 #LightYellow:if (Environment.OSVersion.Platform == PlatformID.Win32NT) then (<color:green>yes)
-        #WhiteSmoke:Process.Start(new ProcessStartInfo()
-                {
-                    WorkingDirectory = solutionPath,
-                    FileName = "explorer",
-                    Arguments = solutionPath,
-                    CreateNoWindow = true,
-                });
+        #WhiteSmoke:Process.Start(new ProcessStartInfo() { WorkingDirectory = solutionPath, FileName = "explorer", Arguments = solutionPath, CreateNoWindow = true, });
+endif
+stop
 footer
 generated with the DiagramCreator by Prof.Gehrer
 end footer

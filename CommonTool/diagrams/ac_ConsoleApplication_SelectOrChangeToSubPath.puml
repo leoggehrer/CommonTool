@@ -3,8 +3,7 @@ title ConsoleApplication.SelectOrChangeToSubPath
 start
 #LightGreen:Params(string currentPath,int maxDepth,params string[] queryPaths);
 #LightSkyBlue:var result = currentPath\nvar solutionPath = GetCurrentSolutionPath()\nvar subPaths = new List<string>()\nvar saveForeColor = ForegroundColor;
-#WhiteSmoke:queryPaths.ToList().ForEach(qp => TemplatePath.GetSubPaths(qp, maxDepth)
-                      .ToList().ForEach(s => subPaths.Add(s)));
+#WhiteSmoke:queryPaths.ToList().ForEach(qp => TemplatePath.GetSubPaths(qp, maxDepth) .ToList().ForEach(s => subPaths.Add(s)));
 #LightYellow:if (subPaths.Contains(solutionPath) == false && solutionPath != currentPath) then (<color:green>yes)
         #WhiteSmoke:subPaths.Add(solutionPath);
 endif

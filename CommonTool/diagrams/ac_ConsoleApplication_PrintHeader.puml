@@ -7,7 +7,7 @@ start
 #WhiteSmoke:PrintLine('=', count);
 #WhiteSmoke:PrintLine();
 #WhiteSmoke:ForegroundColor = saveForeColor;
-#WhiteSmoke:PrintLine($"Force flag:     {Force}");
+#WhiteSmoke:PrintLine($"Force flag: {Force}");
 #WhiteSmoke:PrintLine();
 stop
 @enduml

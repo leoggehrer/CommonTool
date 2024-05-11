@@ -3,8 +3,7 @@ title ConsoleApplication.ChangeTemplateSolutionPath
 start
 #LightGreen:Params(string currentPath,int maxDeep,params string[] queryPaths);
 #LightSkyBlue:var result = currentPath\nvar solutionPath = GetCurrentSolutionPath()\nvar qtSolutionPaths = new List<string>()\nvar saveForeColor = ForegroundColor;
-#WhiteSmoke:queryPaths.ToList().ForEach(qp => TemplatePath.GetTemplateSolutions(qp, maxDeep)
-                      .ToList().ForEach(s => qtSolutionPaths.Add(s)));
+#WhiteSmoke:queryPaths.ToList().ForEach(qp => TemplatePath.GetTemplateSolutions(qp, maxDeep) .ToList().ForEach(s => qtSolutionPaths.Add(s)));
 #LightYellow:if (qtSolutionPaths.Contains(solutionPath) == false && solutionPath != currentPath) then (<color:green>yes)
         #WhiteSmoke:qtSolutionPaths.Add(solutionPath);
 endif

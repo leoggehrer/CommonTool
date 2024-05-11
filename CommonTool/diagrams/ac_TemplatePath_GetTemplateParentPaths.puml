@@ -2,9 +2,7 @@
 title TemplatePath.GetTemplateParentPaths
 start
 #LightGreen:Params(string startPath,int maxDepth,params string[] includePaths);
-#LightSkyBlue:var result = new List<string>()\nvar qtProjects = GetTemplatePaths(startPath, maxDepth).Union(includePaths).ToArray()\nvar qtPaths = qtProjects.Select(p => GetParentDirectory(p))
-                                    .Distinct()
-                                    .OrderBy(p => p);
+#LightSkyBlue:var result = new List<string>()\nvar qtProjects = GetTemplatePaths(startPath, maxDepth).Union(includePaths).ToArray()\nvar qtPaths = qtProjects.Select(p => GetParentDirectory(p)) .Distinct() .OrderBy(p => p);
 :iterator = qtPaths.GetIterator();
 while (iterator.MoveNext()) is (<color:green>yes)
 :qtPath = iterator.Current();

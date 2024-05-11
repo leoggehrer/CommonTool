@@ -9,9 +9,7 @@ while (iterator.MoveNext()) is (<color:green>yes)
             :iterator = searchPatterns.GetIterator();
             while (iterator.MoveNext()) is (<color:green>yes)
             :searchPattern = iterator.Current();
-                                #WhiteSmoke:result.AddRange(Directory.GetFiles(sourcePath, searchPattern, SearchOption.TopDirectoryOnly)
-                          .Where(f => ignoreFolders.Any(e => f.Contains(e)) == false)
-                          .OrderBy(i => i));
+                                #WhiteSmoke:result.AddRange(Directory.GetFiles(sourcePath, searchPattern, SearchOption.TopDirectoryOnly) .Where(f => ignoreFolders.Any(e => f.Contains(e)) == false) .OrderBy(i => i));
             endwhile (<color:red>no)
 endwhile (<color:red>no)
 #Lavender:return result;

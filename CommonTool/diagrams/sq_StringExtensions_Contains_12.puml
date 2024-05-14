@@ -1,0 +1,8 @@
+@startuml StringExtensions.Contains
+title StringExtensions.Contains
+participant "Contains(this string source,char toCheck,char quotationStart,char quotationEnd)" as Contains_p0_p1_p2_p3 #LightYellow
+participant "source.Contains(a0,a1,a2)" as source_Contains_a0_a1_a2 #LightGreen
+autonumber
+Contains_p0_p1_p2_p3 -[#grey]> source_Contains_a0_a1_a2 : (toCheck, [quotationStart], [quotationEnd])
+source_Contains_a0_a1_a2 -[#blue]-> Contains_p0_p1_p2_p3 : result
+@enduml

@@ -1,0 +1,11 @@
+@startuml StringExtensions.Substring
+title StringExtensions.Substring
+start
+#LightGreen:Params(this string source,int index,string text);
+#LightSkyBlue:var result = string.Empty\nvar ofIdx = source.IndexOf(text);
+#LightYellow:if (ofIdx >= 0 && ofIdx - index >= 0) then (<color:green>yes)
+        #WhiteSmoke:result = source.Substring(index, ofIdx);
+endif
+#Lavender:return result;
+stop
+@enduml

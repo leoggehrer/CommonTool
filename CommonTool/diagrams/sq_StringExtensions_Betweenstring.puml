@@ -1,0 +1,19 @@
+@startuml StringExtensions.Betweenstring
+title StringExtensions.Betweenstring
+participant "Betweenstring(this string text,string from,string to)" as Betweenstring_p0_p1_p2 #LightYellow
+participant "text.HasContent()" as text_HasContent #LightGreen
+participant "text.IndexOf(a0)" as text_IndexOf_a0 #LightGreen
+participant "text.IndexOf(a0,a1)" as text_IndexOf_a0_a1 #LightGreen
+participant "text.Partialstring(a0,a1)" as text_Partialstring_a0_a1 #LightGreen
+autonumber
+alt#LightBlue text.HasContent()
+    Betweenstring_p0_p1_p2 -[#grey]> text_HasContent
+    text_HasContent -[#blue]-> Betweenstring_p0_p1_p2 : result
+    Betweenstring_p0_p1_p2 -[#grey]> text_IndexOf_a0 : (from)
+    text_IndexOf_a0 -[#blue]-> Betweenstring_p0_p1_p2 : result
+    Betweenstring_p0_p1_p2 -[#grey]> text_IndexOf_a0_a1 : (to, f + 1)
+    text_IndexOf_a0_a1 -[#blue]-> Betweenstring_p0_p1_p2 : result
+    Betweenstring_p0_p1_p2 -[#grey]> text_Partialstring_a0_a1 : (f, t)
+    text_Partialstring_a0_a1 -[#blue]-> Betweenstring_p0_p1_p2 : result
+end
+@enduml

@@ -1,0 +1,7 @@
+@startuml StringExtensions.Contains
+title StringExtensions.Contains
+start
+#LightGreen:Params(this string source,params string[] toChecks);
+#Lavender:return source.Contains(StringComparison.CurrentCultureIgnoreCase, toChecks);
+stop
+@enduml

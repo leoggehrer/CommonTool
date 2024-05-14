@@ -1,0 +1,13 @@
+@startuml StringExtensions.Contains
+title StringExtensions.Contains
+start
+#LightGreen:Params(this string source,StringComparison comparison,params string[] toChecks);
+#LightSkyBlue:var result = toChecks.Length > 0;
+:iterator = toChecks.GetIterator();
+while (iterator.MoveNext()) is (<color:green>yes)
+:item = iterator.Current();
+            #WhiteSmoke:result = result && source.Contains(item, comparison);
+endwhile (<color:red>no)
+#Lavender:return result;
+stop
+@enduml

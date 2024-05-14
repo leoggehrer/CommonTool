@@ -1,208 +1,488 @@
 title:Application.GetCurrentSolutionPath (SQ)
 fileName:sq_Application_GetCurrentSolutionPath.puml
-generated_on:11/05/2024 16:18:02
+generated_on:12.05.2024 20:01:18
 generated_by:generated with the DiagramCreator by Prof.Gehrer
 title:Application.GetParentFromPath (SQ)
 fileName:sq_Application_GetParentFromPath.puml
-generated_on:11/05/2024 16:18:02
+generated_on:12.05.2024 20:01:18
 generated_by:generated with the DiagramCreator by Prof.Gehrer
 title:Application.FindFilesFromPathAndParentPath (SQ)
 fileName:sq_Application_FindFilesFromPathAndParentPath.puml
-generated_on:11/05/2024 16:18:02
+generated_on:12.05.2024 20:01:18
 generated_by:generated with the DiagramCreator by Prof.Gehrer
 title:Application.GetSourceCodeFiles (SQ)
 fileName:sq_Application_GetSourceCodeFiles.puml
-generated_on:11/05/2024 16:18:02
+generated_on:12.05.2024 20:01:18
 generated_by:generated with the DiagramCreator by Prof.Gehrer
 title:Application.GetSourceCodePaths (SQ)
 fileName:sq_Application_GetSourceCodePaths.puml
-generated_on:11/05/2024 16:18:02
+generated_on:12.05.2024 20:01:18
 generated_by:generated with the DiagramCreator by Prof.Gehrer
 title:Application.GetSourceCodeFiles (SQ)
 fileName:sq_Application_GetSourceCodeFiles_1.puml
-generated_on:11/05/2024 16:18:02
+generated_on:12.05.2024 20:01:18
 generated_by:generated with the DiagramCreator by Prof.Gehrer
 title:ConsoleApplication.Clear (SQ)
 fileName:sq_ConsoleApplication_Clear.puml
-generated_on:11/05/2024 16:18:02
+generated_on:12.05.2024 20:01:18
 generated_by:generated with the DiagramCreator by Prof.Gehrer
 title:ConsoleApplication.Print (SQ)
 fileName:sq_ConsoleApplication_Print.puml
-generated_on:11/05/2024 16:18:02
+generated_on:12.05.2024 20:01:18
 generated_by:generated with the DiagramCreator by Prof.Gehrer
 title:ConsoleApplication.Print (SQ)
 fileName:sq_ConsoleApplication_Print_2.puml
-generated_on:11/05/2024 16:18:02
+generated_on:12.05.2024 20:01:18
 generated_by:generated with the DiagramCreator by Prof.Gehrer
 title:ConsoleApplication.PrintLine (SQ)
 fileName:sq_ConsoleApplication_PrintLine.puml
-generated_on:11/05/2024 16:18:02
+generated_on:12.05.2024 20:01:18
 generated_by:generated with the DiagramCreator by Prof.Gehrer
 title:ConsoleApplication.PrintLine (SQ)
 fileName:sq_ConsoleApplication_PrintLine_3.puml
-generated_on:11/05/2024 16:18:02
+generated_on:12.05.2024 20:01:18
 generated_by:generated with the DiagramCreator by Prof.Gehrer
 title:ConsoleApplication.PrintLine (SQ)
 fileName:sq_ConsoleApplication_PrintLine_4.puml
-generated_on:11/05/2024 16:18:02
+generated_on:12.05.2024 20:01:18
 generated_by:generated with the DiagramCreator by Prof.Gehrer
 title:ConsoleApplication.ReadLine (SQ)
 fileName:sq_ConsoleApplication_ReadLine.puml
-generated_on:11/05/2024 16:18:02
+generated_on:12.05.2024 20:01:18
 generated_by:generated with the DiagramCreator by Prof.Gehrer
 title:ConsoleApplication.ReadLine (SQ)
 fileName:sq_ConsoleApplication_ReadLine_5.puml
-generated_on:11/05/2024 16:18:02
+generated_on:12.05.2024 20:01:18
 generated_by:generated with the DiagramCreator by Prof.Gehrer
 title:ConsoleApplication.SetCursorPosition (SQ)
 fileName:sq_ConsoleApplication_SetCursorPosition.puml
-generated_on:11/05/2024 16:18:02
+generated_on:12.05.2024 20:01:18
 generated_by:generated with the DiagramCreator by Prof.Gehrer
 title:ConsoleApplication.ToLabelText (SQ)
 fileName:sq_ConsoleApplication_ToLabelText.puml
-generated_on:11/05/2024 16:18:02
+generated_on:12.05.2024 20:01:18
 generated_by:generated with the DiagramCreator by Prof.Gehrer
 title:ConsoleApplication.ToLabelText (SQ)
 fileName:sq_ConsoleApplication_ToLabelText_6.puml
-generated_on:11/05/2024 16:18:02
+generated_on:12.05.2024 20:01:18
 generated_by:generated with the DiagramCreator by Prof.Gehrer
 title:ConsoleApplication.StartProgressBar (SQ)
 fileName:sq_ConsoleApplication_StartProgressBar.puml
-generated_on:11/05/2024 16:18:02
+generated_on:12.05.2024 20:01:18
 generated_by:generated with the DiagramCreator by Prof.Gehrer
 title:ConsoleApplication.PrintHeader (SQ)
 fileName:sq_ConsoleApplication_PrintHeader.puml
-generated_on:11/05/2024 16:18:02
+generated_on:12.05.2024 20:01:18
 generated_by:generated with the DiagramCreator by Prof.Gehrer
 title:ConsoleApplication.CreateExitMenuItems (SQ)
 fileName:sq_ConsoleApplication_CreateExitMenuItems.puml
-generated_on:11/05/2024 16:18:02
+generated_on:12.05.2024 20:01:18
 generated_by:generated with the DiagramCreator by Prof.Gehrer
 title:ConsoleApplication.CreatePageMenuItems (SQ)
 fileName:sq_ConsoleApplication_CreatePageMenuItems.puml
-generated_on:11/05/2024 16:18:02
+generated_on:12.05.2024 20:01:18
 generated_by:generated with the DiagramCreator by Prof.Gehrer
 title:ConsoleApplication.PrintFooter (SQ)
 fileName:sq_ConsoleApplication_PrintFooter.puml
-generated_on:11/05/2024 16:18:02
+generated_on:12.05.2024 20:01:18
 generated_by:generated with the DiagramCreator by Prof.Gehrer
 title:ConsoleApplication.PrintScreen (SQ)
 fileName:sq_ConsoleApplication_PrintScreen.puml
-generated_on:11/05/2024 16:18:02
+generated_on:12.05.2024 20:01:18
 generated_by:generated with the DiagramCreator by Prof.Gehrer
 title:ConsoleApplication.Run (SQ)
 fileName:sq_ConsoleApplication_Run.puml
-generated_on:11/05/2024 16:18:02
+generated_on:12.05.2024 20:01:18
 generated_by:generated with the DiagramCreator by Prof.Gehrer
 title:ConsoleApplication.ChangeMaxSubPathDepth (SQ)
 fileName:sq_ConsoleApplication_ChangeMaxSubPathDepth.puml
-generated_on:11/05/2024 16:18:02
+generated_on:12.05.2024 20:01:18
 generated_by:generated with the DiagramCreator by Prof.Gehrer
 title:ConsoleApplication.ChangeSolutionPath (SQ)
 fileName:sq_ConsoleApplication_ChangeSolutionPath.puml
-generated_on:11/05/2024 16:18:02
+generated_on:12.05.2024 20:01:18
 generated_by:generated with the DiagramCreator by Prof.Gehrer
 title:ConsoleApplication.ChangeSourcePath (SQ)
 fileName:sq_ConsoleApplication_ChangeSourcePath.puml
-generated_on:11/05/2024 16:18:02
+generated_on:12.05.2024 20:01:18
 generated_by:generated with the DiagramCreator by Prof.Gehrer
 title:ConsoleApplication.ChangePath (SQ)
 fileName:sq_ConsoleApplication_ChangePath.puml
-generated_on:11/05/2024 16:18:02
+generated_on:12.05.2024 20:01:18
 generated_by:generated with the DiagramCreator by Prof.Gehrer
 title:ConsoleApplication.ChangePath (SQ)
 fileName:sq_ConsoleApplication_ChangePath_7.puml
-generated_on:11/05/2024 16:18:02
+generated_on:12.05.2024 20:01:18
 generated_by:generated with the DiagramCreator by Prof.Gehrer
 title:ConsoleApplication.ChangeTemplateSolutionPath (SQ)
 fileName:sq_ConsoleApplication_ChangeTemplateSolutionPath.puml
-generated_on:11/05/2024 16:18:02
+generated_on:12.05.2024 20:01:18
 generated_by:generated with the DiagramCreator by Prof.Gehrer
 title:ConsoleApplication.SelectOrChangeToSubPath (SQ)
 fileName:sq_ConsoleApplication_SelectOrChangeToSubPath.puml
-generated_on:11/05/2024 16:18:02
+generated_on:12.05.2024 20:01:18
 generated_by:generated with the DiagramCreator by Prof.Gehrer
 title:TemplatePath.ContainsFiles (SQ)
 fileName:sq_TemplatePath_ContainsFiles.puml
-generated_on:11/05/2024 16:18:02
+generated_on:12.05.2024 20:01:18
 generated_by:generated with the DiagramCreator by Prof.Gehrer
 title:TemplatePath.GetFiles (SQ)
 fileName:sq_TemplatePath_GetFiles.puml
-generated_on:11/05/2024 16:18:02
+generated_on:12.05.2024 20:01:18
 generated_by:generated with the DiagramCreator by Prof.Gehrer
 title:TemplatePath.GetSubPaths (SQ)
 fileName:sq_TemplatePath_GetSubPaths.puml
-generated_on:11/05/2024 16:18:02
+generated_on:12.05.2024 20:01:18
 generated_by:generated with the DiagramCreator by Prof.Gehrer
 title:TemplatePath.GetTemplatePaths (SQ)
 fileName:sq_TemplatePath_GetTemplatePaths.puml
-generated_on:11/05/2024 16:18:02
+generated_on:12.05.2024 20:01:18
 generated_by:generated with the DiagramCreator by Prof.Gehrer
 title:TemplatePath.GetTemplateSolutions (SQ)
 fileName:sq_TemplatePath_GetTemplateSolutions.puml
-generated_on:11/05/2024 16:18:02
+generated_on:12.05.2024 20:01:18
 generated_by:generated with the DiagramCreator by Prof.Gehrer
 title:TemplatePath.QueryDirectoryStructure (SQ)
 fileName:sq_TemplatePath_QueryDirectoryStructure.puml
-generated_on:11/05/2024 16:18:02
+generated_on:12.05.2024 20:01:18
 generated_by:generated with the DiagramCreator by Prof.Gehrer
 title:TemplatePath.GetTemplateParentPaths (SQ)
 fileName:sq_TemplatePath_GetTemplateParentPaths.puml
-generated_on:11/05/2024 16:18:02
+generated_on:12.05.2024 20:01:18
 generated_by:generated with the DiagramCreator by Prof.Gehrer
 title:TemplatePath.GetParentDirectory (SQ)
 fileName:sq_TemplatePath_GetParentDirectory.puml
-generated_on:11/05/2024 16:18:02
+generated_on:12.05.2024 20:01:18
 generated_by:generated with the DiagramCreator by Prof.Gehrer
 title:TemplatePath.IsSolutionPath (SQ)
 fileName:sq_TemplatePath_IsSolutionPath.puml
-generated_on:11/05/2024 16:18:02
+generated_on:12.05.2024 20:01:18
 generated_by:generated with the DiagramCreator by Prof.Gehrer
 title:TemplatePath.IsSolutionFilePath (SQ)
 fileName:sq_TemplatePath_IsSolutionFilePath.puml
-generated_on:11/05/2024 16:18:02
+generated_on:12.05.2024 20:01:18
 generated_by:generated with the DiagramCreator by Prof.Gehrer
 title:TemplatePath.GetSolutionNameFromPath (SQ)
 fileName:sq_TemplatePath_GetSolutionNameFromPath.puml
-generated_on:11/05/2024 16:18:02
+generated_on:12.05.2024 20:01:18
 generated_by:generated with the DiagramCreator by Prof.Gehrer
 title:TemplatePath.IsProjectPath (SQ)
 fileName:sq_TemplatePath_IsProjectPath.puml
-generated_on:11/05/2024 16:18:02
+generated_on:12.05.2024 20:01:18
 generated_by:generated with the DiagramCreator by Prof.Gehrer
 title:TemplatePath.IsProjectFilePath (SQ)
 fileName:sq_TemplatePath_IsProjectFilePath.puml
-generated_on:11/05/2024 16:18:02
+generated_on:12.05.2024 20:01:18
 generated_by:generated with the DiagramCreator by Prof.Gehrer
 title:TemplatePath.GetProjectNameFromPath (SQ)
 fileName:sq_TemplatePath_GetProjectNameFromPath.puml
-generated_on:11/05/2024 16:18:02
+generated_on:12.05.2024 20:01:18
 generated_by:generated with the DiagramCreator by Prof.Gehrer
 title:TemplatePath.GetProjectSubFilePath (SQ)
 fileName:sq_TemplatePath_GetProjectSubFilePath.puml
-generated_on:11/05/2024 16:18:02
+generated_on:12.05.2024 20:01:18
 generated_by:generated with the DiagramCreator by Prof.Gehrer
 title:TemplatePath.GetSolutionSubFilePath (SQ)
 fileName:sq_TemplatePath_GetSolutionSubFilePath.puml
-generated_on:11/05/2024 16:18:02
+generated_on:12.05.2024 20:01:18
 generated_by:generated with the DiagramCreator by Prof.Gehrer
 title:TemplatePath.GetSolutionItemDataFromPath (SQ)
 fileName:sq_TemplatePath_GetSolutionItemDataFromPath.puml
-generated_on:11/05/2024 16:18:02
+generated_on:12.05.2024 20:01:18
 generated_by:generated with the DiagramCreator by Prof.Gehrer
 title:TemplatePath.GetPathFromPath (SQ)
 fileName:sq_TemplatePath_GetPathFromPath.puml
-generated_on:11/05/2024 16:18:02
+generated_on:12.05.2024 20:01:18
 generated_by:generated with the DiagramCreator by Prof.Gehrer
 title:TemplatePath.GetDirectoryNameFromPath (SQ)
 fileName:sq_TemplatePath_GetDirectoryNameFromPath.puml
-generated_on:11/05/2024 16:18:02
+generated_on:12.05.2024 20:01:18
 generated_by:generated with the DiagramCreator by Prof.Gehrer
 title:TemplatePath.CleanDirectories (SQ)
 fileName:sq_TemplatePath_CleanDirectories.puml
-generated_on:11/05/2024 16:18:02
+generated_on:12.05.2024 20:01:18
 generated_by:generated with the DiagramCreator by Prof.Gehrer
 title:TemplatePath.OpenSolutionFolder (SQ)
 fileName:sq_TemplatePath_OpenSolutionFolder.puml
-generated_on:11/05/2024 16:18:02
+generated_on:12.05.2024 20:01:18
+generated_by:generated with the DiagramCreator by Prof.Gehrer
+title:IEnumerableExtensions.IndexOf (SQ)
+fileName:sq_IEnumerableExtensions_IndexOf.puml
+generated_on:12.05.2024 20:01:18
+generated_by:generated with the DiagramCreator by Prof.Gehrer
+title:IEnumerableExtensions.ToEnumerable (SQ)
+fileName:sq_IEnumerableExtensions_ToEnumerable.puml
+generated_on:12.05.2024 20:01:18
+generated_by:generated with the DiagramCreator by Prof.Gehrer
+title:IEnumerableExtensions.Flatten (SQ)
+fileName:sq_IEnumerableExtensions_Flatten.puml
+generated_on:12.05.2024 20:01:18
+generated_by:generated with the DiagramCreator by Prof.Gehrer
+title:IEnumerableExtensions.FindIndex (SQ)
+fileName:sq_IEnumerableExtensions_FindIndex.puml
+generated_on:12.05.2024 20:01:18
+generated_by:generated with the DiagramCreator by Prof.Gehrer
+title:IEnumerableExtensions.IndexOf (SQ)
+fileName:sq_IEnumerableExtensions_IndexOf_8.puml
+generated_on:12.05.2024 20:01:18
+generated_by:generated with the DiagramCreator by Prof.Gehrer
+title:IEnumerableExtensions.TakeTo (SQ)
+fileName:sq_IEnumerableExtensions_TakeTo.puml
+generated_on:12.05.2024 20:01:18
+generated_by:generated with the DiagramCreator by Prof.Gehrer
+title:IEnumerableExtensions.ForEach (SQ)
+fileName:sq_IEnumerableExtensions_ForEach.puml
+generated_on:12.05.2024 20:01:18
+generated_by:generated with the DiagramCreator by Prof.Gehrer
+title:IEnumerableExtensions.IsSubsequence (SQ)
+fileName:sq_IEnumerableExtensions_IsSubsequence.puml
+generated_on:12.05.2024 20:01:18
+generated_by:generated with the DiagramCreator by Prof.Gehrer
+title:StringExtensions.CheckNotNullOrEmpty (SQ)
+fileName:sq_StringExtensions_CheckNotNullOrEmpty.puml
+generated_on:12.05.2024 20:01:18
+generated_by:generated with the DiagramCreator by Prof.Gehrer
+title:StringExtensions.CuttingOut (SQ)
+fileName:sq_StringExtensions_CuttingOut.puml
+generated_on:12.05.2024 20:01:18
+generated_by:generated with the DiagramCreator by Prof.Gehrer
+title:StringExtensions.CuttingOut (SQ)
+fileName:sq_StringExtensions_CuttingOut_9.puml
+generated_on:12.05.2024 20:01:18
+generated_by:generated with the DiagramCreator by Prof.Gehrer
+title:StringExtensions.Substring (SQ)
+fileName:sq_StringExtensions_Substring.puml
+generated_on:12.05.2024 20:01:18
+generated_by:generated with the DiagramCreator by Prof.Gehrer
+title:StringExtensions.ExtractBetween (SQ)
+fileName:sq_StringExtensions_ExtractBetween.puml
+generated_on:12.05.2024 20:01:18
+generated_by:generated with the DiagramCreator by Prof.Gehrer
+title:StringExtensions.ExtractBetween (SQ)
+fileName:sq_StringExtensions_ExtractBetween_10.puml
+generated_on:12.05.2024 20:01:18
+generated_by:generated with the DiagramCreator by Prof.Gehrer
+title:StringExtensions.ExtractBetween (SQ)
+fileName:sq_StringExtensions_ExtractBetween_11.puml
+generated_on:12.05.2024 20:01:18
+generated_by:generated with the DiagramCreator by Prof.Gehrer
+title:StringExtensions.ReplaceBetween (SQ)
+fileName:sq_StringExtensions_ReplaceBetween.puml
+generated_on:12.05.2024 20:01:18
+generated_by:generated with the DiagramCreator by Prof.Gehrer
+title:StringExtensions.TryParse (SQ)
+fileName:sq_StringExtensions_TryParse.puml
+generated_on:12.05.2024 20:01:18
+generated_by:generated with the DiagramCreator by Prof.Gehrer
+title:StringExtensions.ContainsIgnoreCase (SQ)
+fileName:sq_StringExtensions_ContainsIgnoreCase.puml
+generated_on:12.05.2024 20:01:18
+generated_by:generated with the DiagramCreator by Prof.Gehrer
+title:StringExtensions.Contains (SQ)
+fileName:sq_StringExtensions_Contains.puml
+generated_on:12.05.2024 20:01:18
+generated_by:generated with the DiagramCreator by Prof.Gehrer
+title:StringExtensions.Contains (SQ)
+fileName:sq_StringExtensions_Contains_12.puml
+generated_on:12.05.2024 20:01:18
+generated_by:generated with the DiagramCreator by Prof.Gehrer
+title:StringExtensions.Contains (SQ)
+fileName:sq_StringExtensions_Contains_13.puml
+generated_on:12.05.2024 20:01:18
+generated_by:generated with the DiagramCreator by Prof.Gehrer
+title:StringExtensions.Split (SQ)
+fileName:sq_StringExtensions_Split.puml
+generated_on:12.05.2024 20:01:18
+generated_by:generated with the DiagramCreator by Prof.Gehrer
+title:StringExtensions.SplitAndMap (SQ)
+fileName:sq_StringExtensions_SplitAndMap.puml
+generated_on:12.05.2024 20:01:18
+generated_by:generated with the DiagramCreator by Prof.Gehrer
+title:StringExtensions.SplitAndMap (SQ)
+fileName:sq_StringExtensions_SplitAndMap_14.puml
+generated_on:12.05.2024 20:01:18
+generated_by:generated with the DiagramCreator by Prof.Gehrer
+title:StringExtensions.GetValue (SQ)
+fileName:sq_StringExtensions_GetValue.puml
+generated_on:12.05.2024 20:01:18
+generated_by:generated with the DiagramCreator by Prof.Gehrer
+title:StringExtensions.Divide (SQ)
+fileName:sq_StringExtensions_Divide.puml
+generated_on:12.05.2024 20:01:18
+generated_by:generated with the DiagramCreator by Prof.Gehrer
+title:StringExtensions.GetAllTags (SQ)
+fileName:sq_StringExtensions_GetAllTags.puml
+generated_on:12.05.2024 20:01:18
+generated_by:generated with the DiagramCreator by Prof.Gehrer
+title:StringExtensions.GetAllTags (SQ)
+fileName:sq_StringExtensions_GetAllTags_15.puml
+generated_on:12.05.2024 20:01:18
+generated_by:generated with the DiagramCreator by Prof.Gehrer
+title:StringExtensions.GetAllTags (SQ)
+fileName:sq_StringExtensions_GetAllTags_16.puml
+generated_on:12.05.2024 20:01:18
+generated_by:generated with the DiagramCreator by Prof.Gehrer
+title:StringExtensions.GetAllTags (SQ)
+fileName:sq_StringExtensions_GetAllTags_17.puml
+generated_on:12.05.2024 20:01:18
+generated_by:generated with the DiagramCreator by Prof.Gehrer
+title:StringExtensions.GetAllTags (SQ)
+fileName:sq_StringExtensions_GetAllTags_18.puml
+generated_on:12.05.2024 20:01:18
+generated_by:generated with the DiagramCreator by Prof.Gehrer
+title:StringExtensions.IsNullOrEmpty (SQ)
+fileName:sq_StringExtensions_IsNullOrEmpty.puml
+generated_on:12.05.2024 20:01:18
+generated_by:generated with the DiagramCreator by Prof.Gehrer
+title:StringExtensions.IsNullOrWhiteSpace (SQ)
+fileName:sq_StringExtensions_IsNullOrWhiteSpace.puml
+generated_on:12.05.2024 20:01:18
+generated_by:generated with the DiagramCreator by Prof.Gehrer
+title:StringExtensions.HasContent (SQ)
+fileName:sq_StringExtensions_HasContent.puml
+generated_on:12.05.2024 20:01:18
+generated_by:generated with the DiagramCreator by Prof.Gehrer
+title:StringExtensions.NotEquals (SQ)
+fileName:sq_StringExtensions_NotEquals.puml
+generated_on:12.05.2024 20:01:18
+generated_by:generated with the DiagramCreator by Prof.Gehrer
+title:StringExtensions.AreEquals (SQ)
+fileName:sq_StringExtensions_AreEquals.puml
+generated_on:12.05.2024 20:01:18
+generated_by:generated with the DiagramCreator by Prof.Gehrer
+title:StringExtensions.AreEquals (SQ)
+fileName:sq_StringExtensions_AreEquals_19.puml
+generated_on:12.05.2024 20:01:18
+generated_by:generated with the DiagramCreator by Prof.Gehrer
+title:StringExtensions.GetValueOrDefault (SQ)
+fileName:sq_StringExtensions_GetValueOrDefault.puml
+generated_on:12.05.2024 20:01:18
+generated_by:generated with the DiagramCreator by Prof.Gehrer
+title:StringExtensions.GetValueOrDefault (SQ)
+fileName:sq_StringExtensions_GetValueOrDefault_20.puml
+generated_on:12.05.2024 20:01:18
+generated_by:generated with the DiagramCreator by Prof.Gehrer
+title:StringExtensions.SetIndent (SQ)
+fileName:sq_StringExtensions_SetIndent.puml
+generated_on:12.05.2024 20:01:18
+generated_by:generated with the DiagramCreator by Prof.Gehrer
+title:StringExtensions.SetIndent (SQ)
+fileName:sq_StringExtensions_SetIndent_21.puml
+generated_on:12.05.2024 20:01:18
+generated_by:generated with the DiagramCreator by Prof.Gehrer
+title:StringExtensions.SetIndent (SQ)
+fileName:sq_StringExtensions_SetIndent_22.puml
+generated_on:12.05.2024 20:01:18
+generated_by:generated with the DiagramCreator by Prof.Gehrer
+title:StringExtensions.SetIndent (SQ)
+fileName:sq_StringExtensions_SetIndent_23.puml
+generated_on:12.05.2024 20:01:18
+generated_by:generated with the DiagramCreator by Prof.Gehrer
+title:StringExtensions.SetIndent (SQ)
+fileName:sq_StringExtensions_SetIndent_24.puml
+generated_on:12.05.2024 20:01:18
+generated_by:generated with the DiagramCreator by Prof.Gehrer
+title:StringExtensions.ToText (SQ)
+fileName:sq_StringExtensions_ToText.puml
+generated_on:12.05.2024 20:01:18
+generated_by:generated with the DiagramCreator by Prof.Gehrer
+title:StringExtensions.ToText (SQ)
+fileName:sq_StringExtensions_ToText_25.puml
+generated_on:12.05.2024 20:01:18
+generated_by:generated with the DiagramCreator by Prof.Gehrer
+title:StringExtensions.ToLines (SQ)
+fileName:sq_StringExtensions_ToLines.puml
+generated_on:12.05.2024 20:01:18
+generated_by:generated with the DiagramCreator by Prof.Gehrer
+title:StringExtensions.Trim (SQ)
+fileName:sq_StringExtensions_Trim.puml
+generated_on:12.05.2024 20:01:18
+generated_by:generated with the DiagramCreator by Prof.Gehrer
+title:StringExtensions.Partialstring (SQ)
+fileName:sq_StringExtensions_Partialstring.puml
+generated_on:12.05.2024 20:01:18
+generated_by:generated with the DiagramCreator by Prof.Gehrer
+title:StringExtensions.Partialstring (SQ)
+fileName:sq_StringExtensions_Partialstring_26.puml
+generated_on:12.05.2024 20:01:18
+generated_by:generated with the DiagramCreator by Prof.Gehrer
+title:StringExtensions.Betweenstring (SQ)
+fileName:sq_StringExtensions_Betweenstring.puml
+generated_on:12.05.2024 20:01:18
+generated_by:generated with the DiagramCreator by Prof.Gehrer
+title:StringExtensions.Remove (SQ)
+fileName:sq_StringExtensions_Remove.puml
+generated_on:12.05.2024 20:01:18
+generated_by:generated with the DiagramCreator by Prof.Gehrer
+title:StringExtensions.ReplaceUmlauts (SQ)
+fileName:sq_StringExtensions_ReplaceUmlauts.puml
+generated_on:12.05.2024 20:01:18
+generated_by:generated with the DiagramCreator by Prof.Gehrer
+title:StringExtensions.ReplaceAll (SQ)
+fileName:sq_StringExtensions_ReplaceAll.puml
+generated_on:12.05.2024 20:01:18
+generated_by:generated with the DiagramCreator by Prof.Gehrer
+title:StringExtensions.ReplaceAll (SQ)
+fileName:sq_StringExtensions_ReplaceAll_27.puml
+generated_on:12.05.2024 20:01:18
+generated_by:generated with the DiagramCreator by Prof.Gehrer
+title:StringExtensions.ReplaceAll (SQ)
+fileName:sq_StringExtensions_ReplaceAll_28.puml
+generated_on:12.05.2024 20:01:18
+generated_by:generated with the DiagramCreator by Prof.Gehrer
+title:StringExtensions.RemoveAll (SQ)
+fileName:sq_StringExtensions_RemoveAll.puml
+generated_on:12.05.2024 20:01:18
+generated_by:generated with the DiagramCreator by Prof.Gehrer
+title:StringExtensions.RemoveAll (SQ)
+fileName:sq_StringExtensions_RemoveAll_29.puml
+generated_on:12.05.2024 20:01:18
+generated_by:generated with the DiagramCreator by Prof.Gehrer
+title:StringExtensions.ToInt (SQ)
+fileName:sq_StringExtensions_ToInt.puml
+generated_on:12.05.2024 20:01:18
+generated_by:generated with the DiagramCreator by Prof.Gehrer
+title:StringExtensions.ToLong (SQ)
+fileName:sq_StringExtensions_ToLong.puml
+generated_on:12.05.2024 20:01:18
+generated_by:generated with the DiagramCreator by Prof.Gehrer
+title:StringExtensions.ToFileName (SQ)
+fileName:sq_StringExtensions_ToFileName.puml
+generated_on:12.05.2024 20:01:18
+generated_by:generated with the DiagramCreator by Prof.Gehrer
+title:StringExtensions.ToEnumerable (SQ)
+fileName:sq_StringExtensions_ToEnumerable.puml
+generated_on:12.05.2024 20:01:18
+generated_by:generated with the DiagramCreator by Prof.Gehrer
+title:StringExtensions.ToByteArray (SQ)
+fileName:sq_StringExtensions_ToByteArray.puml
+generated_on:12.05.2024 20:01:18
+generated_by:generated with the DiagramCreator by Prof.Gehrer
+title:StringExtensions.Encrypt (SQ)
+fileName:sq_StringExtensions_Encrypt.puml
+generated_on:12.05.2024 20:01:18
+generated_by:generated with the DiagramCreator by Prof.Gehrer
+title:StringExtensions.Decrypt (SQ)
+fileName:sq_StringExtensions_Decrypt.puml
+generated_on:12.05.2024 20:01:18
+generated_by:generated with the DiagramCreator by Prof.Gehrer
+title:StringExtensions.IsWord (SQ)
+fileName:sq_StringExtensions_IsWord.puml
+generated_on:12.05.2024 20:01:18
+generated_by:generated with the DiagramCreator by Prof.Gehrer
+title:StringExtensions.CreatePluralWord (SQ)
+fileName:sq_StringExtensions_CreatePluralWord.puml
+generated_on:12.05.2024 20:01:18
+generated_by:generated with the DiagramCreator by Prof.Gehrer
+title:StringExtensions.Shrink (SQ)
+fileName:sq_StringExtensions_Shrink.puml
+generated_on:12.05.2024 20:01:18
+generated_by:generated with the DiagramCreator by Prof.Gehrer
+title:TagInfo.GetText (SQ)
+fileName:sq_TagInfo_GetText.puml
+generated_on:12.05.2024 20:01:18
+generated_by:generated with the DiagramCreator by Prof.Gehrer
+title:TagInfo.GetText (SQ)
+fileName:sq_TagInfo_GetText_30.puml
+generated_on:12.05.2024 20:01:18
 generated_by:generated with the DiagramCreator by Prof.Gehrer

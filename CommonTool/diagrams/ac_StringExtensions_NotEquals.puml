@@ -1,0 +1,7 @@
+@startuml StringExtensions.NotEquals
+title StringExtensions.NotEquals
+start
+#LightGreen:Params(this string source,string value);
+#Lavender:return source.AreEquals(value) == false;
+stop
+@enduml

@@ -1,0 +1,21 @@
+@startuml IEnumerableExtensions.IsSubsequence
+title IEnumerableExtensions.IsSubsequence
+start
+#LightGreen:Params(this IEnumerable<T> sequence,IEnumerable<T> subsequence);
+#LightSkyBlue:var start = false\nvar equalsCounter = 0\nvar subsequenceLength = 0\nvar sequenceEnumerator = sequence.GetEnumerator()\nvar subsequenceEnumerator = subsequence.GetEnumerator();
+while (subsequenceEnumerator.MoveNext()) is (<color:green>yes)
+    #WhiteSmoke:subsequenceLength++;
+endwhile (<color:red>no)
+#WhiteSmoke:subsequenceEnumerator.Reset();
+#LightYellow:if (subsequenceEnumerator.MoveNext()) then (<color:green>yes)
+        while (start == false && sequenceEnumerator.MoveNext()) is (<color:green>yes)
+                #WhiteSmoke:start = Equals(sequenceEnumerator.Current, subsequenceEnumerator.Current);
+        endwhile (<color:red>no)
+        #WhiteSmoke:equalsCounter = start ? 1 : equalsCounter;
+        while (start && sequenceEnumerator.MoveNext() && subsequenceEnumerator.MoveNext()) is (<color:green>yes)
+                #WhiteSmoke:equalsCounter = Equals(sequenceEnumerator.Current, subsequenceEnumerator.Current) ? equalsCounter + 1 : equalsCounter;
+        endwhile (<color:red>no)
+endif
+#Lavender:return equalsCounter == subsequenceLength;
+stop
+@enduml

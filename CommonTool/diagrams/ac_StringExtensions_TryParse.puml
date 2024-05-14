@@ -1,0 +1,33 @@
+@startuml StringExtensions.TryParse
+title StringExtensions.TryParse
+start
+#LightGreen:Params(this string value,Type type,out object? typeValue);
+#LightSkyBlue:bool result = false;
+#LightYellow:if (value == null) then (<color:green>yes)
+        #WhiteSmoke:result = true;
+        #WhiteSmoke:typeValue = null;
+    else (<color:red>no)
+        #LightYellow:if (type.IsEnum) then (<color:green>yes)
+                #WhiteSmoke:result = Enum.TryParse(type, value, out typeValue);
+            else (<color:red>no)
+                #LightYellow:if (type == typeof(TimeSpan)) then (<color:green>yes)
+                        #WhiteSmoke:typeValue = TimeSpan.Parse(value);
+                        #WhiteSmoke:result = true;
+                    else (<color:red>no)
+                        #LightYellow:if (type == typeof(DateTime)) then (<color:green>yes)
+                                #WhiteSmoke:typeValue = DateTime.Parse(value);
+                                #WhiteSmoke:result = true;
+                            else (<color:red>no)
+                                #LightYellow:if (type == typeof(string)) then (<color:green>yes)
+                                        #WhiteSmoke:typeValue = value;
+                                    else (<color:red>no)
+                                            #WhiteSmoke:typeValue = Convert.ChangeType(value, type);
+                                            #WhiteSmoke:result = true;
+                                endif
+                        endif
+                endif
+        endif
+endif
+#Lavender:return result;
+stop
+@enduml

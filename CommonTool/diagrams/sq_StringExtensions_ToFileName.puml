@@ -1,0 +1,12 @@
+@startuml StringExtensions.ToFileName
+title StringExtensions.ToFileName
+participant "ToFileName(this string text)" as ToFileName_p0 #LightYellow
+participant "Path.GetInvalidFileNameChars()" as Path_GetInvalidFileNameChars #LightGreen
+participant "text.Replace(a0,a1)" as text_Replace_a0_a1 #LightGreen
+autonumber
+loop#LightCoral Path.GetInvalidFileNameChars()
+    ToFileName_p0 -[#grey]> Path_GetInvalidFileNameChars
+    ToFileName_p0 -[#grey]> text_Replace_a0_a1 : (c, '_')
+    text_Replace_a0_a1 -[#blue]-> ToFileName_p0 : text
+end
+@enduml

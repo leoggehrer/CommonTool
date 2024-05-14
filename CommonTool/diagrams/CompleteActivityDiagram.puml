@@ -1,6 +1,6 @@
 @startuml CompleteActivityDiagram
 header
-generated on 11/05/2024 16:18:02
+generated on 12.05.2024 20:01:18
 end header
 title CompleteActivityDiagram
 start
@@ -546,6 +546,874 @@ note right:  TemplatePath.OpenSolutionFolder
 #LightYellow:if (Environment.OSVersion.Platform == PlatformID.Win32NT) then (<color:green>yes)
         #WhiteSmoke:Process.Start(new ProcessStartInfo() { WorkingDirectory = solutionPath, FileName = "explorer", Arguments = solutionPath, CreateNoWindow = true, });
 endif
+stop
+start
+note right:  IEnumerableExtensions.IndexOf
+#LightGreen:Params(this IEnumerable<T> source,Predicate<T> predicate);
+#LightSkyBlue:var idx = 0\nvar result = -1\nvar enumerator = source.GetEnumerator();
+while (result == -1 && enumerator.MoveNext()) is (<color:green>yes)
+        #LightYellow:if (predicate(enumerator.Current)) then (<color:green>yes)
+                #WhiteSmoke:result = idx;
+        endif
+        #WhiteSmoke:idx++;
+endwhile (<color:red>no)
+#Lavender:return result;
+stop
+start
+note right:  IEnumerableExtensions.ToEnumerable
+#LightGreen:Params(this IEnumerable<T> source,Func<T, ST> expandSelector);
+#LightSkyBlue:List<ST> expandResult = [];
+#LightYellow:if (source != null && expandSelector != null) then (<color:green>yes)
+        :iterator = source.GetIterator();
+        while (iterator.MoveNext()) is (<color:green>yes)
+        :item = iterator.Current();
+                            #LightSkyBlue:var subItem = expandSelector(item);
+                            #LightYellow:if (subItem != null) then (<color:green>yes)
+                                    #WhiteSmoke:expandResult.Add(subItem);
+                            endif
+        endwhile (<color:red>no)
+endif
+#Lavender:return expandResult;
+stop
+start
+note right:  IEnumerableExtensions.Flatten
+#LightGreen:Params(this IEnumerable<T> source,Func<T, IEnumerable<ST>> expandSelector);
+#LightSkyBlue:List<ST> expandResult = [];
+#LightYellow:if (source != null && expandSelector != null) then (<color:green>yes)
+        :iterator = source.GetIterator();
+        while (iterator.MoveNext()) is (<color:green>yes)
+        :item = iterator.Current();
+                            #LightSkyBlue:var subItems = expandSelector(item);
+                            #LightYellow:if (subItems != null) then (<color:green>yes)
+                                    #WhiteSmoke:expandResult.AddRange(subItems);
+                            endif
+        endwhile (<color:red>no)
+endif
+#Lavender:return expandResult;
+stop
+start
+note right:  IEnumerableExtensions.FindIndex
+#LightGreen:Params(this IEnumerable<T> items,Func<T, bool> predicate);
+#LightSkyBlue:int retVal = 0;
+:iterator = items.GetIterator();
+while (iterator.MoveNext()) is (<color:green>yes)
+:item = iterator.Current();
+            #LightYellow:if (predicate(item)) then (<color:green>yes)
+                #Lavender:return retVal;
+            endif
+            #WhiteSmoke:retVal++;
+endwhile (<color:red>no)
+#Lavender:return -1;
+stop
+start
+note right:  IEnumerableExtensions.IndexOf
+#LightGreen:Params(this IEnumerable<T> items,T item);
+#LightSkyBlue:var result = -1;
+#LightYellow:if (items != null) then (<color:green>yes)
+        #WhiteSmoke:result = items.FindIndex(i => EqualityComparer<T>.Default.Equals(item, i));
+endif
+#Lavender:return result;
+stop
+start
+note right:  IEnumerableExtensions.TakeTo
+#LightGreen:Params(this IEnumerable<T> source,Predicate<T> predicate);
+#LightSkyBlue:var result = default(IEnumerable<T>);
+#LightYellow:if (source != null) then (<color:green>yes)
+        #LightSkyBlue:var end = false;
+        #WhiteSmoke:result = source.Where(e => { if (end == false && predicate != null) { end = predicate(e); } return end == false; });
+endif
+#Lavender:return result ?? [];
+stop
+start
+note right:  IEnumerableExtensions.ForEach
+#LightGreen:Params(this IEnumerable<T> source,Action<T> action);
+#LightYellow:if (source != null && action != null) then (<color:green>yes)
+        :iterator = source.GetIterator();
+        while (iterator.MoveNext()) is (<color:green>yes)
+        :item = iterator.Current();
+                            #WhiteSmoke:action(item);
+        endwhile (<color:red>no)
+endif
+#Lavender:return source ?? [];
+stop
+start
+note right:  IEnumerableExtensions.Clone
+#LightGreen:Params(this IEnumerable<T> source);
+#Lavender:return new List<T>(source);
+stop
+start
+note right:  IEnumerableExtensions.IsSubsequence
+#LightGreen:Params(this IEnumerable<T> sequence,IEnumerable<T> subsequence);
+#LightSkyBlue:var start = false\nvar equalsCounter = 0\nvar subsequenceLength = 0\nvar sequenceEnumerator = sequence.GetEnumerator()\nvar subsequenceEnumerator = subsequence.GetEnumerator();
+while (subsequenceEnumerator.MoveNext()) is (<color:green>yes)
+    #WhiteSmoke:subsequenceLength++;
+endwhile (<color:red>no)
+#WhiteSmoke:subsequenceEnumerator.Reset();
+#LightYellow:if (subsequenceEnumerator.MoveNext()) then (<color:green>yes)
+        while (start == false && sequenceEnumerator.MoveNext()) is (<color:green>yes)
+                #WhiteSmoke:start = Equals(sequenceEnumerator.Current, subsequenceEnumerator.Current);
+        endwhile (<color:red>no)
+        #WhiteSmoke:equalsCounter = start ? 1 : equalsCounter;
+        while (start && sequenceEnumerator.MoveNext() && subsequenceEnumerator.MoveNext()) is (<color:green>yes)
+                #WhiteSmoke:equalsCounter = Equals(sequenceEnumerator.Current, subsequenceEnumerator.Current) ? equalsCounter + 1 : equalsCounter;
+        endwhile (<color:red>no)
+endif
+#Lavender:return equalsCounter == subsequenceLength;
+stop
+start
+note right:  StringExtensions.CheckNotNullOrEmpty
+#LightGreen:Params(this string? source,string argName);
+#LightYellow:if (string.IsNullOrEmpty(source)) then (<color:green>yes)
+    #Red:throw new ArgumentException("String is null or empty!", argName);
+    kill
+endif
+stop
+start
+note right:  StringExtensions.CuttingOut
+#LightGreen:Params(this string source,int startIdx);
+#Lavender:return source.CuttingOut(startIdx, source.Length - 1);
+stop
+start
+note right:  StringExtensions.CuttingOut
+#LightGreen:Params(this string source,int startIdx,int endIdx);
+#LightSkyBlue:var result = new StringBuilder();
+#LightSkyBlue:int i = 0;
+while (i < source.Length) is (<color:green>yes)
+        #LightYellow:if (i < startIdx || i > endIdx) then (<color:green>yes)
+                #WhiteSmoke:result.Append(source[i]);
+        endif
+:i++;
+endwhile (<color:red>no)
+#Lavender:return result.ToString();
+stop
+start
+note right:  StringExtensions.Substring
+#LightGreen:Params(this string source,int index,string text);
+#LightSkyBlue:var result = string.Empty\nvar ofIdx = source.IndexOf(text);
+#LightYellow:if (ofIdx >= 0 && ofIdx - index >= 0) then (<color:green>yes)
+        #WhiteSmoke:result = source.Substring(index, ofIdx);
+endif
+#Lavender:return result;
+stop
+start
+note right:  StringExtensions.ExtractBetween
+#LightGreen:Params(this string source,string startText,string endText);
+#LightSkyBlue:var result = string.Empty\nvar sIdx = source.IndexOf(startText) + startText.Length\nvar eIdx = source.IndexOf(endText) - 1;
+#LightYellow:if (sIdx > -1 && eIdx > -1 && sIdx <= eIdx) then (<color:green>yes)
+        #WhiteSmoke:result = source.Partialstring(sIdx, eIdx);
+endif
+#Lavender:return result;
+stop
+start
+note right:  StringExtensions.ExtractBetween
+#LightGreen:Params(this string source,char openingBracket,char closingBracket);
+#Lavender:return source.ExtractBetween(openingBracket, closingBracket, 0);
+stop
+start
+note right:  StringExtensions.ExtractBetween
+#LightGreen:Params(this string source,char openingBracket,char closingBracket,int startPosition);
+#LightSkyBlue:var toScan = true\nvar open = false\nvar openCount = 0\nvar result = new StringBuilder();
+#LightSkyBlue:int i = startPosition;
+while (i > -1 && i < source.Length && toScan) is (<color:green>yes)
+        #LightYellow:if (source[i] == openingBracket && open == false) then (<color:green>yes)
+                #WhiteSmoke:open = true;
+                #WhiteSmoke:openCount = 1;
+            else (<color:red>no)
+                #LightYellow:if (source[i] == openingBracket && open) then (<color:green>yes)
+                        #WhiteSmoke:openCount++;
+                        #WhiteSmoke:result.Append(source[i]);
+                    else (<color:red>no)
+                        #LightYellow:if (source[i] == closingBracket && openCount > 1) then (<color:green>yes)
+                                #WhiteSmoke:openCount--;
+                                #WhiteSmoke:result.Append(source[i]);
+                            else (<color:red>no)
+                                #LightYellow:if (source[i] == closingBracket && openCount == 1) then (<color:green>yes)
+                                        #WhiteSmoke:open = false;
+                                        #WhiteSmoke:openCount = 0;
+                                        #WhiteSmoke:toScan = false;
+                                    else (<color:red>no)
+                                        #LightYellow:if (openCount > 0) then (<color:green>yes)
+                                                #WhiteSmoke:result.Append(source[i]);
+                                        endif
+                                endif
+                        endif
+                endif
+        endif
+:i++;
+endwhile (<color:red>no)
+#Lavender:return toScan == false ? result.ToString() : string.Empty;
+stop
+start
+note right:  StringExtensions.ReplaceBetween
+#LightGreen:Params(this string source,string startText,string endText,string replaceText);
+#LightSkyBlue:string result\nvar sIdx = source.IndexOf(startText)\nvar eIdx = source.IndexOf(endText);
+#LightYellow:if (sIdx > -1 && eIdx > -1 && sIdx <= eIdx) then (<color:green>yes)
+        #WhiteSmoke:result = source[..(sIdx + startText.Length)];
+        #WhiteSmoke:result += replaceText;
+        #WhiteSmoke:result += source[eIdx..];
+    else (<color:red>no)
+            #WhiteSmoke:result = source;
+endif
+#Lavender:return result;
+stop
+start
+note right:  StringExtensions.TryParse
+#LightGreen:Params(this string value,Type type,out object? typeValue);
+#LightSkyBlue:bool result = false;
+#LightYellow:if (value == null) then (<color:green>yes)
+        #WhiteSmoke:result = true;
+        #WhiteSmoke:typeValue = null;
+    else (<color:red>no)
+        #LightYellow:if (type.IsEnum) then (<color:green>yes)
+                #WhiteSmoke:result = Enum.TryParse(type, value, out typeValue);
+            else (<color:red>no)
+                #LightYellow:if (type == typeof(TimeSpan)) then (<color:green>yes)
+                        #WhiteSmoke:typeValue = TimeSpan.Parse(value);
+                        #WhiteSmoke:result = true;
+                    else (<color:red>no)
+                        #LightYellow:if (type == typeof(DateTime)) then (<color:green>yes)
+                                #WhiteSmoke:typeValue = DateTime.Parse(value);
+                                #WhiteSmoke:result = true;
+                            else (<color:red>no)
+                                #LightYellow:if (type == typeof(string)) then (<color:green>yes)
+                                        #WhiteSmoke:typeValue = value;
+                                    else (<color:red>no)
+                                            #WhiteSmoke:typeValue = Convert.ChangeType(value, type);
+                                            #WhiteSmoke:result = true;
+                                endif
+                        endif
+                endif
+        endif
+endif
+#Lavender:return result;
+stop
+start
+note right:  StringExtensions.ContainsIgnoreCase
+#LightGreen:Params(this string source,string toCheck);
+#Lavender:return source.Contains(toCheck, StringComparison.OrdinalIgnoreCase);
+stop
+start
+note right:  StringExtensions.Contains
+#LightGreen:Params(this string source,params string[] toChecks);
+#Lavender:return source.Contains(StringComparison.CurrentCultureIgnoreCase, toChecks);
+stop
+start
+note right:  StringExtensions.Contains
+#LightGreen:Params(this string source,StringComparison comparison,params string[] toChecks);
+#LightSkyBlue:var result = toChecks.Length > 0;
+:iterator = toChecks.GetIterator();
+while (iterator.MoveNext()) is (<color:green>yes)
+:item = iterator.Current();
+            #WhiteSmoke:result = result && source.Contains(item, comparison);
+endwhile (<color:red>no)
+#Lavender:return result;
+stop
+start
+note right:  StringExtensions.Contains
+#LightGreen:Params(this string source,char toCheck,char quotationStart,char quotationEnd);
+#Lavender:return source.Contains(toCheck, [quotationStart], [quotationEnd]);
+stop
+start
+note right:  StringExtensions.Contains
+#LightGreen:Params(this string source,char toCheck,char[] quotationStarts,char[] quotationEnds);
+#LightSkyBlue:var result = false\nvar search = quotationStarts.Length == quotationEnds.Length\nvar quotationCounter = new int[quotationStarts.Length];
+#LightSkyBlue:int i = 0;
+while (i < source.Length && search) is (<color:green>yes)
+        #LightSkyBlue:var c = source[i];
+        #LightYellow:if (quotationStarts.FindIndex(q => q == c) > -1) then (<color:green>yes)
+                #WhiteSmoke:quotationCounter[quotationStarts.FindIndex(q => q == c)]++;
+            else (<color:red>no)
+                #LightYellow:if (quotationEnds.FindIndex(q => q == c) > -1) then (<color:green>yes)
+                        #WhiteSmoke:quotationCounter[quotationEnds.FindIndex(q => q == c)]--;
+                    else (<color:red>no)
+                        #LightYellow:if (quotationCounter.Sum(q => q % 2) == 0) then (<color:green>yes)
+                                #WhiteSmoke:result = c == toCheck;
+                                #WhiteSmoke:search = result == false;
+                        endif
+                endif
+        endif
+:i++;
+endwhile (<color:red>no)
+#Lavender:return result;
+stop
+start
+note right:  StringExtensions.Split
+#LightGreen:Params(this IEnumerable<string> source,string separator);
+#Lavender:return source.Select(l => string.IsNullOrEmpty(l) ? [] : l.Split(separator));
+stop
+start
+note right:  StringExtensions.SplitAndMap
+#LightGreen:Params(this IEnumerable<string> source,string separator,Func<string[], T> mapper);
+#Lavender:return source.Split(separator).Select(d => mapper(d));
+stop
+start
+note right:  StringExtensions.SplitAndMap
+#LightGreen:Params(this IEnumerable<string> source,string separator,Func<string[], string[], T> mapper);
+#LightSkyBlue:var splitSource = source.Split(separator)\nvar header = splitSource.FirstOrDefault();
+#Lavender:return splitSource.Skip(1).Select(d => mapper(d, header ?? []));
+stop
+start
+note right:  StringExtensions.GetValue
+#LightGreen:Params(this string source,string defaultValue);
+#Lavender:return string.IsNullOrEmpty(source) ? defaultValue : source;
+stop
+start
+note right:  StringExtensions.Divide
+#LightGreen:Params(this string text,string[] tags);
+#LightSkyBlue:List<DivideInfo> result = []\nint startIdx = 0\nvar tagInfos = text.GetAllTags(tags);
+:iterator = tagInfos.GetIterator();
+while (iterator.MoveNext()) is (<color:green>yes)
+:tagInfo = iterator.Current();
+            #LightYellow:if (startIdx < tagInfo.StartTagIndex) then (<color:green>yes)
+                    #WhiteSmoke:result.Add(new DivideInfo(startIdx, tagInfo.StartTagIndex - 1) { Text = text.Partialstring(startIdx, tagInfo.StartTagIndex - 1), });
+                    #WhiteSmoke:result.Add(new DivideInfo(tagInfo) { Text = text.Partialstring(tagInfo.StartTagIndex, tagInfo.EndTagIndex), });
+                    #WhiteSmoke:startIdx = tagInfo.EndTagIndex + 1;
+                else (<color:red>no)
+                    #LightYellow:if (startIdx == tagInfo.StartTagIndex) then (<color:green>yes)
+                            #WhiteSmoke:result.Add(new DivideInfo(tagInfo) { Text = text.Partialstring(tagInfo.StartTagIndex, tagInfo.EndTagIndex), });
+                            #WhiteSmoke:startIdx = tagInfo.EndTagIndex + 1;
+                    endif
+            endif
+endwhile (<color:red>no)
+#LightYellow:if (startIdx < text.Length - 1) then (<color:green>yes)
+        #WhiteSmoke:result.Add(new DivideInfo(startIdx, text.Length) { Text = text.Partialstring(startIdx, text.Length - 1), });
+endif
+#Lavender:return result;
+stop
+start
+note right:  StringExtensions.GetAllTags
+#LightGreen:Params(this string text,string[] tags);
+#LightSkyBlue:int parseIndex = 0\nList<TagInfo> result = [];
+#LightSkyBlue:int i = 0;
+while (i + 1 < tags.Length) is (<color:green>yes)
+        #LightSkyBlue:var tagInfos = text.GetAllTags(tags[i], tags[i + 1], parseIndex);
+        #LightYellow:if (tagInfos.Any()) then (<color:green>yes)
+                #WhiteSmoke:result.AddRange(tagInfos);
+                #WhiteSmoke:parseIndex = tagInfos.Last().EndTagIndex;
+        endif
+:i += 2;
+endwhile (<color:red>no)
+#Lavender:return result;
+stop
+start
+note right:  StringExtensions.GetAllTags
+#LightGreen:Params(this string text,string startTag,string endTag);
+#Lavender:return text.GetAllTags<TagInfo>(startTag, endTag, 0);
+stop
+start
+note right:  StringExtensions.GetAllTags
+#LightGreen:Params(this string text,string startTag,string endTag,int parseIndex);
+#Lavender:return text.GetAllTags<TagInfo>(startTag, endTag, parseIndex);
+stop
+start
+note right:  StringExtensions.GetAllTags
+#LightGreen:Params(this string text,string startTag,string endTag,int parseIndex,params char[] excludeBlocks);
+#Lavender:return text.GetAllTags<TagInfo>(startTag, endTag, parseIndex, excludeBlocks);
+stop
+start
+note right:  StringExtensions.GetAllTags
+#LightGreen:Params(this string text,string startTag,string endTag,int parseIndex,params char[] excludeBlocks);
+#LightSkyBlue:int startTagIndex\nint endTagIndex\nvar result = new List<T>()\nvar tagHeader = new TagInfo.TagHeader(text);
+repeat
+        #WhiteSmoke:startTagIndex = text.IndexOf(startTag, parseIndex, StringComparison.CurrentCultureIgnoreCase);
+        #LightSkyBlue:var startTagEndIndex = startTagIndex > -1 ? startTagIndex + startTag.Length : parseIndex;
+        #WhiteSmoke:endTagIndex = startTagEndIndex >= 0 ? text.IndexOf(endTag, startTagEndIndex, StringComparison.CurrentCultureIgnoreCase) : -1;
+        #LightYellow:if (startTagIndex > -1 && endTagIndex > startTagIndex) then (<color:green>yes)
+                #LightSkyBlue:int idx = startTagEndIndex;
+                #LightSkyBlue:int endTagSearchPosAt = startTagEndIndex;
+                #LightSkyBlue:var blockCounter = new int[excludeBlocks.Length];
+                while (idx < endTagIndex) is (<color:green>yes)
+                        #LightSkyBlue:int j = 0;
+                        while (j < blockCounter.Length) is (<color:green>yes)
+                                #LightYellow:if (text[idx] == excludeBlocks[j]) then (<color:green>yes)
+                                        #WhiteSmoke:endTagSearchPosAt = idx;
+                                        #WhiteSmoke:blockCounter[j] += j % 2 == 0 ? 1 : -1;
+                                endif
+                        :j++;
+                        endwhile (<color:red>no)
+                        #WhiteSmoke:idx++;
+                endwhile (<color:red>no)
+                while (idx < text.Length && blockCounter.Sum() != 0) is (<color:green>yes)
+                        #LightSkyBlue:int j = 0;
+                        while (j < blockCounter.Length) is (<color:green>yes)
+                                #LightYellow:if (text[idx] == excludeBlocks[j]) then (<color:green>yes)
+                                        #WhiteSmoke:endTagSearchPosAt = idx;
+                                        #WhiteSmoke:blockCounter[j] += j % 2 == 0 ? 1 : -1;
+                                endif
+                        :j++;
+                        endwhile (<color:red>no)
+                        #WhiteSmoke:idx++;
+                endwhile (<color:red>no)
+                #LightYellow:if (endTagSearchPosAt > endTagIndex && blockCounter.Sum() == 0) then (<color:green>yes)
+                        #WhiteSmoke:endTagIndex = text.IndexOf(endTag, endTagSearchPosAt, StringComparison.CurrentCultureIgnoreCase);
+                endif
+        endif
+        #LightYellow:if (startTagIndex > -1 && endTagIndex > startTagIndex) then (<color:green>yes)
+                #WhiteSmoke:result.Add(new T { Header = tagHeader, StartTag = startTag, StartTagIndex = startTagIndex, EndTag = endTag, EndTagIndex = endTagIndex, });
+                #WhiteSmoke:parseIndex = startTagEndIndex;
+        endif
+repeat while (startTagIndex > -1 && endTagIndex > -1) is (<color:green>yes)
+#Lavender:return result;
+stop
+start
+note right:  StringExtensions.InRange
+#LightGreen:Params(this string source,int index);
+#Lavender:return source != null && index > -1 && index < source.Length;
+stop
+start
+note right:  StringExtensions.IsNullOrEmpty
+#LightGreen:Params(this string? text);
+#Lavender:return string.IsNullOrEmpty(text);
+stop
+start
+note right:  StringExtensions.IsNullOrWhiteSpace
+#LightGreen:Params(this string text);
+#Lavender:return string.IsNullOrWhiteSpace(text);
+stop
+start
+note right:  StringExtensions.HasContent
+#LightGreen:Params(this string? source);
+#Lavender:return !string.IsNullOrEmpty(source);
+stop
+start
+note right:  StringExtensions.NotEquals
+#LightGreen:Params(this string source,string value);
+#Lavender:return source.AreEquals(value) == false;
+stop
+start
+note right:  StringExtensions.AreEquals
+#LightGreen:Params(this string source,string value);
+#Lavender:return source == null && value == null || value != null && source != null && source.Equals(value);
+stop
+start
+note right:  StringExtensions.AreEquals
+#LightGreen:Params(this string source,string value,StringComparison stringComparison);
+#Lavender:return source == null && value == null || value != null && source != null && source.Equals(value, stringComparison);
+stop
+start
+note right:  StringExtensions.GetValueOrDefault
+#LightGreen:Params(this string text);
+#Lavender:return text.GetValueOrDefault(string.Empty);
+stop
+start
+note right:  StringExtensions.GetValueOrDefault
+#LightGreen:Params(this string text,string defaultValue);
+#Lavender:return string.IsNullOrEmpty(text) ? defaultValue : text;
+stop
+start
+note right:  StringExtensions.SetIndent
+#LightGreen:Params(this string text);
+#Lavender:return text.SetIndent(IndentSpace, 1);
+stop
+start
+note right:  StringExtensions.SetIndent
+#LightGreen:Params(this string text,int count);
+#Lavender:return text.SetIndent(IndentSpace, count);
+stop
+start
+note right:  StringExtensions.SetIndent
+#LightGreen:Params(this string text,string indentSpace,int count);
+#LightSkyBlue:StringBuilder sb = new();
+#LightYellow:if (text != null) then (<color:green>yes)
+        #LightSkyBlue:int i = 0;
+        while (i < count) is (<color:green>yes)
+            #WhiteSmoke:sb.Append(indentSpace);
+        :i++;
+        endwhile (<color:red>no)
+endif
+#WhiteSmoke:sb.Append(text);
+#Lavender:return sb.ToString();
+stop
+start
+note right:  StringExtensions.SetIndent
+#LightGreen:Params(this string[] lines,int count);
+#LightYellow:if (lines != null) then (<color:green>yes)
+        #LightSkyBlue:int i = 0;
+        while (i < lines.Length) is (<color:green>yes)
+                #WhiteSmoke:lines[i] = lines[i].SetIndent(count);
+        :i++;
+        endwhile (<color:red>no)
+endif
+#Lavender:return lines ?? [];
+stop
+start
+note right:  StringExtensions.SetIndent
+#LightGreen:Params(this IEnumerable<string> lines,int count);
+#Lavender:return lines.ToArray().SetIndent(count);
+stop
+start
+note right:  StringExtensions.ToText
+#LightGreen:Params(this IEnumerable<string> lines);
+#LightSkyBlue:StringBuilder sb = new();
+:iterator = lines.GetIterator();
+while (iterator.MoveNext()) is (<color:green>yes)
+:line = iterator.Current();
+            #LightYellow:if (sb.Length > 0) then (<color:green>yes)
+                    #WhiteSmoke:sb.AppendLine();
+            endif
+            #WhiteSmoke:sb.Append(line);
+endwhile (<color:red>no)
+#Lavender:return sb.ToString();
+stop
+start
+note right:  StringExtensions.ToText
+#LightGreen:Params(this IEnumerable<string> lines,Func<string, string> lineConvert);
+#LightSkyBlue:StringBuilder sb = new();
+:iterator = lines.GetIterator();
+while (iterator.MoveNext()) is (<color:green>yes)
+:line = iterator.Current();
+            #WhiteSmoke:sb.AppendLine(lineConvert == null ? line : lineConvert(line));
+endwhile (<color:red>no)
+#Lavender:return sb.ToString();
+stop
+start
+note right:  StringExtensions.ToLines
+#LightGreen:Params(this string text);
+#LightSkyBlue:List<string> result = [.. text.Split(new string[] { Environment.NewLine }, StringSplitOptions.None)];
+#Lavender:return result;
+stop
+start
+note right:  StringExtensions.Trim
+#LightGreen:Params(this IEnumerable<string> source);
+#LightSkyBlue:var result = new List<string?>()\nvar prvEmpty = true;
+:iterator = source.GetIterator();
+while (iterator.MoveNext()) is (<color:green>yes)
+:item = iterator.Current();
+            #LightYellow:if (string.IsNullOrEmpty(item) && prvEmpty == false) then (<color:green>yes)
+                    #WhiteSmoke:result.Add(string.Empty);
+                    #WhiteSmoke:prvEmpty = true;
+                else (<color:red>no)
+                    #LightYellow:if (string.IsNullOrEmpty(item) == false) then (<color:green>yes)
+                            #WhiteSmoke:result.Add(item);
+                            #WhiteSmoke:prvEmpty = false;
+                    endif
+            endif
+endwhile (<color:red>no)
+#LightSkyBlue:var lastElem = result.LastOrDefault();
+#LightYellow:if (string.IsNullOrEmpty(lastElem)) then (<color:green>yes)
+        #WhiteSmoke:_ = result.Remove(lastElem);
+endif
+#Lavender:return result;
+stop
+start
+note right:  StringExtensions.Partialstring
+#LightGreen:Params(this string text,string from,string to);
+#LightSkyBlue:var result = default(string);
+#LightYellow:if (text.HasContent()) then (<color:green>yes)
+        #LightSkyBlue:int f = text.IndexOf(from);
+        #LightSkyBlue:int t = text.IndexOf(to, f + 1) + to.Length - 1;
+        #WhiteSmoke:result = text.Partialstring(f, t);
+endif
+#Lavender:return result ?? String.Empty;
+stop
+start
+note right:  StringExtensions.Partialstring
+#LightGreen:Params(this string text,int from,int to);
+#LightSkyBlue:StringBuilder sb = new();
+#LightYellow:if (string.IsNullOrEmpty(text) == false) then (<color:green>yes)
+        #LightSkyBlue:int i = from;
+        while (i >= 0 && i <= to && i < text.Length) is (<color:green>yes)
+                #WhiteSmoke:sb.Append(text[i]);
+        :i++;
+        endwhile (<color:red>no)
+endif
+#Lavender:return sb.ToString();
+stop
+start
+note right:  StringExtensions.Betweenstring
+#LightGreen:Params(this string text,string from,string to);
+#LightSkyBlue:var result = default(string);
+#LightYellow:if (text.HasContent()) then (<color:green>yes)
+        #LightSkyBlue:int f = text.IndexOf(from) + from.Length;
+        #LightSkyBlue:int t = text.IndexOf(to, f + 1) - 1;
+        #WhiteSmoke:result = text.Partialstring(f, t);
+endif
+#Lavender:return result ?? String.Empty;
+stop
+start
+note right:  StringExtensions.Remove
+#LightGreen:Params(this string text,string startTag,string endTag);
+#LightSkyBlue:StringBuilder result = new()\nint parseIndex = 0\nint startTagIndex\nint endTagIndex;
+repeat
+        #WhiteSmoke:startTagIndex = text.IndexOf(startTag, parseIndex, StringComparison.CurrentCultureIgnoreCase);
+        #LightSkyBlue:var startTagEndIndex = startTagIndex > -1 ? startTagIndex + startTag.Length : parseIndex;
+        #WhiteSmoke:endTagIndex = startTagEndIndex >= 0 ? text.IndexOf(endTag, startTagEndIndex, StringComparison.CurrentCultureIgnoreCase) : -1;
+        #LightSkyBlue:var endTagEndIndex = endTagIndex > -1 ? endTagIndex + endTag.Length : parseIndex;
+        #LightYellow:if (startTagIndex > -1 && endTagIndex > startTagIndex) then (<color:green>yes)
+                #WhiteSmoke:result.Append(text[parseIndex..startTagIndex]);
+                #WhiteSmoke:parseIndex = endTagEndIndex;
+        endif
+repeat while (startTagIndex > -1 && endTagIndex > -1) is (<color:green>yes)
+#LightYellow:if (parseIndex < text.Length) then (<color:green>yes)
+        #WhiteSmoke:result.Append(text[parseIndex..]);
+endif
+#Lavender:return result.ToString();
+stop
+start
+note right:  StringExtensions.ReplaceUmlauts
+#LightGreen:Params(this string text);
+#LightSkyBlue:StringBuilder sb = new();
+#LightYellow:if (text != null) then (<color:green>yes)
+        :iterator = text.GetIterator();
+        while (iterator.MoveNext()) is (<color:green>yes)
+        :item = iterator.Current();
+                            #LightYellow:if (item == 223) then (<color:green>yes)
+                                    #WhiteSmoke:sb.Append("ss");
+                                else (<color:red>no)
+                                    #LightYellow:if (item == 196) then (<color:green>yes)
+                                            #WhiteSmoke:sb.Append("Ae");
+                                        else (<color:red>no)
+                                            #LightYellow:if (item == 228) then (<color:green>yes)
+                                                    #WhiteSmoke:sb.Append("ae");
+                                                else (<color:red>no)
+                                                    #LightYellow:if (item == 214) then (<color:green>yes)
+                                                            #WhiteSmoke:sb.Append("Oe");
+                                                        else (<color:red>no)
+                                                            #LightYellow:if (item == 246) then (<color:green>yes)
+                                                                    #WhiteSmoke:sb.Append("oe");
+                                                                else (<color:red>no)
+                                                                    #LightYellow:if (item == 220) then (<color:green>yes)
+                                                                            #WhiteSmoke:sb.Append("Ue");
+                                                                        else (<color:red>no)
+                                                                            #LightYellow:if (item == 252) then (<color:green>yes)
+                                                                                    #WhiteSmoke:sb.Append("ue");
+                                                                                else (<color:red>no)
+                                                                                        #WhiteSmoke:sb.Append(item);
+                                                                            endif
+                                                                    endif
+                                                            endif
+                                                    endif
+                                            endif
+                                    endif
+                            endif
+        endwhile (<color:red>no)
+endif
+#Lavender:return sb.ToString();
+stop
+start
+note right:  StringExtensions.ReplaceAll
+#LightGreen:Params(this string text,TagInfo tagInfo,Func<string, string> replace);
+#LightSkyBlue:StringBuilder result = new()\nint parseIndex = 0\nint startTagIndex\nint endTagIndex;
+repeat
+        #WhiteSmoke:startTagIndex = text.IndexOf(tagInfo.StartTag, parseIndex, StringComparison.CurrentCultureIgnoreCase);
+        #LightSkyBlue:int startTagEndIndex = startTagIndex > -1 ? startTagIndex + tagInfo.StartTag.Length : parseIndex;
+        #WhiteSmoke:endTagIndex = startTagEndIndex >= 0 ? text.IndexOf(tagInfo.EndTag, startTagEndIndex, StringComparison.CurrentCultureIgnoreCase) : -1;
+        #LightSkyBlue:int endTagEndIndex = endTagIndex > -1 ? endTagIndex + tagInfo.EndTag.Length : parseIndex;
+        #LightYellow:if (startTagIndex > -1 && endTagIndex > startTagIndex) then (<color:green>yes)
+                #LightSkyBlue:string substr = text.Substring(startTagIndex, endTagIndex - startTagIndex + tagInfo.EndTag.Length);
+                #WhiteSmoke:result.Append(text[parseIndex..startTagIndex]);
+                #LightYellow:if (replace != null) then (<color:green>yes)
+                        #WhiteSmoke:result.Append(replace(substr));
+                endif
+                #WhiteSmoke:parseIndex = endTagEndIndex;
+        endif
+repeat while (startTagIndex > -1 && endTagIndex > -1) is (<color:green>yes)
+#LightYellow:if (parseIndex < text.Length) then (<color:green>yes)
+        #WhiteSmoke:result.Append(text[parseIndex..]);
+endif
+#Lavender:return result.ToString();
+stop
+start
+note right:  StringExtensions.ReplaceAll
+#LightGreen:Params(this string text,string startTag,string endTag,string replaceText);
+#Lavender:return text.ReplaceAll(startTag, endTag, s => replaceText);
+stop
+start
+note right:  StringExtensions.ReplaceAll
+#LightGreen:Params(this string text,string startTag,string endTag,Func<string, string> replace);
+#LightSkyBlue:int parseIndex = 0\nint startTagIndex\nint endTagIndex\nStringBuilder result = new();
+repeat
+        #WhiteSmoke:startTagIndex = text.IndexOf(startTag, parseIndex, StringComparison.CurrentCultureIgnoreCase);
+        #LightSkyBlue:int startTagEndIndex = startTagIndex > -1 ? startTagIndex + startTag.Length : parseIndex;
+        #WhiteSmoke:endTagIndex = startTagEndIndex >= 0 ? text.IndexOf(endTag, startTagEndIndex, StringComparison.CurrentCultureIgnoreCase) : -1;
+        #LightSkyBlue:int endTagEndIndex = endTagIndex > -1 ? endTagIndex + endTag.Length : parseIndex;
+        #LightYellow:if (startTagIndex > -1 && endTagIndex > startTagIndex) then (<color:green>yes)
+                #LightSkyBlue:string substr = text.Substring(startTagIndex, endTagIndex - startTagIndex + endTag.Length);
+                #WhiteSmoke:result.Append(text[parseIndex..startTagIndex]);
+                #LightYellow:if (replace != null) then (<color:green>yes)
+                        #WhiteSmoke:result.Append(replace(substr));
+                endif
+                #WhiteSmoke:parseIndex = endTagEndIndex;
+        endif
+repeat while (startTagIndex > -1 && endTagIndex > -1) is (<color:green>yes)
+#LightYellow:if (parseIndex < text.Length) then (<color:green>yes)
+        #WhiteSmoke:result.Append(text[parseIndex..]);
+endif
+#Lavender:return result.ToString();
+stop
+start
+note right:  StringExtensions.RemoveAll
+#LightGreen:Params(this string source);
+#Lavender:return source.RemoveAll(" ");
+stop
+start
+note right:  StringExtensions.RemoveAll
+#LightGreen:Params(this string source,params string[] removeItems);
+#LightSkyBlue:var result = source;
+:iterator = removeItems.GetIterator();
+while (iterator.MoveNext()) is (<color:green>yes)
+:item = iterator.Current();
+            #WhiteSmoke:result = result.Replace(item, string.Empty);
+endwhile (<color:red>no)
+#Lavender:return result;
+stop
+start
+note right:  StringExtensions.ToInt
+#LightGreen:Params(this string text);
+#LightSkyBlue:int result = 0;
+:iterator = text.GetIterator();
+while (iterator.MoveNext()) is (<color:green>yes)
+:item = iterator.Current();
+            #LightYellow:if (char.IsDigit(item)) then (<color:green>yes)
+                    #WhiteSmoke:result *= 10;
+                    #WhiteSmoke:result = result + item - '0';
+            endif
+endwhile (<color:red>no)
+#Lavender:return result;
+stop
+start
+note right:  StringExtensions.ToLong
+#LightGreen:Params(this string text);
+#LightSkyBlue:long result = 0;
+:iterator = text.GetIterator();
+while (iterator.MoveNext()) is (<color:green>yes)
+:item = iterator.Current();
+            #LightYellow:if (char.IsDigit(item)) then (<color:green>yes)
+                    #WhiteSmoke:result *= 10;
+                    #WhiteSmoke:result = result + item - '0';
+            endif
+endwhile (<color:red>no)
+#Lavender:return result;
+stop
+start
+note right:  StringExtensions.ToFileName
+#LightGreen:Params(this string text);
+:iterator = Path.GetInvalidFileNameChars().GetIterator();
+while (iterator.MoveNext()) is (<color:green>yes)
+:c = iterator.Current();
+            #WhiteSmoke:text = text.Replace(c, '_');
+endwhile (<color:red>no)
+#Lavender:return text ?? String.Empty;
+stop
+start
+note right:  StringExtensions.ToEnumerable
+#LightGreen:Params(this string source,string separator);
+#LightSkyBlue:List<T?> result = [];
+#LightYellow:if (string.IsNullOrEmpty(source) == false) then (<color:green>yes)
+        #LightSkyBlue:string[] items = source.Split(separator);
+        :iterator = items.GetIterator();
+        while (iterator.MoveNext()) is (<color:green>yes)
+        :item = iterator.Current();
+                            #LightYellow:if (item.Equals(NullText)) then (<color:green>yes)
+                                    #WhiteSmoke:result.Add(default);
+                                else (<color:red>no)
+                            endif
+        endwhile (<color:red>no)
+endif
+#Lavender:return result;
+stop
+start
+note right:  StringExtensions.ToByteArray
+#LightGreen:Params(this string source);
+#LightSkyBlue:byte[]? result = null;
+#LightYellow:if (source != null) then (<color:green>yes)
+        #WhiteSmoke:result = new ASCIIEncoding().GetBytes(source);
+endif
+#Lavender:return result ?? [];
+stop
+start
+note right:  StringExtensions.Encrypt
+#LightGreen:Params(this string text,string keyString);
+#LightSkyBlue:var key = Encoding.UTF8.GetBytes(keyString)\nvar aesAlg = Aes.Create()\nvar encryptor = aesAlg.CreateEncryptor(key, aesAlg.IV)\nvar msEncrypt = new MemoryStream();
+#LightSkyBlue:var iv = aesAlg.IV\nvar decryptedContent = msEncrypt.ToArray()\nvar result = new byte[iv.Length + decryptedContent.Length];
+#WhiteSmoke:Buffer.BlockCopy(iv, 0, result, 0, iv.Length);
+#WhiteSmoke:Buffer.BlockCopy(decryptedContent, 0, result, iv.Length, decryptedContent.Length);
+#Lavender:return Convert.ToBase64String(result);
+stop
+start
+note right:  StringExtensions.Decrypt
+#LightGreen:Params(this string cipherText,string keyString);
+#LightSkyBlue:var fullCipher = Convert.FromBase64String(cipherText)\nvar iv = new byte[16]\nvar cipher = new byte[16];
+#WhiteSmoke:Buffer.BlockCopy(fullCipher, 0, iv, 0, iv.Length);
+#WhiteSmoke:Buffer.BlockCopy(fullCipher, iv.Length, cipher, 0, iv.Length);
+#LightSkyBlue:var key = Encoding.UTF8.GetBytes(keyString)\nstring result\nvar aesAlg = Aes.Create()\nvar decryptor = aesAlg.CreateDecryptor(key, iv);
+#Lavender:return result;
+stop
+start
+note right:  StringExtensions.IsWord
+#LightGreen:Params(this string text);
+#LightSkyBlue:var result = text.IsNullOrEmpty() == false;
+#LightSkyBlue:int i = 0;
+while (result && i < text.Length) is (<color:green>yes)
+        #WhiteSmoke:result = char.IsLetter(text[i]);
+:i++;
+endwhile (<color:red>no)
+#Lavender:return result;
+stop
+start
+note right:  StringExtensions.CreatePluralWord
+#LightGreen:Params(this string wordInSingular);
+#LightSkyBlue:string result = wordInSingular;
+#LightYellow:if (wordInSingular.IsWord()) then (<color:green>yes)
+        #LightYellow:if (wordInSingular.EndsWith("y", StringComparison.CurrentCultureIgnoreCase)) then (<color:green>yes)
+                #WhiteSmoke:result = $"{wordInSingular[0..^1]}ies";
+            else (<color:red>no)
+                #LightYellow:if (wordInSingular.EndsWith("h", StringComparison.CurrentCultureIgnoreCase)) then (<color:green>yes)
+                        #WhiteSmoke:result = $"{wordInSingular}es";
+                    else (<color:red>no)
+                        #LightYellow:if (wordInSingular.EndsWith("x", StringComparison.CurrentCultureIgnoreCase)) then (<color:green>yes)
+                                #WhiteSmoke:result = $"{wordInSingular}es";
+                            else (<color:red>no)
+                                #LightYellow:if (wordInSingular.EndsWith("f", StringComparison.CurrentCultureIgnoreCase)) then (<color:green>yes)
+                                        #WhiteSmoke:result = $"{wordInSingular[0..^1]}ves";
+                                    else (<color:red>no)
+                                        #LightYellow:if (wordInSingular.EndsWith("ss", StringComparison.CurrentCultureIgnoreCase)) then (<color:green>yes)
+                                                #WhiteSmoke:result = $"{wordInSingular}es";
+                                            else (<color:red>no)
+                                                #LightYellow:if (wordInSingular.EndsWith("s", StringComparison.CurrentCultureIgnoreCase)) then (<color:green>yes)
+                                                        #WhiteSmoke:result = $"{wordInSingular}";
+                                                    else (<color:red>no)
+                                                            #WhiteSmoke:result = $"{wordInSingular}s";
+                                                endif
+                                        endif
+                                endif
+                        endif
+                endif
+        endif
+endif
+#Lavender:return result;
+stop
+start
+note right:  StringExtensions.Shrink
+#LightGreen:Params(this string source,char charToRemove);
+#LightSkyBlue:var result = new StringBuilder()\nvar hasFound = false;
+:iterator = source.GetIterator();
+while (iterator.MoveNext()) is (<color:green>yes)
+:c = iterator.Current();
+            #LightYellow:if (c == charToRemove) then (<color:green>yes)
+                    #LightYellow:if (hasFound == false) then (<color:green>yes)
+                            #WhiteSmoke:hasFound = true;
+                            #WhiteSmoke:result.Append(c);
+                    endif
+                else (<color:red>no)
+                        #WhiteSmoke:hasFound = false;
+                        #WhiteSmoke:result.Append(c);
+            endif
+endwhile (<color:red>no)
+#Lavender:return result.ToString();
+stop
+start
+note right:  TagInfo.GetText
+#Lavender:return GetText(InnerText);
+stop
+start
+note right:  TagInfo.GetText
+#LightGreen:Params(string innerText);
+#Lavender:return Source?.Partialstring(0, StartTagIndex + StartTag.Length - 1) + innerText + Source?.Partialstring(EndTagIndex, Source.Length - 1);
+stop
+start
+note right:  TagInfo.ToString
+#Lavender:return FullText;
 stop
 footer
 generated with the DiagramCreator by Prof.Gehrer

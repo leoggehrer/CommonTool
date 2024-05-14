@@ -1,0 +1,15 @@
+@startuml StringExtensions.Partialstring
+title StringExtensions.Partialstring
+start
+#LightGreen:Params(this string text,int from,int to);
+#LightSkyBlue:StringBuilder sb = new();
+#LightYellow:if (string.IsNullOrEmpty(text) == false) then (<color:green>yes)
+        #LightSkyBlue:int i = from;
+        while (i >= 0 && i <= to && i < text.Length) is (<color:green>yes)
+                #WhiteSmoke:sb.Append(text[i]);
+        :i++;
+        endwhile (<color:red>no)
+endif
+#Lavender:return sb.ToString();
+stop
+@enduml

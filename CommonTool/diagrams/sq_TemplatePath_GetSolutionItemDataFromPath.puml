@@ -13,6 +13,7 @@ GetSolutionItemDataFromPath_p0_p1 -[#grey]> path_Split_Path_DirectorySeparatorCh
 path_Split_Path_DirectorySeparatorChar_StringSplitOptions_RemoveEmptyEntries_GetEnumerator -[#blue]-> GetSolutionItemDataFromPath_p0_p1 : itemsEnumerator
 loop#LightCoral itemName.IsNullOrEmpty() && itemsEnumerator.MoveNext()
     GetSolutionItemDataFromPath_p0_p1 -[#grey]> itemName_IsNullOrEmpty
+    itemName_IsNullOrEmpty -[#blue]-> GetSolutionItemDataFromPath_p0_p1 : result
     GetSolutionItemDataFromPath_p0_p1 -[#grey]> itemsEnumerator_MoveNext
     itemsEnumerator_MoveNext -[#blue]-> GetSolutionItemDataFromPath_p0_p1 : result
     GetSolutionItemDataFromPath_p0_p1 -[#grey]> Path_Combine_a0_a1 : (subPath, itemsEnumerator.Current.ToString()!)

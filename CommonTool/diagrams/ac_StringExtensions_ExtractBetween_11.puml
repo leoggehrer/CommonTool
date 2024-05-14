@@ -1,0 +1,36 @@
+@startuml StringExtensions.ExtractBetween
+title StringExtensions.ExtractBetween
+start
+#LightGreen:Params(this string source,char openingBracket,char closingBracket,int startPosition);
+#LightSkyBlue:var toScan = true\nvar open = false\nvar openCount = 0\nvar result = new StringBuilder();
+#LightSkyBlue:int i = startPosition;
+while (i > -1 && i < source.Length && toScan) is (<color:green>yes)
+        #LightYellow:if (source[i] == openingBracket && open == false) then (<color:green>yes)
+                #WhiteSmoke:open = true;
+                #WhiteSmoke:openCount = 1;
+            else (<color:red>no)
+                #LightYellow:if (source[i] == openingBracket && open) then (<color:green>yes)
+                        #WhiteSmoke:openCount++;
+                        #WhiteSmoke:result.Append(source[i]);
+                    else (<color:red>no)
+                        #LightYellow:if (source[i] == closingBracket && openCount > 1) then (<color:green>yes)
+                                #WhiteSmoke:openCount--;
+                                #WhiteSmoke:result.Append(source[i]);
+                            else (<color:red>no)
+                                #LightYellow:if (source[i] == closingBracket && openCount == 1) then (<color:green>yes)
+                                        #WhiteSmoke:open = false;
+                                        #WhiteSmoke:openCount = 0;
+                                        #WhiteSmoke:toScan = false;
+                                    else (<color:red>no)
+                                        #LightYellow:if (openCount > 0) then (<color:green>yes)
+                                                #WhiteSmoke:result.Append(source[i]);
+                                        endif
+                                endif
+                        endif
+                endif
+        endif
+:i++;
+endwhile (<color:red>no)
+#Lavender:return toScan == false ? result.ToString() : string.Empty;
+stop
+@enduml

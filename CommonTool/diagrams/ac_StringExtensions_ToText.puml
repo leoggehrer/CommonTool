@@ -1,0 +1,16 @@
+@startuml StringExtensions.ToText
+title StringExtensions.ToText
+start
+#LightGreen:Params(this IEnumerable<string> lines);
+#LightSkyBlue:StringBuilder sb = new();
+:iterator = lines.GetIterator();
+while (iterator.MoveNext()) is (<color:green>yes)
+:line = iterator.Current();
+            #LightYellow:if (sb.Length > 0) then (<color:green>yes)
+                    #WhiteSmoke:sb.AppendLine();
+            endif
+            #WhiteSmoke:sb.Append(line);
+endwhile (<color:red>no)
+#Lavender:return sb.ToString();
+stop
+@enduml

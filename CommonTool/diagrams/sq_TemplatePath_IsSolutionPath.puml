@@ -5,5 +5,7 @@ participant "path.HasContent()" as path_HasContent #LightGreen
 participant "GetSolutionItemDataFromPath(path,".sln").Name.HasContent()" as GetSolutionItemDataFromPath_path_sln_Name_HasContent #LightGreen
 autonumber
 IsSolutionPath_p0 -[#grey]> path_HasContent
+path_HasContent -[#blue]-> IsSolutionPath_p0 : result
 IsSolutionPath_p0 -[#grey]> GetSolutionItemDataFromPath_path_sln_Name_HasContent
+GetSolutionItemDataFromPath_path_sln_Name_HasContent -[#blue]-> IsSolutionPath_p0 : result
 @enduml

@@ -30,6 +30,154 @@ abstract class Application #White {
 + {static} List<string> GetSourceCodePaths(string path, string[] searchPatterns)
 + {static} List<string> GetSourceCodeFiles(string path, string[] searchPatterns, int maxDeep)
 }
+ class IEnumerableExtensions << static >> #GhostWhite {
+---
+---
++ {static} int IndexOf(IEnumerable<T> source, Predicate<T> predicate)
++ {static} IEnumerable<ST> ToEnumerable(IEnumerable<T> source, Func<T, ST> expandSelector)
++ {static} IEnumerable<ST> Flatten(IEnumerable<T> source, Func<T, IEnumerable<ST>> expandSelector)
++ {static} int FindIndex(IEnumerable<T> items, Func<T, bool> predicate)
++ {static} int IndexOf(IEnumerable<T> items, T item)
++ {static} IEnumerable<T> TakeTo(IEnumerable<T> source, Predicate<T> predicate)
++ {static} IEnumerable<T> ForEach(IEnumerable<T> source, Action<T> action)
++ {static} IEnumerable<T> Clone(IEnumerable<T> source)
++ {static} bool IsSubsequence(IEnumerable<T> sequence, IEnumerable<T> subsequence)
+}
+ class TagHeader #GhostWhite {
+- string _source
+---
++ string getSource()
+---
+}
+ class MenuItem #GhostWhite {
+- bool _isdisplayed
+- string _key
+- string _optionalkey
+- string _text
+- Action<MenuItem> _action
+- Dictionary<string, object> _params
+- ConsoleColor _foregroundcolor
+- string _tag
+---
++ bool getIsDisplayed()
++ Void setIsDisplayed(bool value)
++ string getKey()
++ Void setKey(string value)
++ string getOptionalKey()
++ Void setOptionalKey(string value)
++ string getText()
++ Void setText(string value)
++ Action<MenuItem> getAction()
++ Void setAction(Action<MenuItem> value)
++ Dictionary<string, object> getParams()
++ Void setParams(Dictionary<string, object> value)
++ ConsoleColor getForegroundColor()
++ Void setForegroundColor(ConsoleColor value)
++ string getTag()
++ Void setTag(string value)
+---
+}
+ class StringExtensions << static >> #GhostWhite {
+- {static} string _separator
+- {static} string _indentspace
+- {static} string _nulltext
+---
++ {static} string getSeparator()
++ {static} Void setSeparator(string value)
++ {static} string getIndentSpace()
++ {static} Void setIndentSpace(string value)
++ {static} string getNullText()
++ {static} Void setNullText(string value)
+---
++ {static} void CheckNotNullOrEmpty(string? source, string argName)
++ {static} string CuttingOut(string source, int startIdx)
++ {static} string CuttingOut(string source, int startIdx, int endIdx)
++ {static} string Substring(string source, int index, string text)
++ {static} string ExtractBetween(string source, string startText, string endText)
++ {static} string ExtractBetween(string source, char openingBracket, char closingBracket)
++ {static} string ExtractBetween(string source, char openingBracket, char closingBracket, int startPosition)
++ {static} string ReplaceBetween(string source, string startText, string endText, string replaceText)
++ {static} bool TryParse(string value, Type type, object? typeValue)
++ {static} bool ContainsIgnoreCase(string source, string toCheck)
++ {static} bool Contains(string source, string[] toChecks)
++ {static} bool Contains(string source, StringComparison comparison, string[] toChecks)
++ {static} bool Contains(string source, char toCheck, char quotationStart, char quotationEnd)
++ {static} bool Contains(string source, char toCheck, char[] quotationStarts, char[] quotationEnds)
++ {static} IEnumerable<string[]> Split(IEnumerable<string> source, string separator)
++ {static} IEnumerable<T> SplitAndMap(IEnumerable<string> source, string separator, Func<string[], T> mapper)
++ {static} IEnumerable<T> SplitAndMap(IEnumerable<string> source, string separator, Func<string[], string[], T> mapper)
++ {static} string GetValue(string source, string defaultValue)
++ {static} IEnumerable<DivideInfo> Divide(string text, string[] tags)
++ {static} IEnumerable<TagInfo> GetAllTags(string text, string[] tags)
++ {static} IEnumerable<TagInfo> GetAllTags(string text, string startTag, string endTag)
++ {static} IEnumerable<TagInfo> GetAllTags(string text, string startTag, string endTag, int parseIndex)
++ {static} IEnumerable<TagInfo> GetAllTags(string text, string startTag, string endTag, int parseIndex, char[] excludeBlocks)
++ {static} IEnumerable<T> GetAllTags(string text, string startTag, string endTag, int parseIndex, char[] excludeBlocks)
++ {static} bool InRange(string source, int index)
++ {static} bool IsNullOrEmpty(string? text)
++ {static} bool IsNullOrWhiteSpace(string text)
++ {static} bool HasContent(string? source)
++ {static} bool NotEquals(string source, string value)
++ {static} bool AreEquals(string source, string value)
++ {static} bool AreEquals(string source, string value, StringComparison stringComparison)
++ {static} string GetValueOrDefault(string text)
++ {static} string GetValueOrDefault(string text, string defaultValue)
++ {static} string SetIndent(string text)
++ {static} string SetIndent(string text, int count)
++ {static} string SetIndent(string text, string indentSpace, int count)
++ {static} string[] SetIndent(string[] lines, int count)
++ {static} IEnumerable<string> SetIndent(IEnumerable<string> lines, int count)
++ {static} string ToText(IEnumerable<string> lines)
++ {static} string ToText(IEnumerable<string> lines, Func<string, string> lineConvert)
++ {static} IEnumerable<string> ToLines(string text)
++ {static} IEnumerable<string?> Trim(IEnumerable<string> source)
++ {static} string Partialstring(string text, string from, string to)
++ {static} string Partialstring(string text, int from, int to)
++ {static} string Betweenstring(string text, string from, string to)
++ {static} string Remove(string text, string startTag, string endTag)
++ {static} string ReplaceUmlauts(string text)
++ {static} string ReplaceAll(string text, TagInfo tagInfo, Func<string, string> replace)
++ {static} string ReplaceAll(string text, string startTag, string endTag, string replaceText)
++ {static} string ReplaceAll(string text, string startTag, string endTag, Func<string, string> replace)
++ {static} string RemoveAll(string source)
++ {static} string RemoveAll(string source, string[] removeItems)
++ {static} int ToInt(string text)
++ {static} long ToLong(string text)
++ {static} string ToFileName(string text)
++ {static} IEnumerable<T?> ToEnumerable(string source, string separator)
++ {static} byte[] ToByteArray(string source)
++ {static} string Encrypt(string text, string keyString)
++ {static} string Decrypt(string cipherText, string keyString)
+- {static} bool IsWord(string text)
++ {static} string CreatePluralWord(string wordInSingular)
++ {static} string Shrink(string source, char charToRemove)
+}
+ class TagInfo #GhostWhite {
+- TagHeader? _header
+- string _starttag
+- int _starttagindex
+- string _endtag
+- int _endtagindex
+---
+# TagHeader? getHeader()
+# Void setHeader(TagHeader? value)
++ string getSource()
++ string getStartTag()
+# Void setStartTag(string value)
++ int getStartTagIndex()
+# Void setStartTagIndex(int value)
++ string getEndTag()
+# Void setEndTag(string value)
++ int getEndTagIndex()
+# Void setEndTagIndex(int value)
++ int getEndIndex()
++ string getFullText()
++ string getInnerText()
+---
++ string GetText()
++ string GetText(string innerText)
++ string ToString()
+}
 abstract class ConsoleApplication #White {
 - int _pageindex
 - int _pagesize
@@ -99,32 +247,11 @@ abstract class ConsoleApplication #White {
 + {static} string ChangeTemplateSolutionPath(string currentPath, int maxDeep, string[] queryPaths)
 + {static} string SelectOrChangeToSubPath(string currentPath, int maxDepth, string[] queryPaths)
 }
- class MenuItem #GhostWhite {
-- bool _isdisplayed
-- string _key
-- string _optionalkey
+ class DivideInfo #GhostWhite {
 - string _text
-- Action<MenuItem> _action
-- Dictionary<string, object> _params
-- ConsoleColor _foregroundcolor
-- string _tag
 ---
-+ bool getIsDisplayed()
-+ Void setIsDisplayed(bool value)
-+ string getKey()
-+ Void setKey(string value)
-+ string getOptionalKey()
-+ Void setOptionalKey(string value)
 + string getText()
-+ Void setText(string value)
-+ Action<MenuItem> getAction()
-+ Void setAction(Action<MenuItem> value)
-+ Dictionary<string, object> getParams()
-+ Void setParams(Dictionary<string, object> value)
-+ ConsoleColor getForegroundColor()
-+ Void setForegroundColor(ConsoleColor value)
-+ string getTag()
-+ Void setTag(string value)
+# Void setText(string value)
 ---
 }
  class TemplatePath #GhostWhite {
@@ -155,4 +282,6 @@ abstract class ConsoleApplication #White {
 + {static} void OpenSolutionFolder(string solutionPath)
 }
 ConsoleApplication <|-- Application
+DivideInfo <|-- TagInfo
+TagInfo "0..1" *-- "1" TagHeader : _header
 @enduml

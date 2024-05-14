@@ -1,0 +1,8 @@
+@startuml StringExtensions.Split
+title StringExtensions.Split
+participant "Split(this IEnumerable<string> source,string separator)" as Split_p0_p1 #LightYellow
+participant "source.Select(a0)" as source_Select_a0 #LightGreen
+autonumber
+Split_p0_p1 -[#grey]> source_Select_a0 : (l => string.IsNullOrEmpty(l) ? [] : l.Split(separator))
+source_Select_a0 -[#blue]-> Split_p0_p1 : result
+@enduml

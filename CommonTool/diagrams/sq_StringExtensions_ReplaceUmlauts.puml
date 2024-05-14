@@ -1,0 +1,39 @@
+@startuml StringExtensions.ReplaceUmlauts
+title StringExtensions.ReplaceUmlauts
+participant "ReplaceUmlauts(this string text)" as ReplaceUmlauts_p0 #LightYellow
+participant "sb.Append(a0)" as sb_Append_a0 #LightGreen
+autonumber
+alt#LightBlue text != null
+    loop#LightCoral text
+        alt#LightBlue item == 223
+            ReplaceUmlauts_p0 -[#grey]> sb_Append_a0 : ("ss")
+            else
+                alt#LightBlue item == 196
+                    ReplaceUmlauts_p0 -[#grey]> sb_Append_a0 : ("Ae")
+                    else
+                        alt#LightBlue item == 228
+                            ReplaceUmlauts_p0 -[#grey]> sb_Append_a0 : ("ae")
+                            else
+                                alt#LightBlue item == 214
+                                    ReplaceUmlauts_p0 -[#grey]> sb_Append_a0 : ("Oe")
+                                    else
+                                        alt#LightBlue item == 246
+                                            ReplaceUmlauts_p0 -[#grey]> sb_Append_a0 : ("oe")
+                                            else
+                                                alt#LightBlue item == 220
+                                                    ReplaceUmlauts_p0 -[#grey]> sb_Append_a0 : ("Ue")
+                                                    else
+                                                        alt#LightBlue item == 252
+                                                            ReplaceUmlauts_p0 -[#grey]> sb_Append_a0 : ("ue")
+                                                            else
+                                                                ReplaceUmlauts_p0 -[#grey]> sb_Append_a0 : (item)
+                                                        end
+                                                end
+                                        end
+                                end
+                        end
+                end
+        end
+    end
+end
+@enduml

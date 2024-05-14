@@ -1,0 +1,10 @@
+@startuml StringExtensions.ReplaceBetween
+title StringExtensions.ReplaceBetween
+participant "ReplaceBetween(this string source,string startText,string endText,string replaceText)" as ReplaceBetween_p0_p1_p2_p3 #LightYellow
+participant "source.IndexOf(a0)" as source_IndexOf_a0 #LightGreen
+autonumber
+ReplaceBetween_p0_p1_p2_p3 -[#grey]> source_IndexOf_a0 : (startText)
+source_IndexOf_a0 -[#blue]-> ReplaceBetween_p0_p1_p2_p3 : sIdx
+ReplaceBetween_p0_p1_p2_p3 -[#grey]> source_IndexOf_a0 : (endText)
+source_IndexOf_a0 -[#blue]-> ReplaceBetween_p0_p1_p2_p3 : eIdx
+@enduml

@@ -1,0 +1,38 @@
+@startuml DivideInfo
+title DivideInfo
+ class DivideInfo #GhostWhite {
+- string _text
+---
++ string getText()
+# Void setText(string value)
+---
+}
+ class TagInfo #GhostWhite {
+- TagHeader? _header
+- string _starttag
+- int _starttagindex
+- string _endtag
+- int _endtagindex
+---
+# TagHeader? getHeader()
+# Void setHeader(TagHeader? value)
++ string getSource()
++ string getStartTag()
+# Void setStartTag(string value)
++ int getStartTagIndex()
+# Void setStartTagIndex(int value)
++ string getEndTag()
+# Void setEndTag(string value)
++ int getEndTagIndex()
+# Void setEndTagIndex(int value)
++ int getEndIndex()
++ string getFullText()
++ string getInnerText()
+---
++ string GetText()
++ string GetText(string innerText)
++ string ToString()
+}
+DivideInfo <|-- TagInfo
+class TagInfo #GhostWhite
+@enduml

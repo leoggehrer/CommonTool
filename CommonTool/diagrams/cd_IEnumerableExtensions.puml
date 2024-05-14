@@ -1,0 +1,16 @@
+@startuml IEnumerableExtensions
+title IEnumerableExtensions
+ class IEnumerableExtensions << static >> #GhostWhite {
+---
+---
++ {static} int IndexOf(IEnumerable<T> source, Predicate<T> predicate)
++ {static} IEnumerable<ST> ToEnumerable(IEnumerable<T> source, Func<T, ST> expandSelector)
++ {static} IEnumerable<ST> Flatten(IEnumerable<T> source, Func<T, IEnumerable<ST>> expandSelector)
++ {static} int FindIndex(IEnumerable<T> items, Func<T, bool> predicate)
++ {static} int IndexOf(IEnumerable<T> items, T item)
++ {static} IEnumerable<T> TakeTo(IEnumerable<T> source, Predicate<T> predicate)
++ {static} IEnumerable<T> ForEach(IEnumerable<T> source, Action<T> action)
++ {static} IEnumerable<T> Clone(IEnumerable<T> source)
++ {static} bool IsSubsequence(IEnumerable<T> sequence, IEnumerable<T> subsequence)
+}
+@enduml

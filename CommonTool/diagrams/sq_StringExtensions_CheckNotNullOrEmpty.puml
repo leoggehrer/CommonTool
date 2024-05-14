@@ -1,0 +1,10 @@
+@startuml StringExtensions.CheckNotNullOrEmpty
+title StringExtensions.CheckNotNullOrEmpty
+participant "CheckNotNullOrEmpty(this string? source,string argName)" as CheckNotNullOrEmpty_p0_p1 #LightYellow
+participant "string.IsNullOrEmpty(a0)" as string_IsNullOrEmpty_a0 #LightGreen
+autonumber
+alt#LightBlue string.IsNullOrEmpty(source)
+    CheckNotNullOrEmpty_p0_p1 -[#grey]> string_IsNullOrEmpty_a0 : (source)
+    string_IsNullOrEmpty_a0 -[#blue]-> CheckNotNullOrEmpty_p0_p1 : result
+end
+@enduml

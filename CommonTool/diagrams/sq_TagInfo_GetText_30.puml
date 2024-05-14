@@ -1,0 +1,10 @@
+@startuml TagInfo.GetText
+title TagInfo.GetText
+participant "GetText(string innerText)" as GetText_p0 #LightYellow
+participant ".Partialstring(a0,a1)" as _Partialstring_a0_a1 #LightGreen
+autonumber
+GetText_p0 -[#grey]> _Partialstring_a0_a1 : (0, StartTagIndex + StartTag.Length - 1)
+_Partialstring_a0_a1 -[#blue]-> GetText_p0 : result
+GetText_p0 -[#grey]> _Partialstring_a0_a1 : (EndTagIndex, Source.Length - 1)
+_Partialstring_a0_a1 -[#blue]-> GetText_p0 : result
+@enduml

@@ -1,0 +1,7 @@
+@startuml StringExtensions.Split
+title StringExtensions.Split
+start
+#LightGreen:Params(this IEnumerable<string> source,string separator);
+#Lavender:return source.Select(l => string.IsNullOrEmpty(l) ? [] : l.Split(separator));
+stop
+@enduml

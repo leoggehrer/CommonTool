@@ -1,0 +1,27 @@
+@startuml StringExtensions.Trim
+title StringExtensions.Trim
+participant "Trim(this IEnumerable<string> source)" as Trim_p0 #LightYellow
+participant "string.IsNullOrEmpty(a0)" as string_IsNullOrEmpty_a0 #LightGreen
+participant "result.Add(a0)" as result_Add_a0 #LightGreen
+participant "result.LastOrDefault()" as result_LastOrDefault #LightGreen
+participant "result.Remove(a0)" as result_Remove_a0 #LightGreen
+autonumber
+loop#LightCoral source
+    alt#LightBlue string.IsNullOrEmpty(item) && prvEmpty == false
+        Trim_p0 -[#grey]> string_IsNullOrEmpty_a0 : (item)
+        Trim_p0 -[#grey]> result_Add_a0 : (string.Empty)
+        else
+            alt#LightBlue string.IsNullOrEmpty(item) == false
+                Trim_p0 -[#grey]> string_IsNullOrEmpty_a0 : (item)
+                Trim_p0 -[#grey]> result_Add_a0 : (item)
+            end
+    end
+end
+Trim_p0 -[#grey]> result_LastOrDefault
+result_LastOrDefault -[#blue]-> Trim_p0 : lastElem
+alt#LightBlue string.IsNullOrEmpty(lastElem)
+    Trim_p0 -[#grey]> string_IsNullOrEmpty_a0 : (lastElem)
+    Trim_p0 -[#grey]> result_Remove_a0 : (lastElem)
+    result_Remove_a0 -[#blue]-> Trim_p0 : _
+end
+@enduml

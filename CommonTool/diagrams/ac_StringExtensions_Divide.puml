@@ -1,0 +1,25 @@
+@startuml StringExtensions.Divide
+title StringExtensions.Divide
+start
+#LightGreen:Params(this string text,string[] tags);
+#LightSkyBlue:List<DivideInfo> result = []\nint startIdx = 0\nvar tagInfos = text.GetAllTags(tags);
+:iterator = tagInfos.GetIterator();
+while (iterator.MoveNext()) is (<color:green>yes)
+:tagInfo = iterator.Current();
+            #LightYellow:if (startIdx < tagInfo.StartTagIndex) then (<color:green>yes)
+                    #WhiteSmoke:result.Add(new DivideInfo(startIdx, tagInfo.StartTagIndex - 1) { Text = text.Partialstring(startIdx, tagInfo.StartTagIndex - 1), });
+                    #WhiteSmoke:result.Add(new DivideInfo(tagInfo) { Text = text.Partialstring(tagInfo.StartTagIndex, tagInfo.EndTagIndex), });
+                    #WhiteSmoke:startIdx = tagInfo.EndTagIndex + 1;
+                else (<color:red>no)
+                    #LightYellow:if (startIdx == tagInfo.StartTagIndex) then (<color:green>yes)
+                            #WhiteSmoke:result.Add(new DivideInfo(tagInfo) { Text = text.Partialstring(tagInfo.StartTagIndex, tagInfo.EndTagIndex), });
+                            #WhiteSmoke:startIdx = tagInfo.EndTagIndex + 1;
+                    endif
+            endif
+endwhile (<color:red>no)
+#LightYellow:if (startIdx < text.Length - 1) then (<color:green>yes)
+        #WhiteSmoke:result.Add(new DivideInfo(startIdx, text.Length) { Text = text.Partialstring(startIdx, text.Length - 1), });
+endif
+#Lavender:return result;
+stop
+@enduml

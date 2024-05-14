@@ -1,0 +1,8 @@
+@startuml StringExtensions.SetIndent
+title StringExtensions.SetIndent
+participant "SetIndent(this string text,int count)" as SetIndent_p0_p1 #LightYellow
+participant "text.SetIndent(a0,a1)" as text_SetIndent_a0_a1 #LightGreen
+autonumber
+SetIndent_p0_p1 -[#grey]> text_SetIndent_a0_a1 : (IndentSpace, count)
+text_SetIndent_a0_a1 -[#blue]-> SetIndent_p0_p1 : result
+@enduml

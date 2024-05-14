@@ -13,6 +13,7 @@ GetCurrentSolutionPath -[#grey]> paths_0_IsNullOrEmpty
 GetCurrentSolutionPath -[#grey]> paths_0_IsNullOrEmpty
 loop#LightCoral result.IsNullOrEmpty() && index < paths.Length
     GetCurrentSolutionPath -[#grey]> result_IsNullOrEmpty
+    result_IsNullOrEmpty -[#blue]-> GetCurrentSolutionPath : result
     GetCurrentSolutionPath -[#grey]> Path_Combine_a0_a1 : (checkPath, folder)
     Path_Combine_a0_a1 -[#blue]-> GetCurrentSolutionPath : checkPath
     GetCurrentSolutionPath -[#grey]> Path_Combine_a0_a1 : (checkPath, fileName)

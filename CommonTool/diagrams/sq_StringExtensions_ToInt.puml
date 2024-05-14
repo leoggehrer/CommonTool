@@ -1,0 +1,12 @@
+@startuml StringExtensions.ToInt
+title StringExtensions.ToInt
+participant "ToInt(this string text)" as ToInt_p0 #LightYellow
+participant "char.IsDigit(a0)" as char_IsDigit_a0 #LightGreen
+autonumber
+loop#LightCoral text
+    alt#LightBlue char.IsDigit(item)
+        ToInt_p0 -[#grey]> char_IsDigit_a0 : (item)
+        char_IsDigit_a0 -[#blue]-> ToInt_p0 : result
+    end
+end
+@enduml

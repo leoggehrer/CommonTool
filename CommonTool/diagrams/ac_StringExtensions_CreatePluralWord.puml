@@ -1,0 +1,35 @@
+@startuml StringExtensions.CreatePluralWord
+title StringExtensions.CreatePluralWord
+start
+#LightGreen:Params(this string wordInSingular);
+#LightSkyBlue:string result = wordInSingular;
+#LightYellow:if (wordInSingular.IsWord()) then (<color:green>yes)
+        #LightYellow:if (wordInSingular.EndsWith("y", StringComparison.CurrentCultureIgnoreCase)) then (<color:green>yes)
+                #WhiteSmoke:result = $"{wordInSingular[0..^1]}ies";
+            else (<color:red>no)
+                #LightYellow:if (wordInSingular.EndsWith("h", StringComparison.CurrentCultureIgnoreCase)) then (<color:green>yes)
+                        #WhiteSmoke:result = $"{wordInSingular}es";
+                    else (<color:red>no)
+                        #LightYellow:if (wordInSingular.EndsWith("x", StringComparison.CurrentCultureIgnoreCase)) then (<color:green>yes)
+                                #WhiteSmoke:result = $"{wordInSingular}es";
+                            else (<color:red>no)
+                                #LightYellow:if (wordInSingular.EndsWith("f", StringComparison.CurrentCultureIgnoreCase)) then (<color:green>yes)
+                                        #WhiteSmoke:result = $"{wordInSingular[0..^1]}ves";
+                                    else (<color:red>no)
+                                        #LightYellow:if (wordInSingular.EndsWith("ss", StringComparison.CurrentCultureIgnoreCase)) then (<color:green>yes)
+                                                #WhiteSmoke:result = $"{wordInSingular}es";
+                                            else (<color:red>no)
+                                                #LightYellow:if (wordInSingular.EndsWith("s", StringComparison.CurrentCultureIgnoreCase)) then (<color:green>yes)
+                                                        #WhiteSmoke:result = $"{wordInSingular}";
+                                                    else (<color:red>no)
+                                                            #WhiteSmoke:result = $"{wordInSingular}s";
+                                                endif
+                                        endif
+                                endif
+                        endif
+                endif
+        endif
+endif
+#Lavender:return result;
+stop
+@enduml

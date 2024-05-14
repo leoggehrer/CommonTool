@@ -1,0 +1,14 @@
+@startuml StringExtensions.Partialstring
+title StringExtensions.Partialstring
+participant "Partialstring(this string text,int from,int to)" as Partialstring_p0_p1_p2 #LightYellow
+participant "string.IsNullOrEmpty(a0)" as string_IsNullOrEmpty_a0 #LightGreen
+participant "sb.Append(a0)" as sb_Append_a0 #LightGreen
+autonumber
+alt#LightBlue string.IsNullOrEmpty(text) == false
+    Partialstring_p0_p1_p2 -[#grey]> string_IsNullOrEmpty_a0 : (text)
+    string_IsNullOrEmpty_a0 -[#blue]-> Partialstring_p0_p1_p2 : result
+    loop#LightCoral i >= 0 && i <= to && i < text.Length
+        Partialstring_p0_p1_p2 -[#grey]> sb_Append_a0 : (text[i])
+    end
+end
+@enduml

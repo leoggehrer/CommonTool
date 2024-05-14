@@ -1,0 +1,8 @@
+@startuml StringExtensions.IsNullOrEmpty
+title StringExtensions.IsNullOrEmpty
+participant "IsNullOrEmpty(this string? text)" as IsNullOrEmpty_p0 #LightYellow
+participant "string.IsNullOrEmpty(a0)" as string_IsNullOrEmpty_a0 #LightGreen
+autonumber
+IsNullOrEmpty_p0 -[#grey]> string_IsNullOrEmpty_a0 : (text)
+string_IsNullOrEmpty_a0 -[#blue]-> IsNullOrEmpty_p0 : result
+@enduml

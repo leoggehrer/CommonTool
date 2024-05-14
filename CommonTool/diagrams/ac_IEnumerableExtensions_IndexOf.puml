@@ -1,0 +1,14 @@
+@startuml IEnumerableExtensions.IndexOf
+title IEnumerableExtensions.IndexOf
+start
+#LightGreen:Params(this IEnumerable<T> source,Predicate<T> predicate);
+#LightSkyBlue:var idx = 0\nvar result = -1\nvar enumerator = source.GetEnumerator();
+while (result == -1 && enumerator.MoveNext()) is (<color:green>yes)
+        #LightYellow:if (predicate(enumerator.Current)) then (<color:green>yes)
+                #WhiteSmoke:result = idx;
+        endif
+        #WhiteSmoke:idx++;
+endwhile (<color:red>no)
+#Lavender:return result;
+stop
+@enduml

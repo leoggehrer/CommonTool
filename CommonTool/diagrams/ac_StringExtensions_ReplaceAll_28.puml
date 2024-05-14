@@ -1,0 +1,7 @@
+@startuml StringExtensions.ReplaceAll
+title StringExtensions.ReplaceAll
+start
+#LightGreen:Params(this string text,string startTag,string endTag,string replaceText);
+#Lavender:return text.ReplaceAll(startTag, endTag, s => replaceText);
+stop
+@enduml

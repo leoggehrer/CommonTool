@@ -1,0 +1,32 @@
+@startuml StringExtensions.TryParse
+title StringExtensions.TryParse
+participant "TryParse(this string value,Type type,out object? typeValue)" as TryParse_p0_p1_p2 #LightYellow
+participant "Enum.TryParse(a0,a1,a2)" as Enum_TryParse_a0_a1_a2 #LightGreen
+participant "TimeSpan.Parse(a0)" as TimeSpan_Parse_a0 #LightGreen
+participant "DateTime.Parse(a0)" as DateTime_Parse_a0 #LightGreen
+participant "Convert.ChangeType(a0,a1)" as Convert_ChangeType_a0_a1 #LightGreen
+autonumber
+alt#LightBlue value == null
+    else
+        alt#LightBlue type.IsEnum
+            TryParse_p0_p1_p2 -[#grey]> Enum_TryParse_a0_a1_a2 : (type, value, out typeValue)
+            Enum_TryParse_a0_a1_a2 -[#blue]-> TryParse_p0_p1_p2 : result
+            else
+                alt#LightBlue type == typeof(TimeSpan)
+                    TryParse_p0_p1_p2 -[#grey]> TimeSpan_Parse_a0 : (value)
+                    TimeSpan_Parse_a0 -[#blue]-> TryParse_p0_p1_p2 : typeValue
+                    else
+                        alt#LightBlue type == typeof(DateTime)
+                            TryParse_p0_p1_p2 -[#grey]> DateTime_Parse_a0 : (value)
+                            DateTime_Parse_a0 -[#blue]-> TryParse_p0_p1_p2 : typeValue
+                            else
+                                alt#LightBlue type == typeof(string)
+                                    else
+                                        TryParse_p0_p1_p2 -[#grey]> Convert_ChangeType_a0_a1 : (value, type)
+                                        Convert_ChangeType_a0_a1 -[#blue]-> TryParse_p0_p1_p2 : typeValue
+                                end
+                        end
+                end
+        end
+end
+@enduml

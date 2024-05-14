@@ -1,0 +1,18 @@
+@startuml IEnumerableExtensions.ToEnumerable
+title IEnumerableExtensions.ToEnumerable
+start
+#LightGreen:Params(this IEnumerable<T> source,Func<T, ST> expandSelector);
+#LightSkyBlue:List<ST> expandResult = [];
+#LightYellow:if (source != null && expandSelector != null) then (<color:green>yes)
+        :iterator = source.GetIterator();
+        while (iterator.MoveNext()) is (<color:green>yes)
+        :item = iterator.Current();
+                            #LightSkyBlue:var subItem = expandSelector(item);
+                            #LightYellow:if (subItem != null) then (<color:green>yes)
+                                    #WhiteSmoke:expandResult.Add(subItem);
+                            endif
+        endwhile (<color:red>no)
+endif
+#Lavender:return expandResult;
+stop
+@enduml

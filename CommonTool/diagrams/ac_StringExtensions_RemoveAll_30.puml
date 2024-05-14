@@ -1,0 +1,13 @@
+@startuml StringExtensions.RemoveAll
+title StringExtensions.RemoveAll
+start
+#LightGreen:Params(this string source,params string[] removeItems);
+#LightSkyBlue:var result = source;
+:iterator = removeItems.GetIterator();
+while (iterator.MoveNext()) is (<color:green>yes)
+:item = iterator.Current();
+            #WhiteSmoke:result = result.Replace(item, string.Empty);
+endwhile (<color:red>no)
+#Lavender:return result;
+stop
+@enduml

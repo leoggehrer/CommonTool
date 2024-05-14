@@ -1,0 +1,8 @@
+@startuml StringExtensions.NotEquals
+title StringExtensions.NotEquals
+participant "NotEquals(this string source,string value)" as NotEquals_p0_p1 #LightYellow
+participant "source.AreEquals(a0)" as source_AreEquals_a0 #LightGreen
+autonumber
+NotEquals_p0_p1 -[#grey]> source_AreEquals_a0 : (value)
+source_AreEquals_a0 -[#blue]-> NotEquals_p0_p1 : result
+@enduml

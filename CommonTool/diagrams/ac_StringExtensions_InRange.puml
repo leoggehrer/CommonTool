@@ -1,0 +1,7 @@
+@startuml StringExtensions.InRange
+title StringExtensions.InRange
+start
+#LightGreen:Params(this string source,int index);
+#Lavender:return source != null && index > -1 && index < source.Length;
+stop
+@enduml

@@ -1,0 +1,19 @@
+@startuml StringExtensions.ToEnumerable
+title StringExtensions.ToEnumerable
+start
+#LightGreen:Params(this string source,string separator);
+#LightSkyBlue:List<T?> result = [];
+#LightYellow:if (string.IsNullOrEmpty(source) == false) then (<color:green>yes)
+        #LightSkyBlue:string[] items = source.Split(separator);
+        :iterator = items.GetIterator();
+        while (iterator.MoveNext()) is (<color:green>yes)
+        :item = iterator.Current();
+                            #LightYellow:if (item.Equals(NullText)) then (<color:green>yes)
+                                    #WhiteSmoke:result.Add(default);
+                                else (<color:red>no)
+                            endif
+        endwhile (<color:red>no)
+endif
+#Lavender:return result;
+stop
+@enduml

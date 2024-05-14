@@ -1,0 +1,8 @@
+@startuml StringExtensions.RemoveAll
+title StringExtensions.RemoveAll
+participant "RemoveAll(this string source)" as RemoveAll_p0 #LightYellow
+participant "source.RemoveAll(a0)" as source_RemoveAll_a0 #LightGreen
+autonumber
+RemoveAll_p0 -[#grey]> source_RemoveAll_a0 : (" ")
+source_RemoveAll_a0 -[#blue]-> RemoveAll_p0 : result
+@enduml

@@ -1,0 +1,23 @@
+@startuml StringExtensions.ReplaceAll
+title StringExtensions.ReplaceAll
+participant "ReplaceAll(this string text,TagInfo tagInfo,Func<string, string> replace)" as ReplaceAll_p0_p1_p2 #LightYellow
+participant "text.IndexOf(a0,a1,a2)" as text_IndexOf_a0_a1_a2 #LightGreen
+participant "text.Substring(a0,a1)" as text_Substring_a0_a1 #LightGreen
+participant "result.Append(a0)" as result_Append_a0 #LightGreen
+autonumber
+loop#LightCoral startTagIndex > -1 && endTagIndex > -1
+    ReplaceAll_p0_p1_p2 -[#grey]> text_IndexOf_a0_a1_a2 : (tagInfo.StartTag, parseIndex, StringComparison.CurrentCultureIgnoreCase)
+    text_IndexOf_a0_a1_a2 -[#blue]-> ReplaceAll_p0_p1_p2 : startTagIndex
+    alt#LightBlue startTagIndex > -1 && endTagIndex > startTagIndex
+        ReplaceAll_p0_p1_p2 -[#grey]> text_Substring_a0_a1 : (startTagIndex, endTagIndex - startTagIndex + tagInfo.EndTag.Length)
+        text_Substring_a0_a1 -[#blue]-> ReplaceAll_p0_p1_p2 : substr
+        ReplaceAll_p0_p1_p2 -[#grey]> result_Append_a0 : (text[parseIndex..startTagIndex])
+        alt#LightBlue replace != null
+            ReplaceAll_p0_p1_p2 -[#grey]> result_Append_a0 : (replace(substr))
+        end
+    end
+end
+alt#LightBlue parseIndex < text.Length
+    ReplaceAll_p0_p1_p2 -[#grey]> result_Append_a0 : (text[parseIndex..])
+end
+@enduml

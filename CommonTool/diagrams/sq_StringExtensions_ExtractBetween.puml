@@ -1,0 +1,15 @@
+@startuml StringExtensions.ExtractBetween
+title StringExtensions.ExtractBetween
+participant "ExtractBetween(this string source,string startText,string endText)" as ExtractBetween_p0_p1_p2 #LightYellow
+participant "source.IndexOf(a0)" as source_IndexOf_a0 #LightGreen
+participant "source.Partialstring(a0,a1)" as source_Partialstring_a0_a1 #LightGreen
+autonumber
+ExtractBetween_p0_p1_p2 -[#grey]> source_IndexOf_a0 : (startText)
+source_IndexOf_a0 -[#blue]-> ExtractBetween_p0_p1_p2 : result
+ExtractBetween_p0_p1_p2 -[#grey]> source_IndexOf_a0 : (endText)
+source_IndexOf_a0 -[#blue]-> ExtractBetween_p0_p1_p2 : result
+alt#LightBlue sIdx > -1 && eIdx > -1 && sIdx <= eIdx
+    ExtractBetween_p0_p1_p2 -[#grey]> source_Partialstring_a0_a1 : (sIdx, eIdx)
+    source_Partialstring_a0_a1 -[#blue]-> ExtractBetween_p0_p1_p2 : result
+end
+@enduml

@@ -1,0 +1,16 @@
+@startuml IEnumerableExtensions.Flatten
+title IEnumerableExtensions.Flatten
+participant "Flatten(this IEnumerable<T> source,Func<T, IEnumerable<ST>> expandSelector)" as Flatten_p0_p1 #LightYellow
+participant "expandSelector(a0)" as expandSelector_a0 #LightGreen
+participant "expandResult.AddRange(a0)" as expandResult_AddRange_a0 #LightGreen
+autonumber
+alt#LightBlue source != null && expandSelector != null
+    loop#LightCoral source
+        Flatten_p0_p1 -[#grey]> expandSelector_a0 : (item)
+        expandSelector_a0 -[#blue]-> Flatten_p0_p1 : subItems
+        alt#LightBlue subItems != null
+            Flatten_p0_p1 -[#grey]> expandResult_AddRange_a0 : (subItems)
+        end
+    end
+end
+@enduml

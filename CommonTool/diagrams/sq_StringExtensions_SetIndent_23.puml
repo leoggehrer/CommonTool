@@ -1,0 +1,12 @@
+@startuml StringExtensions.SetIndent
+title StringExtensions.SetIndent
+participant "SetIndent(this string[] lines,int count)" as SetIndent_p0_p1 #LightYellow
+participant "lines[i].SetIndent(a0)" as lines_i_SetIndent_a0 #LightGreen
+autonumber
+alt#LightBlue lines != null
+    loop#LightCoral i < lines.Length
+        SetIndent_p0_p1 -[#grey]> lines_i_SetIndent_a0 : (count)
+        lines_i_SetIndent_a0 -[#blue]-> SetIndent_p0_p1 : lines[i]
+    end
+end
+@enduml

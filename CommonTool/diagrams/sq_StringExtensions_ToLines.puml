@@ -1,0 +1,7 @@
+@startuml StringExtensions.ToLines
+title StringExtensions.ToLines
+participant "ToLines(this string text)" as ToLines_p0 #LightYellow
+participant "text.Split(a0,a1)" as text_Split_a0_a1 #LightGreen
+autonumber
+ToLines_p0 -[#grey]> text_Split_a0_a1 : (new string[] { Environment.NewLine }, StringSplitOptions.None)
+@enduml

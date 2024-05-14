@@ -1,0 +1,12 @@
+@startuml StringExtensions.SetIndent
+title StringExtensions.SetIndent
+participant "SetIndent(this string text,string indentSpace,int count)" as SetIndent_p0_p1_p2 #LightYellow
+participant "sb.Append(a0)" as sb_Append_a0 #LightGreen
+autonumber
+alt#LightBlue text != null
+    loop#LightCoral i < count
+        SetIndent_p0_p1_p2 -[#grey]> sb_Append_a0 : (indentSpace)
+    end
+end
+SetIndent_p0_p1_p2 -[#grey]> sb_Append_a0 : (text)
+@enduml

@@ -1,0 +1,21 @@
+@startuml StringExtensions.Shrink
+title StringExtensions.Shrink
+start
+#LightGreen:Params(this string source,char charToRemove);
+#LightSkyBlue:var result = new StringBuilder()\nvar hasFound = false;
+:iterator = source.GetIterator();
+while (iterator.MoveNext()) is (<color:green>yes)
+:c = iterator.Current();
+            #LightYellow:if (c == charToRemove) then (<color:green>yes)
+                    #LightYellow:if (hasFound == false) then (<color:green>yes)
+                            #WhiteSmoke:hasFound = true;
+                            #WhiteSmoke:result.Append(c);
+                    endif
+                else (<color:red>no)
+                        #WhiteSmoke:hasFound = false;
+                        #WhiteSmoke:result.Append(c);
+            endif
+endwhile (<color:red>no)
+#Lavender:return result.ToString();
+stop
+@enduml

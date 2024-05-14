@@ -1,0 +1,17 @@
+@startuml IEnumerableExtensions.TakeTo
+title IEnumerableExtensions.TakeTo
+participant "TakeTo(this IEnumerable<T> source,Predicate<T> predicate)" as TakeTo_p0_p1 #LightYellow
+participant "source.Where(a0)" as source_Where_a0 #LightGreen
+autonumber
+alt#LightBlue source != null
+    TakeTo_p0_p1 -[#grey]> source_Where_a0 : (e =>
+                {
+                    if (end == false && predicate != null)
+                    {
+                        end = predicate(e);
+                    }
+                    return end == false;
+                })
+    source_Where_a0 -[#blue]-> TakeTo_p0_p1 : result
+end
+@enduml

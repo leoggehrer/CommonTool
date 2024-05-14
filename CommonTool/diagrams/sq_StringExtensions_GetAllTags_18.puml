@@ -1,0 +1,32 @@
+@startuml StringExtensions.GetAllTags
+title StringExtensions.GetAllTags
+participant "GetAllTags(this string text,string startTag,string endTag,int parseIndex,params char[] excludeBlocks)" as GetAllTags_p0_p1_p2_p3_p4 #LightYellow
+participant "text.IndexOf(a0,a1,a2)" as text_IndexOf_a0_a1_a2 #LightGreen
+participant "blockCounter.Sum()" as blockCounter_Sum #LightGreen
+participant "result.Add(a0)" as result_Add_a0 #LightGreen
+autonumber
+loop#LightCoral startTagIndex > -1 && endTagIndex > -1
+    GetAllTags_p0_p1_p2_p3_p4 -[#grey]> text_IndexOf_a0_a1_a2 : (startTag, parseIndex, StringComparison.CurrentCultureIgnoreCase)
+    text_IndexOf_a0_a1_a2 -[#blue]-> GetAllTags_p0_p1_p2_p3_p4 : startTagIndex
+    alt#LightBlue startTagIndex > -1 && endTagIndex > startTagIndex
+        loop#LightCoral idx < text.Length && blockCounter.Sum() != 0
+            GetAllTags_p0_p1_p2_p3_p4 -[#grey]> blockCounter_Sum
+        end
+        alt#LightBlue endTagSearchPosAt > endTagIndex && blockCounter.Sum() == 0
+            GetAllTags_p0_p1_p2_p3_p4 -[#grey]> blockCounter_Sum
+            GetAllTags_p0_p1_p2_p3_p4 -[#grey]> text_IndexOf_a0_a1_a2 : (endTag, endTagSearchPosAt, StringComparison.CurrentCultureIgnoreCase)
+            text_IndexOf_a0_a1_a2 -[#blue]-> GetAllTags_p0_p1_p2_p3_p4 : endTagIndex
+        end
+    end
+    alt#LightBlue startTagIndex > -1 && endTagIndex > startTagIndex
+        GetAllTags_p0_p1_p2_p3_p4 -[#grey]> result_Add_a0 : (new T
+                    {
+                        Header = tagHeader,
+                        StartTag = startTag,
+                        StartTagIndex = startTagIndex,
+                        EndTag = endTag,
+                        EndTagIndex = endTagIndex,
+                    })
+    end
+end
+@enduml

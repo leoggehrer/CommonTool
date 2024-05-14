@@ -1,0 +1,25 @@
+@startuml StringExtensions.Trim
+title StringExtensions.Trim
+start
+#LightGreen:Params(this IEnumerable<string> source);
+#LightSkyBlue:var result = new List<string?>()\nvar prvEmpty = true;
+:iterator = source.GetIterator();
+while (iterator.MoveNext()) is (<color:green>yes)
+:item = iterator.Current();
+            #LightYellow:if (string.IsNullOrEmpty(item) && prvEmpty == false) then (<color:green>yes)
+                    #WhiteSmoke:result.Add(string.Empty);
+                    #WhiteSmoke:prvEmpty = true;
+                else (<color:red>no)
+                    #LightYellow:if (string.IsNullOrEmpty(item) == false) then (<color:green>yes)
+                            #WhiteSmoke:result.Add(item);
+                            #WhiteSmoke:prvEmpty = false;
+                    endif
+            endif
+endwhile (<color:red>no)
+#LightSkyBlue:var lastElem = result.LastOrDefault();
+#LightYellow:if (string.IsNullOrEmpty(lastElem)) then (<color:green>yes)
+        #WhiteSmoke:_ = result.Remove(lastElem);
+endif
+#Lavender:return result;
+stop
+@enduml

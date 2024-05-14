@@ -1,0 +1,13 @@
+@startuml StringExtensions.IsWord
+title StringExtensions.IsWord
+participant "IsWord(this string text)" as IsWord_p0 #LightYellow
+participant "text.IsNullOrEmpty()" as text_IsNullOrEmpty #LightGreen
+participant "char.IsLetter(a0)" as char_IsLetter_a0 #LightGreen
+autonumber
+IsWord_p0 -[#grey]> text_IsNullOrEmpty
+text_IsNullOrEmpty -[#blue]-> IsWord_p0 : result
+loop#LightCoral result && i < text.Length
+    IsWord_p0 -[#grey]> char_IsLetter_a0 : (text[i])
+    char_IsLetter_a0 -[#blue]-> IsWord_p0 : result
+end
+@enduml

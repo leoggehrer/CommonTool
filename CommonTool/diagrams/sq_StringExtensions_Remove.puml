@@ -1,0 +1,17 @@
+@startuml StringExtensions.Remove
+title StringExtensions.Remove
+participant "Remove(this string text,string startTag,string endTag)" as Remove_p0_p1_p2 #LightYellow
+participant "text.IndexOf(a0,a1,a2)" as text_IndexOf_a0_a1_a2 #LightGreen
+participant "result.Append(a0)" as result_Append_a0 #LightGreen
+autonumber
+loop#LightCoral startTagIndex > -1 && endTagIndex > -1
+    Remove_p0_p1_p2 -[#grey]> text_IndexOf_a0_a1_a2 : (startTag, parseIndex, StringComparison.CurrentCultureIgnoreCase)
+    text_IndexOf_a0_a1_a2 -[#blue]-> Remove_p0_p1_p2 : startTagIndex
+    alt#LightBlue startTagIndex > -1 && endTagIndex > startTagIndex
+        Remove_p0_p1_p2 -[#grey]> result_Append_a0 : (text[parseIndex..startTagIndex])
+    end
+end
+alt#LightBlue parseIndex < text.Length
+    Remove_p0_p1_p2 -[#grey]> result_Append_a0 : (text[parseIndex..])
+end
+@enduml

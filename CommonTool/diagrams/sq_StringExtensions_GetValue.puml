@@ -1,0 +1,8 @@
+@startuml StringExtensions.GetValue
+title StringExtensions.GetValue
+participant "GetValue(this string source,string defaultValue)" as GetValue_p0_p1 #LightYellow
+participant "string.IsNullOrEmpty(a0)" as string_IsNullOrEmpty_a0 #LightGreen
+autonumber
+GetValue_p0_p1 -[#grey]> string_IsNullOrEmpty_a0 : (source)
+string_IsNullOrEmpty_a0 -[#blue]-> GetValue_p0_p1 : result
+@enduml

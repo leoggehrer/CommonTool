@@ -1,0 +1,19 @@
+@startuml StringExtensions.Partialstring
+title StringExtensions.Partialstring
+participant "Partialstring(this string text,string from,string to)" as Partialstring_p0_p1_p2 #LightYellow
+participant "text.HasContent()" as text_HasContent #LightGreen
+participant "text.IndexOf(a0)" as text_IndexOf_a0 #LightGreen
+participant "text.IndexOf(a0,a1)" as text_IndexOf_a0_a1 #LightGreen
+participant "text.Partialstring(a0,a1)" as text_Partialstring_a0_a1 #LightGreen
+autonumber
+alt#LightBlue text.HasContent()
+    Partialstring_p0_p1_p2 -[#grey]> text_HasContent
+    text_HasContent -[#blue]-> Partialstring_p0_p1_p2 : result
+    Partialstring_p0_p1_p2 -[#grey]> text_IndexOf_a0 : (from)
+    text_IndexOf_a0 -[#blue]-> Partialstring_p0_p1_p2 : f
+    Partialstring_p0_p1_p2 -[#grey]> text_IndexOf_a0_a1 : (to, f + 1)
+    text_IndexOf_a0_a1 -[#blue]-> Partialstring_p0_p1_p2 : result
+    Partialstring_p0_p1_p2 -[#grey]> text_Partialstring_a0_a1 : (f, t)
+    text_Partialstring_a0_a1 -[#blue]-> Partialstring_p0_p1_p2 : result
+end
+@enduml

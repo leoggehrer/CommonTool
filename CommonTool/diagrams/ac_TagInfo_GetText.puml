@@ -1,0 +1,6 @@
+@startuml TagInfo.GetText
+title TagInfo.GetText
+start
+#Lavender:return GetText(InnerText);
+stop
+@enduml

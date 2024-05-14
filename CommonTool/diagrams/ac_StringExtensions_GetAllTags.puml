@@ -1,0 +1,17 @@
+@startuml StringExtensions.GetAllTags
+title StringExtensions.GetAllTags
+start
+#LightGreen:Params(this string text,string[] tags);
+#LightSkyBlue:int parseIndex = 0\nList<TagInfo> result = [];
+#LightSkyBlue:int i = 0;
+while (i + 1 < tags.Length) is (<color:green>yes)
+        #LightSkyBlue:var tagInfos = text.GetAllTags(tags[i], tags[i + 1], parseIndex);
+        #LightYellow:if (tagInfos.Any()) then (<color:green>yes)
+                #WhiteSmoke:result.AddRange(tagInfos);
+                #WhiteSmoke:parseIndex = tagInfos.Last().EndTagIndex;
+        endif
+:i += 2;
+endwhile (<color:red>no)
+#Lavender:return result;
+stop
+@enduml

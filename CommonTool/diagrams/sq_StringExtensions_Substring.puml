@@ -1,0 +1,13 @@
+@startuml StringExtensions.Substring
+title StringExtensions.Substring
+participant "Substring(this string source,int index,string text)" as Substring_p0_p1_p2 #LightYellow
+participant "source.IndexOf(a0)" as source_IndexOf_a0 #LightGreen
+participant "source.Substring(a0,a1)" as source_Substring_a0_a1 #LightGreen
+autonumber
+Substring_p0_p1_p2 -[#grey]> source_IndexOf_a0 : (text)
+source_IndexOf_a0 -[#blue]-> Substring_p0_p1_p2 : ofIdx
+alt#LightBlue ofIdx >= 0 && ofIdx - index >= 0
+    Substring_p0_p1_p2 -[#grey]> source_Substring_a0_a1 : (index, ofIdx)
+    source_Substring_a0_a1 -[#blue]-> Substring_p0_p1_p2 : result
+end
+@enduml

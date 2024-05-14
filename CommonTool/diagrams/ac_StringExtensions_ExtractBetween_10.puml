@@ -1,0 +1,7 @@
+@startuml StringExtensions.ExtractBetween
+title StringExtensions.ExtractBetween
+start
+#LightGreen:Params(this string source,char openingBracket,char closingBracket);
+#Lavender:return source.ExtractBetween(openingBracket, closingBracket, 0);
+stop
+@enduml

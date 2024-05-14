@@ -14,11 +14,7 @@ start
         endwhile (<color:red>no)
         #LightSkyBlue:var pageLabel = $"{(PageIndex * PageSize) + 1}..{Math.Min((PageIndex + 1) * PageSize, items.Length)}/{items.Length}";
         #WhiteSmoke:result.Add(CreateMenuSeparator());
-        #WhiteSmoke:result.Add(new() { Key = "", 
-            Text = ToLabelText(pageLabel, string.Empty, 20, ' '), 
-            Action = (self) => { }, 
-            ForegroundColor = ConsoleColor.DarkGreen, 
-        });
+        #WhiteSmoke:result.Add(new() { Key = "", Text = ToLabelText(pageLabel, string.Empty, 20, ' '), Action = (self) => { }, ForegroundColor = ConsoleColor.DarkGreen, });
         #WhiteSmoke:result.Add(CreateMenuSeparator());
         #WhiteSmoke:result.Add(new() { Key = "+", Text = ToLabelText("Next", "Load next page"), Action = (self) => { PageIndex = (PageIndex + 1) * PageSize < items.Length ? PageIndex + 1 : PageIndex; PrintScreen(); }, ForegroundColor = ConsoleColor.DarkGreen, });
         #WhiteSmoke:result.Add(new() { Key = "-", Text = ToLabelText("Previous", "Load previous page"), Action = (self) => { PageIndex = Math.Max(0, PageIndex - 1); PrintScreen(); }, ForegroundColor = ConsoleColor.DarkGreen, });

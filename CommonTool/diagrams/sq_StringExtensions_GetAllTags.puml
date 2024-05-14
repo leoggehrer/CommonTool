@@ -1,0 +1,16 @@
+@startuml StringExtensions.GetAllTags
+title StringExtensions.GetAllTags
+participant "GetAllTags(this string text,string[] tags)" as GetAllTags_p0_p1 #LightYellow
+participant "text.GetAllTags(a0,a1,a2)" as text_GetAllTags_a0_a1_a2 #LightGreen
+participant "tagInfos.Any()" as tagInfos_Any #LightGreen
+participant "result.AddRange(a0)" as result_AddRange_a0 #LightGreen
+autonumber
+loop#LightCoral i + 1 < tags.Length
+    GetAllTags_p0_p1 -[#grey]> text_GetAllTags_a0_a1_a2 : (tags[i], tags[i + 1], parseIndex)
+    text_GetAllTags_a0_a1_a2 -[#blue]-> GetAllTags_p0_p1 : tagInfos
+    alt#LightBlue tagInfos.Any()
+        GetAllTags_p0_p1 -[#grey]> tagInfos_Any
+        GetAllTags_p0_p1 -[#grey]> result_AddRange_a0 : (tagInfos)
+    end
+end
+@enduml

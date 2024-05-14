@@ -1,0 +1,7 @@
+@startuml StringExtensions.GetAllTags
+title StringExtensions.GetAllTags
+start
+#LightGreen:Params(this string text,string startTag,string endTag,int parseIndex);
+#Lavender:return text.GetAllTags<TagInfo>(startTag, endTag, parseIndex);
+stop
+@enduml

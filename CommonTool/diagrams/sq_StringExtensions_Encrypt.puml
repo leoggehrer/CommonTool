@@ -1,0 +1,25 @@
+@startuml StringExtensions.Encrypt
+title StringExtensions.Encrypt
+participant "Encrypt(this string text,string keyString)" as Encrypt_p0_p1 #LightYellow
+participant "Encoding.UTF8.GetBytes(a0)" as Encoding_UTF8_GetBytes_a0 #LightGreen
+participant "Aes.Create()" as Aes_Create #LightGreen
+participant "aesAlg.CreateEncryptor(a0,a1)" as aesAlg_CreateEncryptor_a0_a1 #LightGreen
+participant "swEncrypt.Write(a0)" as swEncrypt_Write_a0 #LightGreen
+participant "msEncrypt.ToArray()" as msEncrypt_ToArray #LightGreen
+participant "Buffer.BlockCopy(a0,a1,a2,a3,a4)" as Buffer_BlockCopy_a0_a1_a2_a3_a4 #LightGreen
+participant "Convert.ToBase64String(a0)" as Convert_ToBase64String_a0 #LightGreen
+autonumber
+Encrypt_p0_p1 -[#grey]> Encoding_UTF8_GetBytes_a0 : (keyString)
+Encoding_UTF8_GetBytes_a0 -[#blue]-> Encrypt_p0_p1 : key
+Encrypt_p0_p1 -[#grey]> Aes_Create
+Aes_Create -[#blue]-> Encrypt_p0_p1 : aesAlg
+Encrypt_p0_p1 -[#grey]> aesAlg_CreateEncryptor_a0_a1 : (key, aesAlg.IV)
+aesAlg_CreateEncryptor_a0_a1 -[#blue]-> Encrypt_p0_p1 : encryptor
+Encrypt_p0_p1 -[#grey]> swEncrypt_Write_a0 : (text)
+Encrypt_p0_p1 -[#grey]> msEncrypt_ToArray
+msEncrypt_ToArray -[#blue]-> Encrypt_p0_p1 : decryptedContent
+Encrypt_p0_p1 -[#grey]> Buffer_BlockCopy_a0_a1_a2_a3_a4 : (iv, 0, result, 0, iv.Length)
+Encrypt_p0_p1 -[#grey]> Buffer_BlockCopy_a0_a1_a2_a3_a4 : (decryptedContent, 0, result, iv.Length, decryptedContent.Length)
+Encrypt_p0_p1 -[#grey]> Convert_ToBase64String_a0 : (result)
+Convert_ToBase64String_a0 -[#blue]-> Encrypt_p0_p1 : result
+@enduml

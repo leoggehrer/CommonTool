@@ -1,0 +1,7 @@
+@startuml StringExtensions.ContainsIgnoreCase
+title StringExtensions.ContainsIgnoreCase
+start
+#LightGreen:Params(this string source,string toCheck);
+#Lavender:return source.Contains(toCheck, StringComparison.OrdinalIgnoreCase);
+stop
+@enduml

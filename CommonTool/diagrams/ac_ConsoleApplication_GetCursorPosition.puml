@@ -1,0 +1,6 @@
+@startuml ConsoleApplication.GetCursorPosition
+title ConsoleApplication.GetCursorPosition
+start
+#Lavender:return (Console.CursorLeft, Console.CursorTop);
+stop
+@enduml

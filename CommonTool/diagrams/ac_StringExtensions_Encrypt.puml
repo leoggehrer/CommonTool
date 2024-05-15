@@ -1,0 +1,11 @@
+@startuml StringExtensions.Encrypt
+title StringExtensions.Encrypt
+start
+#LightGreen:Params(this string text,string keyString);
+#LightSkyBlue:var key = Encoding.UTF8.GetBytes(keyString)\nvar aesAlg = Aes.Create()\nvar encryptor = aesAlg.CreateEncryptor(key, aesAlg.IV)\nvar msEncrypt = new MemoryStream();
+#LightSkyBlue:var iv = aesAlg.IV\nvar decryptedContent = msEncrypt.ToArray()\nvar result = new byte[iv.Length + decryptedContent.Length];
+#WhiteSmoke:Buffer.BlockCopy(iv, 0, result, 0, iv.Length);
+#WhiteSmoke:Buffer.BlockCopy(decryptedContent, 0, result, iv.Length, decryptedContent.Length);
+#Lavender:return Convert.ToBase64String(result);
+stop
+@enduml

@@ -1,0 +1,7 @@
+@startuml StringExtensions.SetIndent
+title StringExtensions.SetIndent
+start
+#LightGreen:Params(this IEnumerable<string> lines,int count);
+#Lavender:return lines.ToArray().SetIndent(count);
+stop
+@enduml

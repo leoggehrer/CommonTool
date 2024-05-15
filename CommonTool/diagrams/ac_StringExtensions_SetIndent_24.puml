@@ -1,0 +1,14 @@
+@startuml StringExtensions.SetIndent
+title StringExtensions.SetIndent
+start
+#LightGreen:Params(this string[] lines,int count);
+#LightYellow:if (lines != null) then (<color:green>yes)
+        #LightSkyBlue:int i = 0;
+        while (i < lines.Length) is (<color:green>yes)
+                #WhiteSmoke:lines[i] = lines[i].SetIndent(count);
+        :i++;
+        endwhile (<color:red>no)
+endif
+#Lavender:return lines ?? [];
+stop
+@enduml

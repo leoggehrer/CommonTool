@@ -1,0 +1,20 @@
+@startuml TemplatePath.GetTemplateParentPaths
+title TemplatePath.GetTemplateParentPaths
+participant "GetTemplateParentPaths(string startPath,int maxDepth,params string[] includePaths)" as GetTemplateParentPaths_p0_p1_p2 #LightYellow
+participant "GetTemplatePaths(startPath,maxDepth).Union(includePaths).ToArray()" as GetTemplatePaths_startPath_maxDepth_Union_includePaths_ToArray #LightGreen
+participant "qtProjects.Select(p=>GetParentDirectory(p)).Distinct().OrderBy(a0)" as qtProjects_Select_p_GetParentDirectory_p_Distinct_OrderBy_a0 #LightGreen
+participant "qtProjects.Select(p=>GetParentDirectory(p)).Distinct()" as qtProjects_Select_p_GetParentDirectory_p_Distinct #LightGreen
+participant "result.Any(a0)" as result_Any_a0 #LightGreen
+participant "result.Add(a0)" as result_Add_a0 #LightGreen
+autonumber
+GetTemplateParentPaths_p0_p1_p2 -[#grey]> GetTemplatePaths_startPath_maxDepth_Union_includePaths_ToArray
+GetTemplatePaths_startPath_maxDepth_Union_includePaths_ToArray -[#blue]-> GetTemplateParentPaths_p0_p1_p2 : qtProjects
+GetTemplateParentPaths_p0_p1_p2 -[#grey]> qtProjects_Select_p_GetParentDirectory_p_Distinct_OrderBy_a0 : (p => p)
+qtProjects_Select_p_GetParentDirectory_p_Distinct_OrderBy_a0 -[#blue]-> GetTemplateParentPaths_p0_p1_p2 : qtPaths
+loop#LightCoral qtPaths
+    alt#LightBlue result.Any(x => qtPath.Length > x.Length && qtPath.Contains(x)) == false
+        GetTemplateParentPaths_p0_p1_p2 -[#grey]> result_Any_a0 : (x => qtPath.Length > x.Length && qtPath.Contains(x))
+        GetTemplateParentPaths_p0_p1_p2 -[#grey]> result_Add_a0 : (qtPath)
+    end
+end
+@enduml

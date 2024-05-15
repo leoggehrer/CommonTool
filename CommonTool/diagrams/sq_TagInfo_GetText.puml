@@ -1,0 +1,8 @@
+@startuml TagInfo.GetText
+title TagInfo.GetText
+participant "GetText" as GetText #LightYellow
+participant "GetText(a0)" as GetText_a0 #LightGreen
+autonumber
+GetText -[#grey]> GetText_a0 : (InnerText)
+GetText_a0 -[#blue]-> GetText : result
+@enduml

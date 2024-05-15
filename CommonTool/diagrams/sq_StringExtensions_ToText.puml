@@ -1,0 +1,13 @@
+@startuml StringExtensions.ToText
+title StringExtensions.ToText
+participant "ToText(this IEnumerable<string> lines)" as ToText_p0 #LightYellow
+participant "sb.AppendLine()" as sb_AppendLine #LightGreen
+participant "sb.Append(a0)" as sb_Append_a0 #LightGreen
+autonumber
+loop#LightCoral lines
+    alt#LightBlue sb.Length > 0
+        ToText_p0 -[#grey]> sb_AppendLine
+    end
+    ToText_p0 -[#grey]> sb_Append_a0 : (line)
+end
+@enduml

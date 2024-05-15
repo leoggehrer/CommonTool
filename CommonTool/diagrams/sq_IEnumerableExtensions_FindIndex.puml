@@ -1,0 +1,11 @@
+@startuml IEnumerableExtensions.FindIndex
+title IEnumerableExtensions.FindIndex
+participant "FindIndex(this IEnumerable<T> items,Func<T, bool> predicate)" as FindIndex_p0_p1 #LightYellow
+participant "predicate(a0)" as predicate_a0 #LightGreen
+autonumber
+loop#LightCoral items
+    alt#LightBlue predicate(item)
+        FindIndex_p0_p1 -[#grey]> predicate_a0 : (item)
+    end
+end
+@enduml

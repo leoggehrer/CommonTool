@@ -1,0 +1,6 @@
+@startuml ConsoleApplication.BeforeRun
+title ConsoleApplication.BeforeRun
+start
+#LightGreen:Params(string[] args);
+stop
+@enduml

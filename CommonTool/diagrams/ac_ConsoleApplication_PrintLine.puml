@@ -1,0 +1,6 @@
+@startuml ConsoleApplication.PrintLine
+title ConsoleApplication.PrintLine
+start
+#WhiteSmoke:PrintLine();
+stop
+@enduml

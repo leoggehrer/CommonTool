@@ -1,0 +1,7 @@
+@startuml TemplatePath.GetSubPaths
+title TemplatePath.GetSubPaths
+start
+#LightGreen:Params(string startPath,int maxDepth);
+#Lavender:return QueryDirectoryStructure(startPath, n => n.StartsWith($"{Path.DirectorySeparatorChar}.") == false, maxDepth, "bin", "obj", "node_modules");
+stop
+@enduml

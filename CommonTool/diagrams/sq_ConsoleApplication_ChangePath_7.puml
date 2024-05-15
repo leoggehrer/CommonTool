@@ -1,0 +1,17 @@
+@startuml ConsoleApplication.ChangePath
+title ConsoleApplication.ChangePath
+participant "ChangePath(string title,string path)" as ChangePath_p0_p1 #LightYellow
+participant "PrintLine()" as PrintLine #LightGreen
+participant "Print(a0)" as Print_a0 #LightGreen
+participant "ReadLine()" as ReadLine #LightGreen
+participant "Directory.Exists(a0)" as Directory_Exists_a0 #LightGreen
+autonumber
+ChangePath_p0_p1 -[#grey]> PrintLine
+ChangePath_p0_p1 -[#grey]> Print_a0 : (title)
+Print_a0 -[#blue]-> ChangePath_p0_p1 : result
+ChangePath_p0_p1 -[#grey]> ReadLine
+ReadLine -[#blue]-> ChangePath_p0_p1 : newPath
+alt#LightBlue Directory.Exists(newPath)
+    ChangePath_p0_p1 -[#grey]> Directory_Exists_a0 : (newPath)
+end
+@enduml

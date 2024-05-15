@@ -1,0 +1,15 @@
+@startuml StringExtensions.Shrink
+title StringExtensions.Shrink
+participant "Shrink(this string source,char charToRemove)" as Shrink_p0_p1 #LightYellow
+participant "result.Append(a0)" as result_Append_a0 #LightGreen
+autonumber
+loop#LightCoral source
+    alt#LightBlue c == charToRemove
+        alt#LightBlue hasFound == false
+            Shrink_p0_p1 -[#grey]> result_Append_a0 : (c)
+        end
+        else
+            Shrink_p0_p1 -[#grey]> result_Append_a0 : (c)
+    end
+end
+@enduml

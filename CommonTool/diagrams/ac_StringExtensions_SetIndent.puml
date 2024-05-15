@@ -1,0 +1,7 @@
+@startuml StringExtensions.SetIndent
+title StringExtensions.SetIndent
+start
+#LightGreen:Params(this string text);
+#Lavender:return text.SetIndent(IndentSpace, 1);
+stop
+@enduml

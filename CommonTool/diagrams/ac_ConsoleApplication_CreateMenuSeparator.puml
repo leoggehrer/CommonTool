@@ -1,0 +1,6 @@
+@startuml ConsoleApplication.CreateMenuSeparator
+title ConsoleApplication.CreateMenuSeparator
+start
+#Lavender:return new() { Key = new string('-', MENU_KEY_WIDTH), Text = new string('-', MENU_TEXT_WIDTH), Action = (self) => { }, ForegroundColor = ConsoleColor.DarkGreen, };
+stop
+@enduml

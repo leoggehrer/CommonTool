@@ -1,0 +1,23 @@
+@startuml StringExtensions.Contains
+title StringExtensions.Contains
+participant "Contains(this string source,char toCheck,char[] quotationStarts,char[] quotationEnds)" as Contains_p0_p1_p2_p3 #LightYellow
+participant "quotationStarts.FindIndex(a0)" as quotationStarts_FindIndex_a0 #LightGreen
+participant "quotationEnds.FindIndex(a0)" as quotationEnds_FindIndex_a0 #LightGreen
+participant "quotationCounter.Sum(a0)" as quotationCounter_Sum_a0 #LightGreen
+autonumber
+loop#LightCoral i < source.Length && search
+    alt#LightBlue quotationStarts.FindIndex(q => q == c) > -1
+        Contains_p0_p1_p2_p3 -[#grey]> quotationStarts_FindIndex_a0 : (q => q == c)
+        Contains_p0_p1_p2_p3 -[#grey]> quotationStarts_FindIndex_a0 : (q => q == c)
+        else
+            alt#LightBlue quotationEnds.FindIndex(q => q == c) > -1
+                Contains_p0_p1_p2_p3 -[#grey]> quotationEnds_FindIndex_a0 : (q => q == c)
+                Contains_p0_p1_p2_p3 -[#grey]> quotationEnds_FindIndex_a0 : (q => q == c)
+                else
+                    alt#LightBlue quotationCounter.Sum(q => q % 2) == 0
+                        Contains_p0_p1_p2_p3 -[#grey]> quotationCounter_Sum_a0 : (q => q % 2)
+                    end
+            end
+    end
+end
+@enduml

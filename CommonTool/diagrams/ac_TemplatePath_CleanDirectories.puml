@@ -1,0 +1,7 @@
+@startuml TemplatePath.CleanDirectories
+title TemplatePath.CleanDirectories
+start
+#LightGreen:Params(string path,params string[] dropFolders);
+#WhiteSmoke:CleanDirectories(new DirectoryInfo(path), dropFolders);
+stop
+@enduml

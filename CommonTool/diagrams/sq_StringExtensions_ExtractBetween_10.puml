@@ -1,0 +1,8 @@
+@startuml StringExtensions.ExtractBetween
+title StringExtensions.ExtractBetween
+participant "ExtractBetween(this string source,char openingBracket,char closingBracket)" as ExtractBetween_p0_p1_p2 #LightYellow
+participant "source.ExtractBetween(a0,a1,a2)" as source_ExtractBetween_a0_a1_a2 #LightGreen
+autonumber
+ExtractBetween_p0_p1_p2 -[#grey]> source_ExtractBetween_a0_a1_a2 : (openingBracket, closingBracket, 0)
+source_ExtractBetween_a0_a1_a2 -[#blue]-> ExtractBetween_p0_p1_p2 : result
+@enduml

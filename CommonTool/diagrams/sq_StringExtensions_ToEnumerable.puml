@@ -1,0 +1,27 @@
+@startuml StringExtensions.ToEnumerable
+title StringExtensions.ToEnumerable
+participant "ToEnumerable(this string source,string separator)" as ToEnumerable_p0_p1 #LightYellow
+participant "string.IsNullOrEmpty(a0)" as string_IsNullOrEmpty_a0 #LightGreen
+participant "source.Split(a0)" as source_Split_a0 #LightGreen
+participant "item.Equals(a0)" as item_Equals_a0 #LightGreen
+participant "result.Add(a0)" as result_Add_a0 #LightGreen
+participant "System.Diagnostics.Debug.WriteLine(a0)" as System_Diagnostics_Debug_WriteLine_a0 #LightGreen
+autonumber
+alt#LightBlue string.IsNullOrEmpty(source) == false
+    ToEnumerable_p0_p1 -[#grey]> string_IsNullOrEmpty_a0 : (source)
+    string_IsNullOrEmpty_a0 -[#blue]-> ToEnumerable_p0_p1 : result
+    ToEnumerable_p0_p1 -[#grey]> source_Split_a0 : (separator)
+    source_Split_a0 -[#blue]-> ToEnumerable_p0_p1 : items
+    loop#LightCoral items
+        alt#LightBlue item.Equals(NullText)
+            ToEnumerable_p0_p1 -[#grey]> item_Equals_a0 : (NullText)
+            item_Equals_a0 -[#blue]-> ToEnumerable_p0_p1 : result
+            ToEnumerable_p0_p1 -[#grey]> result_Add_a0 : (default)
+            else
+                ToEnumerable_p0_p1 -[#grey]> result_Add_a0 : ((T)Convert.ChangeType(item, typeof(T)))
+                ToEnumerable_p0_p1 -[#grey]> System_Diagnostics_Debug_WriteLine_a0 : (e.Message)
+                ToEnumerable_p0_p1 -[#grey]> result_Add_a0 : (default)
+        end
+    end
+end
+@enduml

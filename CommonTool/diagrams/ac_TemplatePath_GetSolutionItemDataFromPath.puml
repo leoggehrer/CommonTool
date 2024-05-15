@@ -1,0 +1,15 @@
+@startuml TemplatePath.GetSolutionItemDataFromPath
+title TemplatePath.GetSolutionItemDataFromPath
+start
+#LightGreen:Params(string path,string itemExtension);
+#LightSkyBlue:var itemName = string.Empty\nvar subPath = path.StartsWith(Path.DirectorySeparatorChar) ? Path.DirectorySeparatorChar.ToString() : string.Empty\nvar itemsEnumerator = path.Split(Path.DirectorySeparatorChar, StringSplitOptions.RemoveEmptyEntries) .GetEnumerator();
+while (itemName.IsNullOrEmpty() && itemsEnumerator.MoveNext()) is (<color:green>yes)
+        #WhiteSmoke:subPath = Path.Combine(subPath, itemsEnumerator.Current.ToString()!);
+        #LightSkyBlue:var filePath = Path.Combine(subPath, $"{itemsEnumerator.Current}{itemExtension}");
+        #LightYellow:if (File.Exists(filePath)) then (<color:green>yes)
+                #WhiteSmoke:itemName = itemsEnumerator.Current.ToString() ?? string.Empty;
+        endif
+endwhile (<color:red>no)
+#Lavender:return (itemName, subPath);
+stop
+@enduml

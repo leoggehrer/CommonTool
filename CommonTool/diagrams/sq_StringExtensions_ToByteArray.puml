@@ -1,0 +1,10 @@
+@startuml StringExtensions.ToByteArray
+title StringExtensions.ToByteArray
+participant "ToByteArray(this string source)" as ToByteArray_p0 #LightYellow
+participant "newASCIIEncoding().GetBytes(a0)" as new_ASCIIEncoding_GetBytes_a0 #LightGreen
+autonumber
+alt#LightBlue source != null
+    ToByteArray_p0 -[#grey]> new_ASCIIEncoding_GetBytes_a0 : (source)
+    new_ASCIIEncoding_GetBytes_a0 -[#blue]-> ToByteArray_p0 : result
+end
+@enduml

@@ -1,0 +1,7 @@
+@startuml StringExtensions.IsNullOrWhiteSpace
+title StringExtensions.IsNullOrWhiteSpace
+start
+#LightGreen:Params(this string text);
+#Lavender:return string.IsNullOrWhiteSpace(text);
+stop
+@enduml

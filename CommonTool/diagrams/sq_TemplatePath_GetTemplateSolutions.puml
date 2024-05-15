@@ -1,0 +1,17 @@
+@startuml TemplatePath.GetTemplateSolutions
+title TemplatePath.GetTemplateSolutions
+participant "GetTemplateSolutions(string startPath,int maxDepth)" as GetTemplateSolutions_p0_p1 #LightYellow
+participant "GetTemplatePaths(a0,a1)" as GetTemplatePaths_a0_a1 #LightGreen
+participant "di.GetFiles().Any(a0)" as di_GetFiles_Any_a0 #LightGreen
+participant "di.GetFiles()" as di_GetFiles #LightGreen
+participant "result.Add(a0)" as result_Add_a0 #LightGreen
+autonumber
+GetTemplateSolutions_p0_p1 -[#grey]> GetTemplatePaths_a0_a1 : (startPath, maxDepth)
+GetTemplatePaths_a0_a1 -[#blue]-> GetTemplateSolutions_p0_p1 : qtPaths
+loop#LightCoral qtPaths
+    alt#LightBlue di.GetFiles().Any(f => Path.GetExtension(f.Name).Equals(".sln", StringComparison.CurrentCultureIgnoreCase))
+        GetTemplateSolutions_p0_p1 -[#grey]> di_GetFiles_Any_a0 : (f => Path.GetExtension(f.Name).Equals(".sln", StringComparison.CurrentCultureIgnoreCase))
+        GetTemplateSolutions_p0_p1 -[#grey]> result_Add_a0 : (qtPath)
+    end
+end
+@enduml

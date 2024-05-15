@@ -1,0 +1,25 @@
+@startuml Application.GetCurrentSolutionPath
+title Application.GetCurrentSolutionPath
+participant "GetCurrentSolutionPath" as GetCurrentSolutionPath #LightYellow
+participant "AppContext.BaseDirectory.Split(a0)" as AppContext_BaseDirectory_Split_a0 #LightGreen
+participant "paths[0].IsNullOrEmpty()" as paths_0_IsNullOrEmpty #LightGreen
+participant "result.IsNullOrEmpty()" as result_IsNullOrEmpty #LightGreen
+participant "Path.Combine(a0,a1)" as Path_Combine_a0_a1 #LightGreen
+participant "File.Exists(a0)" as File_Exists_a0 #LightGreen
+autonumber
+GetCurrentSolutionPath -[#grey]> AppContext_BaseDirectory_Split_a0 : (Path.DirectorySeparatorChar)
+AppContext_BaseDirectory_Split_a0 -[#blue]-> GetCurrentSolutionPath : paths
+GetCurrentSolutionPath -[#grey]> paths_0_IsNullOrEmpty
+GetCurrentSolutionPath -[#grey]> paths_0_IsNullOrEmpty
+loop#LightCoral result.IsNullOrEmpty() && index < paths.Length
+    GetCurrentSolutionPath -[#grey]> result_IsNullOrEmpty
+    result_IsNullOrEmpty -[#blue]-> GetCurrentSolutionPath : result
+    GetCurrentSolutionPath -[#grey]> Path_Combine_a0_a1 : (checkPath, folder)
+    Path_Combine_a0_a1 -[#blue]-> GetCurrentSolutionPath : checkPath
+    GetCurrentSolutionPath -[#grey]> Path_Combine_a0_a1 : (checkPath, fileName)
+    Path_Combine_a0_a1 -[#blue]-> GetCurrentSolutionPath : filePath
+    alt#LightBlue File.Exists(filePath)
+        GetCurrentSolutionPath -[#grey]> File_Exists_a0 : (filePath)
+    end
+end
+@enduml

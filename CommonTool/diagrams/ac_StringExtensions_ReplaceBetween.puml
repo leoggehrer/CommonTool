@@ -1,0 +1,15 @@
+@startuml StringExtensions.ReplaceBetween
+title StringExtensions.ReplaceBetween
+start
+#LightGreen:Params(this string source,string startText,string endText,string replaceText);
+#LightSkyBlue:string result\nvar sIdx = source.IndexOf(startText)\nvar eIdx = source.IndexOf(endText);
+#LightYellow:if (sIdx > -1 && eIdx > -1 && sIdx <= eIdx) then (<color:green>yes)
+        #WhiteSmoke:result = source[..(sIdx + startText.Length)];
+        #WhiteSmoke:result += replaceText;
+        #WhiteSmoke:result += source[eIdx..];
+    else (<color:red>no)
+            #WhiteSmoke:result = source;
+endif
+#Lavender:return result;
+stop
+@enduml

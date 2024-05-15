@@ -1,0 +1,11 @@
+@startuml StringExtensions.Decrypt
+title StringExtensions.Decrypt
+start
+#LightGreen:Params(this string cipherText,string keyString);
+#LightSkyBlue:var fullCipher = Convert.FromBase64String(cipherText)\nvar iv = new byte[16]\nvar cipher = new byte[16];
+#WhiteSmoke:Buffer.BlockCopy(fullCipher, 0, iv, 0, iv.Length);
+#WhiteSmoke:Buffer.BlockCopy(fullCipher, iv.Length, cipher, 0, iv.Length);
+#LightSkyBlue:var key = Encoding.UTF8.GetBytes(keyString)\nstring result\nvar aesAlg = Aes.Create()\nvar decryptor = aesAlg.CreateDecryptor(key, iv);
+#Lavender:return result;
+stop
+@enduml

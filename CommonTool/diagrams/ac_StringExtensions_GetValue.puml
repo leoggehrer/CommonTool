@@ -1,0 +1,7 @@
+@startuml StringExtensions.GetValue
+title StringExtensions.GetValue
+start
+#LightGreen:Params(this string source,string defaultValue);
+#Lavender:return string.IsNullOrEmpty(source) ? defaultValue : source;
+stop
+@enduml

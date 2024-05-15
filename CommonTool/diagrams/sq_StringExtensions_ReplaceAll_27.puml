@@ -1,0 +1,8 @@
+@startuml StringExtensions.ReplaceAll
+title StringExtensions.ReplaceAll
+participant "ReplaceAll(this string text,string startTag,string endTag,string replaceText)" as ReplaceAll_p0_p1_p2_p3 #LightYellow
+participant "text.ReplaceAll(a0,a1,a2)" as text_ReplaceAll_a0_a1_a2 #LightGreen
+autonumber
+ReplaceAll_p0_p1_p2_p3 -[#grey]> text_ReplaceAll_a0_a1_a2 : (startTag, endTag, s => replaceText)
+text_ReplaceAll_a0_a1_a2 -[#blue]-> ReplaceAll_p0_p1_p2_p3 : result
+@enduml

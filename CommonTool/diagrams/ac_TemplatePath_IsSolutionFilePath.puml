@@ -1,0 +1,8 @@
+@startuml TemplatePath.IsSolutionFilePath
+title TemplatePath.IsSolutionFilePath
+start
+#LightGreen:Params(string filePath);
+#LightSkyBlue:var path = Path.GetDirectoryName(filePath);
+#Lavender:return IsProjectPath(path ?? string.Empty);
+stop
+@enduml

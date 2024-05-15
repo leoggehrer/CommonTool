@@ -1,0 +1,31 @@
+@startuml IEnumerableExtensions.IsSubsequence
+title IEnumerableExtensions.IsSubsequence
+participant "IsSubsequence(this IEnumerable<T> sequence,IEnumerable<T> subsequence)" as IsSubsequence_p0_p1 #LightYellow
+participant "sequence.GetEnumerator()" as sequence_GetEnumerator #LightGreen
+participant "subsequence.GetEnumerator()" as subsequence_GetEnumerator #LightGreen
+participant "subsequenceEnumerator.MoveNext()" as subsequenceEnumerator_MoveNext #LightGreen
+participant "subsequenceEnumerator.Reset()" as subsequenceEnumerator_Reset #LightGreen
+participant "sequenceEnumerator.MoveNext()" as sequenceEnumerator_MoveNext #LightGreen
+participant "Equals(a0,a1)" as Equals_a0_a1 #LightGreen
+autonumber
+IsSubsequence_p0_p1 -[#grey]> sequence_GetEnumerator
+sequence_GetEnumerator -[#blue]-> IsSubsequence_p0_p1 : sequenceEnumerator
+IsSubsequence_p0_p1 -[#grey]> subsequence_GetEnumerator
+subsequence_GetEnumerator -[#blue]-> IsSubsequence_p0_p1 : subsequenceEnumerator
+loop#LightCoral subsequenceEnumerator.MoveNext()
+    IsSubsequence_p0_p1 -[#grey]> subsequenceEnumerator_MoveNext
+end
+IsSubsequence_p0_p1 -[#grey]> subsequenceEnumerator_Reset
+alt#LightBlue subsequenceEnumerator.MoveNext()
+    IsSubsequence_p0_p1 -[#grey]> subsequenceEnumerator_MoveNext
+    loop#LightCoral start == false && sequenceEnumerator.MoveNext()
+        IsSubsequence_p0_p1 -[#grey]> sequenceEnumerator_MoveNext
+        IsSubsequence_p0_p1 -[#grey]> Equals_a0_a1 : (sequenceEnumerator.Current, subsequenceEnumerator.Current)
+        Equals_a0_a1 -[#blue]-> IsSubsequence_p0_p1 : start
+    end
+    loop#LightCoral start && sequenceEnumerator.MoveNext() && subsequenceEnumerator.MoveNext()
+        IsSubsequence_p0_p1 -[#grey]> sequenceEnumerator_MoveNext
+        IsSubsequence_p0_p1 -[#grey]> subsequenceEnumerator_MoveNext
+    end
+end
+@enduml

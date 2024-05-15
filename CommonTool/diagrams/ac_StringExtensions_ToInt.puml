@@ -1,0 +1,16 @@
+@startuml StringExtensions.ToInt
+title StringExtensions.ToInt
+start
+#LightGreen:Params(this string text);
+#LightSkyBlue:int result = 0;
+:iterator = text.GetIterator();
+while (iterator.MoveNext()) is (<color:green>yes)
+:item = iterator.Current();
+            #LightYellow:if (char.IsDigit(item)) then (<color:green>yes)
+                    #WhiteSmoke:result *= 10;
+                    #WhiteSmoke:result = result + item - '0';
+            endif
+endwhile (<color:red>no)
+#Lavender:return result;
+stop
+@enduml

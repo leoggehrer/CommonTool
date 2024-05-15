@@ -1,0 +1,53 @@
+@startuml ConsoleApplication.CreatePageMenuItems
+title ConsoleApplication.CreatePageMenuItems
+participant "CreatePageMenuItems(ref int mnuIdx,T[] items,Action<T, MenuItem> newMenuItemHandler)" as CreatePageMenuItems_p0_p1_p2 #LightYellow
+participant ".Invoke(a0,a1)" as _Invoke_a0_a1 #LightGreen
+participant "result.Add(a0)" as result_Add_a0 #LightGreen
+participant "Math.Min(a0,a1)" as Math_Min_a0_a1 #LightGreen
+participant "CreateMenuSeparator()" as CreateMenuSeparator #LightGreen
+participant "PrintScreen()" as PrintScreen #LightGreen
+autonumber
+alt#LightBlue items.Length > PageSize
+    loop#LightCoral i < items.Length
+        CreatePageMenuItems_p0_p1_p2 -[#grey]> _Invoke_a0_a1 : (item, menuItem)
+        CreatePageMenuItems_p0_p1_p2 -[#grey]> result_Add_a0 : (menuItem)
+    end
+    CreatePageMenuItems_p0_p1_p2 -[#grey]> Math_Min_a0_a1 : ((PageIndex + 1) * PageSize, items.Length)
+    CreatePageMenuItems_p0_p1_p2 -[#grey]> result_Add_a0 : (CreateMenuSeparator())
+    CreatePageMenuItems_p0_p1_p2 -[#grey]> result_Add_a0 : (new()
+                {
+                    Key = "",
+                    Text = ToLabelText(pageLabel, string.Empty, 20, ' '),
+                    Action = (self) => { },
+                    ForegroundColor = ConsoleColor.DarkGreen,
+                })
+    CreatePageMenuItems_p0_p1_p2 -[#grey]> result_Add_a0 : (CreateMenuSeparator())
+    CreatePageMenuItems_p0_p1_p2 -[#grey]> result_Add_a0 : (new()
+                {
+                    Key = "+",
+                    Text = ToLabelText("Next", "Load next page"),
+                    Action = (self) =>
+                    {
+                        PageIndex = (PageIndex + 1) * PageSize < items.Length ? PageIndex + 1 : PageIndex;
+                        PrintScreen();
+                    },
+                    ForegroundColor = ConsoleColor.DarkGreen,
+                })
+    CreatePageMenuItems_p0_p1_p2 -[#grey]> result_Add_a0 : (new()
+                {
+                    Key = "-",
+                    Text = ToLabelText("Previous", "Load previous page"),
+                    Action = (self) =>
+                    {
+                        PageIndex = Math.Max(0, PageIndex - 1);
+                        PrintScreen();
+                    },
+                    ForegroundColor = ConsoleColor.DarkGreen,
+                })
+    else
+        loop#LightCoral i < items.Length
+            CreatePageMenuItems_p0_p1_p2 -[#grey]> _Invoke_a0_a1 : (item, menuItem)
+            CreatePageMenuItems_p0_p1_p2 -[#grey]> result_Add_a0 : (menuItem)
+        end
+end
+@enduml

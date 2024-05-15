@@ -1,0 +1,8 @@
+@startuml StringExtensions.Contains
+title StringExtensions.Contains
+participant "Contains(this string source,params string[] toChecks)" as Contains_p0_p1 #LightYellow
+participant "source.Contains(a0,a1)" as source_Contains_a0_a1 #LightGreen
+autonumber
+Contains_p0_p1 -[#grey]> source_Contains_a0_a1 : (StringComparison.CurrentCultureIgnoreCase, toChecks)
+source_Contains_a0_a1 -[#blue]-> Contains_p0_p1 : result
+@enduml

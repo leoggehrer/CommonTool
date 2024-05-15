@@ -1,0 +1,17 @@
+@startuml TemplatePath.GetFiles
+title TemplatePath.GetFiles
+start
+#LightGreen:Params(string path,string[] searchPatterns,int maxDeep,params string[] ignoreFolders);
+#LightSkyBlue:var result = new List<string>()\nvar sourcePaths = GetSubPaths(path, maxDeep);
+:iterator = sourcePaths.GetIterator();
+while (iterator.MoveNext()) is (<color:green>yes)
+:sourcePath = iterator.Current();
+            :iterator = searchPatterns.GetIterator();
+            while (iterator.MoveNext()) is (<color:green>yes)
+            :searchPattern = iterator.Current();
+                                #WhiteSmoke:result.AddRange(Directory.GetFiles(sourcePath, searchPattern, SearchOption.TopDirectoryOnly) .Where(f => ignoreFolders.Any(e => f.Contains(e)) == false) .OrderBy(i => i));
+            endwhile (<color:red>no)
+endwhile (<color:red>no)
+#Lavender:return result;
+stop
+@enduml

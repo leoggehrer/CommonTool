@@ -1,0 +1,16 @@
+@startuml IEnumerableExtensions.FindIndex
+title IEnumerableExtensions.FindIndex
+start
+#LightGreen:Params(this IEnumerable<T> items,Func<T, bool> predicate);
+#LightSkyBlue:int retVal = 0;
+:iterator = items.GetIterator();
+while (iterator.MoveNext()) is (<color:green>yes)
+:item = iterator.Current();
+            #LightYellow:if (predicate(item)) then (<color:green>yes)
+                #Lavender:return retVal;
+            endif
+            #WhiteSmoke:retVal++;
+endwhile (<color:red>no)
+#Lavender:return -1;
+stop
+@enduml

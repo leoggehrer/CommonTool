@@ -1,0 +1,8 @@
+@startuml StringExtensions.GetAllTags
+title StringExtensions.GetAllTags
+participant "GetAllTags(this string text,string startTag,string endTag,int parseIndex,params char[] excludeBlocks)" as GetAllTags_p0_p1_p2_p3_p4 #LightYellow
+participant "text.GetAllTags<TagInfo>(a0,a1,a2,a3)" as text_GetAllTags_TagInfo_a0_a1_a2_a3 #LightGreen
+autonumber
+GetAllTags_p0_p1_p2_p3_p4 -[#grey]> text_GetAllTags_TagInfo_a0_a1_a2_a3 : (startTag, endTag, parseIndex, excludeBlocks)
+text_GetAllTags_TagInfo_a0_a1_a2_a3 -[#blue]-> GetAllTags_p0_p1_p2_p3_p4 : result
+@enduml

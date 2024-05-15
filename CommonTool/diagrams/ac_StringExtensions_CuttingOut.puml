@@ -1,0 +1,7 @@
+@startuml StringExtensions.CuttingOut
+title StringExtensions.CuttingOut
+start
+#LightGreen:Params(this string source,int startIdx);
+#Lavender:return source.CuttingOut(startIdx, source.Length - 1);
+stop
+@enduml

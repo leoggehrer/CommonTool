@@ -1,0 +1,8 @@
+@startuml Application.GetSourceCodePaths
+title Application.GetSourceCodePaths
+start
+#LightGreen:Params(string path,string[] searchPatterns);
+#LightSkyBlue:var result = GetSourceCodeFiles(path, searchPatterns);
+#Lavender:return [.. result.Select(f => Path.GetDirectoryName(f) ?? string.Empty).Distinct().Order()];
+stop
+@enduml

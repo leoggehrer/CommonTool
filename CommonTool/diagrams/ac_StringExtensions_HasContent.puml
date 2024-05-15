@@ -1,0 +1,7 @@
+@startuml StringExtensions.HasContent
+title StringExtensions.HasContent
+start
+#LightGreen:Params(this string? source);
+#Lavender:return !string.IsNullOrEmpty(source);
+stop
+@enduml

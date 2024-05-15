@@ -1,0 +1,8 @@
+@startuml ConsoleApplication.ChangePath
+title ConsoleApplication.ChangePath
+participant "ChangePath(string path)" as ChangePath_p0 #LightYellow
+participant "ChangePath(a0,a1)" as ChangePath_a0_a1 #LightGreen
+autonumber
+ChangePath_p0 -[#grey]> ChangePath_a0_a1 : ("Enter path: ", path)
+ChangePath_a0_a1 -[#blue]-> ChangePath_p0 : result
+@enduml

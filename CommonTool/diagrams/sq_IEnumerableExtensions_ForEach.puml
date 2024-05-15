@@ -1,0 +1,11 @@
+@startuml IEnumerableExtensions.ForEach
+title IEnumerableExtensions.ForEach
+participant "ForEach(this IEnumerable<T> source,Action<T> action)" as ForEach_p0_p1 #LightYellow
+participant "action(a0)" as action_a0 #LightGreen
+autonumber
+alt#LightBlue source != null && action != null
+    loop#LightCoral source
+        ForEach_p0_p1 -[#grey]> action_a0 : (item)
+    end
+end
+@enduml

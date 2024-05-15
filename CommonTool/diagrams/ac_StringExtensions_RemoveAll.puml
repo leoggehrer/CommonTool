@@ -1,0 +1,7 @@
+@startuml StringExtensions.RemoveAll
+title StringExtensions.RemoveAll
+start
+#LightGreen:Params(this string source);
+#Lavender:return source.RemoveAll(" ");
+stop
+@enduml

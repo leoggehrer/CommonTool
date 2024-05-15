@@ -1,0 +1,8 @@
+@startuml StringExtensions.HasContent
+title StringExtensions.HasContent
+participant "HasContent(this string? source)" as HasContent_p0 #LightYellow
+participant "string.IsNullOrEmpty(a0)" as string_IsNullOrEmpty_a0 #LightGreen
+autonumber
+HasContent_p0 -[#grey]> string_IsNullOrEmpty_a0 : (source)
+string_IsNullOrEmpty_a0 -[#blue]-> HasContent_p0 : result
+@enduml

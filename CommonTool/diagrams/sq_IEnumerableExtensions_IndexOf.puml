@@ -1,0 +1,16 @@
+@startuml IEnumerableExtensions.IndexOf
+title IEnumerableExtensions.IndexOf
+participant "IndexOf(this IEnumerable<T> source,Predicate<T> predicate)" as IndexOf_p0_p1 #LightYellow
+participant "source.GetEnumerator()" as source_GetEnumerator #LightGreen
+participant "enumerator.MoveNext()" as enumerator_MoveNext #LightGreen
+participant "predicate(a0)" as predicate_a0 #LightGreen
+autonumber
+IndexOf_p0_p1 -[#grey]> source_GetEnumerator
+source_GetEnumerator -[#blue]-> IndexOf_p0_p1 : enumerator
+loop#LightCoral result == -1 && enumerator.MoveNext()
+    IndexOf_p0_p1 -[#grey]> enumerator_MoveNext
+    alt#LightBlue predicate(enumerator.Current)
+        IndexOf_p0_p1 -[#grey]> predicate_a0 : (enumerator.Current)
+    end
+end
+@enduml

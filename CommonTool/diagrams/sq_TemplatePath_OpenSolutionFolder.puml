@@ -1,0 +1,15 @@
+@startuml TemplatePath.OpenSolutionFolder
+title TemplatePath.OpenSolutionFolder
+participant "OpenSolutionFolder(string solutionPath)" as OpenSolutionFolder_p0 #LightYellow
+participant "Process.Start(a0)" as Process_Start_a0 #LightGreen
+autonumber
+alt#LightBlue Environment.OSVersion.Platform == PlatformID.Win32NT
+    OpenSolutionFolder_p0 -[#grey]> Process_Start_a0 : (new ProcessStartInfo()
+                {
+                    WorkingDirectory = solutionPath,
+                    FileName = "explorer",
+                    Arguments = solutionPath,
+                    CreateNoWindow = true,
+                })
+end
+@enduml

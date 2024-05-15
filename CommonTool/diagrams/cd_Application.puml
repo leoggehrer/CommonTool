@@ -1,0 +1,33 @@
+@startuml Application
+title Application
+abstract class Application #White {
+- {static} bool _force
+- {static} string? _homepath
+- {static} string _userpath
+- {static} string _sourcepath
+- {static} string _solutionpath
+---
++ {static} bool getForce()
++ {static} Void setForce(bool value)
++ {static} string? getHomePath()
++ {static} Void setHomePath(string? value)
++ {static} string getUserPath()
++ {static} Void setUserPath(string value)
++ {static} string getSourcePath()
++ {static} Void setSourcePath(string value)
++ {static} string getSolutionPath()
++ {static} Void setSolutionPath(string value)
+---
+- {static} void ClassConstructing()
+- {static} void ClassConstructed()
+- void Constructing()
+- void Constructed()
++ {static} void ChangeForce()
++ {static} string GetCurrentSolutionPath()
++ {static} string GetParentFromPath(string path)
++ {static} List<string> FindFilesFromPathAndParentPath(string path, string searchPattern)
++ {static} List<string> GetSourceCodeFiles(string path, string[] searchPatterns)
++ {static} List<string> GetSourceCodePaths(string path, string[] searchPatterns)
++ {static} List<string> GetSourceCodeFiles(string path, string[] searchPatterns, int maxDeep)
+}
+@enduml

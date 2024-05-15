@@ -1,0 +1,14 @@
+@startuml IEnumerableExtensions.ForEach
+title IEnumerableExtensions.ForEach
+start
+#LightGreen:Params(this IEnumerable<T> source,Action<T> action);
+#LightYellow:if (source != null && action != null) then (<color:green>yes)
+        :iterator = source.GetIterator();
+        while (iterator.MoveNext()) is (<color:green>yes)
+        :item = iterator.Current();
+                            #WhiteSmoke:action(item);
+        endwhile (<color:red>no)
+endif
+#Lavender:return source ?? [];
+stop
+@enduml

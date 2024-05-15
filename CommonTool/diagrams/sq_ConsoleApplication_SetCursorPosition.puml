@@ -1,0 +1,7 @@
+@startuml ConsoleApplication.SetCursorPosition
+title ConsoleApplication.SetCursorPosition
+participant "SetCursorPosition(int left,int top)" as SetCursorPosition_p0_p1 #LightYellow
+participant "Console.SetCursorPosition(a0,a1)" as Console_SetCursorPosition_a0_a1 #LightGreen
+autonumber
+SetCursorPosition_p0_p1 -[#grey]> Console_SetCursorPosition_a0_a1 : (left, top)
+@enduml

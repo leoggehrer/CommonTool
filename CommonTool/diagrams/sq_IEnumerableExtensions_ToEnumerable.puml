@@ -1,0 +1,16 @@
+@startuml IEnumerableExtensions.ToEnumerable
+title IEnumerableExtensions.ToEnumerable
+participant "ToEnumerable(this IEnumerable<T> source,Func<T, ST> expandSelector)" as ToEnumerable_p0_p1 #LightYellow
+participant "expandSelector(a0)" as expandSelector_a0 #LightGreen
+participant "expandResult.Add(a0)" as expandResult_Add_a0 #LightGreen
+autonumber
+alt#LightBlue source != null && expandSelector != null
+    loop#LightCoral source
+        ToEnumerable_p0_p1 -[#grey]> expandSelector_a0 : (item)
+        expandSelector_a0 -[#blue]-> ToEnumerable_p0_p1 : subItem
+        alt#LightBlue subItem != null
+            ToEnumerable_p0_p1 -[#grey]> expandResult_Add_a0 : (subItem)
+        end
+    end
+end
+@enduml

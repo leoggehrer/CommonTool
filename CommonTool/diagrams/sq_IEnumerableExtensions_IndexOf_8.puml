@@ -1,0 +1,10 @@
+@startuml IEnumerableExtensions.IndexOf
+title IEnumerableExtensions.IndexOf
+participant "IndexOf(this IEnumerable<T> items,T item)" as IndexOf_p0_p1 #LightYellow
+participant "items.FindIndex(a0)" as items_FindIndex_a0 #LightGreen
+autonumber
+alt#LightBlue items != null
+    IndexOf_p0_p1 -[#grey]> items_FindIndex_a0 : (i => EqualityComparer<T>.Default.Equals(item, i))
+    items_FindIndex_a0 -[#blue]-> IndexOf_p0_p1 : result
+end
+@enduml

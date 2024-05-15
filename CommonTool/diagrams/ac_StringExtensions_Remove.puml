@@ -1,0 +1,21 @@
+@startuml StringExtensions.Remove
+title StringExtensions.Remove
+start
+#LightGreen:Params(this string text,string startTag,string endTag);
+#LightSkyBlue:StringBuilder result = new()\nint parseIndex = 0\nint startTagIndex\nint endTagIndex;
+repeat
+        #WhiteSmoke:startTagIndex = text.IndexOf(startTag, parseIndex, StringComparison.CurrentCultureIgnoreCase);
+        #LightSkyBlue:var startTagEndIndex = startTagIndex > -1 ? startTagIndex + startTag.Length : parseIndex;
+        #WhiteSmoke:endTagIndex = startTagEndIndex >= 0 ? text.IndexOf(endTag, startTagEndIndex, StringComparison.CurrentCultureIgnoreCase) : -1;
+        #LightSkyBlue:var endTagEndIndex = endTagIndex > -1 ? endTagIndex + endTag.Length : parseIndex;
+        #LightYellow:if (startTagIndex > -1 && endTagIndex > startTagIndex) then (<color:green>yes)
+                #WhiteSmoke:result.Append(text[parseIndex..startTagIndex]);
+                #WhiteSmoke:parseIndex = endTagEndIndex;
+        endif
+repeat while (startTagIndex > -1 && endTagIndex > -1) is (<color:green>yes)
+#LightYellow:if (parseIndex < text.Length) then (<color:green>yes)
+        #WhiteSmoke:result.Append(text[parseIndex..]);
+endif
+#Lavender:return result.ToString();
+stop
+@enduml

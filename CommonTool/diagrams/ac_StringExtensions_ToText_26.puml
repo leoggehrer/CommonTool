@@ -1,0 +1,13 @@
+@startuml StringExtensions.ToText
+title StringExtensions.ToText
+start
+#LightGreen:Params(this IEnumerable<string> lines,Func<string, string> lineConvert);
+#LightSkyBlue:StringBuilder sb = new();
+:iterator = lines.GetIterator();
+while (iterator.MoveNext()) is (<color:green>yes)
+:line = iterator.Current();
+            #WhiteSmoke:sb.AppendLine(lineConvert == null ? line : lineConvert(line));
+endwhile (<color:red>no)
+#Lavender:return sb.ToString();
+stop
+@enduml

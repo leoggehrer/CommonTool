@@ -1,0 +1,25 @@
+@startuml StringExtensions.ExtractBetween
+title StringExtensions.ExtractBetween
+participant "ExtractBetween(this string source,char openingBracket,char closingBracket,int startPosition)" as ExtractBetween_p0_p1_p2_p3 #LightYellow
+participant "result.Append(a0)" as result_Append_a0 #LightGreen
+autonumber
+loop#LightCoral i > -1 && i < source.Length && toScan
+    alt#LightBlue source[i] == openingBracket && open == false
+        else
+            alt#LightBlue source[i] == openingBracket && open
+                ExtractBetween_p0_p1_p2_p3 -[#grey]> result_Append_a0 : (source[i])
+                else
+                    alt#LightBlue source[i] == closingBracket && openCount > 1
+                        ExtractBetween_p0_p1_p2_p3 -[#grey]> result_Append_a0 : (source[i])
+                        else
+                            alt#LightBlue source[i] == closingBracket && openCount == 1
+                                else
+                                    alt#LightBlue openCount > 0
+                                        ExtractBetween_p0_p1_p2_p3 -[#grey]> result_Append_a0 : (source[i])
+                                    end
+                            end
+                    end
+            end
+    end
+end
+@enduml

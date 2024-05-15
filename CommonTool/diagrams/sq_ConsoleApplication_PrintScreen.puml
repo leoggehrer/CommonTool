@@ -1,0 +1,23 @@
+@startuml ConsoleApplication.PrintScreen
+title ConsoleApplication.PrintScreen
+participant "PrintScreen" as PrintScreen #LightYellow
+participant "CreateMenuItems()" as CreateMenuItems #LightGreen
+participant "Clear()" as Clear #LightGreen
+participant "PrintHeader()" as PrintHeader #LightGreen
+participant "MenuItems.Where(mi=>mi.IsDisplayed).ToList().ForEach(a0)" as MenuItems_Where_mi_mi_IsDisplayed_ToList_ForEach_a0 #LightGreen
+participant "MenuItems.Where(mi=>mi.IsDisplayed).ToList()" as MenuItems_Where_mi_mi_IsDisplayed_ToList #LightGreen
+participant "PrintFooter()" as PrintFooter #LightGreen
+autonumber
+PrintScreen -[#grey]> CreateMenuItems
+CreateMenuItems -[#blue]-> PrintScreen : MenuItems
+PrintScreen -[#grey]> Clear
+PrintScreen -[#grey]> PrintHeader
+PrintScreen -[#grey]> MenuItems_Where_mi_mi_IsDisplayed_ToList_ForEach_a0 : (m =>
+            {
+                var menuKey = m.Key;
+
+                ForegroundColor = m.ForegroundColor;
+                PrintLine($"[{menuKey,MENU_KEY_WIDTH}] {m.Text}");
+            })
+PrintScreen -[#grey]> PrintFooter
+@enduml

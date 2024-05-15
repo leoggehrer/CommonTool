@@ -1,0 +1,18 @@
+@startuml ConsoleApplication.Clear
+title ConsoleApplication.Clear
+start
+#LightYellow:if (Environment.OSVersion.Platform == PlatformID.Win32NT) then (<color:green>yes)
+        #WhiteSmoke:Console.Clear();
+    else (<color:red>no)
+            #LightSkyBlue:var width = Console.BufferWidth;
+            #LightSkyBlue:var height = Console.BufferHeight;
+            #WhiteSmoke:Console.SetCursorPosition(0, 0);
+            #LightSkyBlue:int i = 0;
+            while (i < height) is (<color:green>yes)
+                    #WhiteSmoke:Print(new string(' ', width));
+            :i++;
+            endwhile (<color:red>no)
+            #WhiteSmoke:Console.SetCursorPosition(0, 0);
+endif
+stop
+@enduml

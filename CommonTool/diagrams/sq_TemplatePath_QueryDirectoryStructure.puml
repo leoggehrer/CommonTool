@@ -1,0 +1,30 @@
+@startuml TemplatePath.QueryDirectoryStructure
+title TemplatePath.QueryDirectoryStructure
+participant "QueryDirectoryStructure(string path,Func<string, bool>? filter,int maxDepth,params string[] excludeFolders)" as QueryDirectoryStructure_p0_p1_p2_p3 #LightYellow
+participant "directoryInfo.Attributes.HasFlag(a0)" as directoryInfo_Attributes_HasFlag_a0 #LightGreen
+participant "filter(a0)" as filter_a0 #LightGreen
+participant "list.Add(a0)" as list_Add_a0 #LightGreen
+participant "directoryInfo.GetDirectories()" as directoryInfo_GetDirectories #LightGreen
+participant "excludeFolders.Any(a0)" as excludeFolders_Any_a0 #LightGreen
+participant "GetDirectoriesWithoutHidden(a0,a1,a2,a3,a4,a5)" as GetDirectoriesWithoutHidden_a0_a1_a2_a3_a4_a5 #LightGreen
+participant "Debug.WriteLine(a0)" as Debug_WriteLine_a0 #LightGreen
+autonumber
+alt#LightBlue directoryInfo.Attributes.HasFlag(FileAttributes.Hidden) == false
+    QueryDirectoryStructure_p0_p1_p2_p3 -[#grey]> directoryInfo_Attributes_HasFlag_a0 : (FileAttributes.Hidden)
+    alt#LightBlue filter == null || filter(directoryInfo.Name)
+        QueryDirectoryStructure_p0_p1_p2_p3 -[#grey]> filter_a0 : (directoryInfo.Name)
+        QueryDirectoryStructure_p0_p1_p2_p3 -[#grey]> list_Add_a0 : (directoryInfo.FullName)
+    end
+    alt#LightBlue maxDeep < 0 || deep < maxDeep
+        loop#LightCoral directoryInfo.GetDirectories()
+            QueryDirectoryStructure_p0_p1_p2_p3 -[#grey]> directoryInfo_GetDirectories
+            alt#LightBlue excludeFolders.Any(e => e.Equals(di.Name, StringComparison.CurrentCultureIgnoreCase)) == false
+                QueryDirectoryStructure_p0_p1_p2_p3 -[#grey]> excludeFolders_Any_a0 : (e => e.Equals(di.Name, StringComparison.CurrentCultureIgnoreCase))
+                QueryDirectoryStructure_p0_p1_p2_p3 -[#grey]> GetDirectoriesWithoutHidden_a0_a1_a2_a3_a4_a5 : (filter, di, list, maxDeep, deep + 1, excludeFolders)
+            end
+        end
+    end
+end
+QueryDirectoryStructure_p0_p1_p2_p3 -[#grey]> Debug_WriteLine_a0 : ($"Error in {MethodBase.GetCurrentMethod()!.Name}: {ex.Message}")
+QueryDirectoryStructure_p0_p1_p2_p3 -[#grey]> GetDirectoriesWithoutHidden_a0_a1_a2_a3_a4_a5 : (filter, directoryInfo, result, maxDepth, 0, excludeFolders)
+@enduml

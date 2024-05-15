@@ -1,0 +1,11 @@
+@startuml StringExtensions.ToByteArray
+title StringExtensions.ToByteArray
+start
+#LightGreen:Params(this string source);
+#LightSkyBlue:byte[]? result = null;
+#LightYellow:if (source != null) then (<color:green>yes)
+        #WhiteSmoke:result = new ASCIIEncoding().GetBytes(source);
+endif
+#Lavender:return result ?? [];
+stop
+@enduml

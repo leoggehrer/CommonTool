@@ -1,0 +1,7 @@
+@startuml ConsoleApplication.PrintFooter
+title ConsoleApplication.PrintFooter
+start
+#WhiteSmoke:PrintLine();
+#WhiteSmoke:Print("Choose [n|n,n|a...all|x|X]: ");
+stop
+@enduml

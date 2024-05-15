@@ -1,0 +1,9 @@
+@startuml StringExtensions.ToText
+title StringExtensions.ToText
+participant "ToText(this IEnumerable<string> lines,Func<string, string> lineConvert)" as ToText_p0_p1 #LightYellow
+participant "sb.AppendLine(a0)" as sb_AppendLine_a0 #LightGreen
+autonumber
+loop#LightCoral lines
+    ToText_p0_p1 -[#grey]> sb_AppendLine_a0 : (lineConvert == null ? line : lineConvert(line))
+end
+@enduml

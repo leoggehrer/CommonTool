@@ -1,0 +1,17 @@
+@startuml ConsoleApplication.ChangeSourcePath
+title ConsoleApplication.ChangeSourcePath
+participant "ChangeSourcePath" as ChangeSourcePath #LightYellow
+participant "PrintLine()" as PrintLine #LightGreen
+participant "Print(a0)" as Print_a0 #LightGreen
+participant "ReadLine()" as ReadLine #LightGreen
+participant "Directory.Exists(a0)" as Directory_Exists_a0 #LightGreen
+autonumber
+ChangeSourcePath -[#grey]> PrintLine
+ChangeSourcePath -[#grey]> Print_a0 : ("Enter source path: ")
+Print_a0 -[#blue]-> ChangeSourcePath : result
+ChangeSourcePath -[#grey]> ReadLine
+ReadLine -[#blue]-> ChangeSourcePath : newPath
+alt#LightBlue Directory.Exists(newPath)
+    ChangeSourcePath -[#grey]> Directory_Exists_a0 : (newPath)
+end
+@enduml

@@ -1,0 +1,13 @@
+@startuml ConsoleApplication.PrintScreen
+title ConsoleApplication.PrintScreen
+start
+#LightSkyBlue:var saveForegrondColor = ForegroundColor;
+#WhiteSmoke:MenuItems = CreateMenuItems();
+#WhiteSmoke:Clear();
+#WhiteSmoke:ForegroundColor = saveForegrondColor;
+#WhiteSmoke:PrintHeader();
+#WhiteSmoke:MenuItems.Where(mi => mi.IsDisplayed).ToList().ForEach(m => { var menuKey = m.Key; ForegroundColor = m.ForegroundColor; PrintLine($"[{menuKey,MENU_KEY_WIDTH}] {m.Text}"); });
+#WhiteSmoke:ForegroundColor = saveForegrondColor;
+#WhiteSmoke:PrintFooter();
+stop
+@enduml

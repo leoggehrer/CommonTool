@@ -1,0 +1,8 @@
+@startuml StringExtensions.GetAllTags
+title StringExtensions.GetAllTags
+participant "GetAllTags(this string text,string startTag,string endTag)" as GetAllTags_p0_p1_p2 #LightYellow
+participant "text.GetAllTags<TagInfo>(a0,a1,a2)" as text_GetAllTags_TagInfo_a0_a1_a2 #LightGreen
+autonumber
+GetAllTags_p0_p1_p2 -[#grey]> text_GetAllTags_TagInfo_a0_a1_a2 : (startTag, endTag, 0)
+text_GetAllTags_TagInfo_a0_a1_a2 -[#blue]-> GetAllTags_p0_p1_p2 : result
+@enduml

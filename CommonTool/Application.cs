@@ -24,7 +24,7 @@ namespace CommonTool
             ClassConstructing();
             Console.OutputEncoding = System.Text.Encoding.UTF8;
             HomePath = (Environment.OSVersion.Platform == PlatformID.Unix ||
-            Environment.OSVersion.Platform == PlatformID.MacOSX)
+                        Environment.OSVersion.Platform == PlatformID.MacOSX)
             ? Environment.GetEnvironmentVariable("HOME")
             : Environment.ExpandEnvironmentVariables("%HOMEDRIVE%%HOMEPATH%");
 
@@ -188,6 +188,13 @@ namespace CommonTool
             var result = GetSourceCodeFiles(path, searchPatterns);
 
             return [.. result.Select(f => Path.GetDirectoryName(f) ?? string.Empty).Distinct().Order()];
+        }
+
+        public static List<string> GetSourceCodeFiles(string path, string[] searchPatterns, int maxDeep)
+        {
+            var ignoreFolders = new string[] { $"{Path.DirectorySeparatorChar}bin{Path.DirectorySeparatorChar}", $"{Path.DirectorySeparatorChar}obj{Path.DirectorySeparatorChar}" };
+
+            return TemplatePath.GetFiles(path, searchPatterns, maxDeep, ignoreFolders);
         }
         #endregion methods for changing the properties
     }

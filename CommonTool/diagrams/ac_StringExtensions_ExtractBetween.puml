@@ -1,0 +1,11 @@
+@startuml StringExtensions.ExtractBetween
+title StringExtensions.ExtractBetween
+start
+#LightGreen:Params(this string source,string startText,string endText);
+#LightSkyBlue:var result = string.Empty\nvar sIdx = source.IndexOf(startText) + startText.Length\nvar eIdx = source.IndexOf(endText) - 1;
+#LightYellow:if (sIdx > -1 && eIdx > -1 && sIdx <= eIdx) then (<color:green>yes)
+        #WhiteSmoke:result = source.Partialstring(sIdx, eIdx);
+endif
+#Lavender:return result;
+stop
+@enduml

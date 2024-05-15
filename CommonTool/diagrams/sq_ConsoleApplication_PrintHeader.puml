@@ -1,0 +1,22 @@
+@startuml ConsoleApplication.PrintHeader
+title ConsoleApplication.PrintHeader
+participant "PrintHeader" as PrintHeader #LightYellow
+participant "GetCurrentSolutionPath()" as GetCurrentSolutionPath #LightGreen
+participant "TemplatePath.GetSolutionNameFromPath(a0)" as TemplatePath_GetSolutionNameFromPath_a0 #LightGreen
+participant "PrintLine(a0)" as PrintLine_a0 #LightGreen
+participant "PrintLine(a0,a1)" as PrintLine_a0_a1 #LightGreen
+participant "PrintLine()" as PrintLine #LightGreen
+autonumber
+PrintHeader -[#grey]> GetCurrentSolutionPath
+GetCurrentSolutionPath -[#blue]-> PrintHeader : solutionPath
+PrintHeader -[#grey]> TemplatePath_GetSolutionNameFromPath_a0 : (solutionPath)
+TemplatePath_GetSolutionNameFromPath_a0 -[#blue]-> PrintHeader : solutionName
+PrintHeader -[#grey]> PrintLine_a0 : (solutionName)
+PrintLine_a0 -[#blue]-> PrintHeader : count
+PrintHeader -[#grey]> PrintLine_a0_a1 : ('=', count)
+PrintLine_a0_a1 -[#blue]-> PrintHeader : result
+PrintHeader -[#grey]> PrintLine
+PrintHeader -[#grey]> PrintLine_a0 : ($"Force flag:     {Force}")
+PrintLine_a0 -[#blue]-> PrintHeader : result
+PrintHeader -[#grey]> PrintLine
+@enduml

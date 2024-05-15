@@ -1,0 +1,12 @@
+@startuml IEnumerableExtensions.TakeTo
+title IEnumerableExtensions.TakeTo
+start
+#LightGreen:Params(this IEnumerable<T> source,Predicate<T> predicate);
+#LightSkyBlue:var result = default(IEnumerable<T>);
+#LightYellow:if (source != null) then (<color:green>yes)
+        #LightSkyBlue:var end = false;
+        #WhiteSmoke:result = source.Where(e => { if (end == false && predicate != null) { end = predicate(e); } return end == false; });
+endif
+#Lavender:return result ?? [];
+stop
+@enduml

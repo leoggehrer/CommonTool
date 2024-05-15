@@ -1,0 +1,10 @@
+@startuml StringExtensions.CheckNotNullOrEmpty
+title StringExtensions.CheckNotNullOrEmpty
+start
+#LightGreen:Params(this string? source,string argName);
+#LightYellow:if (string.IsNullOrEmpty(source)) then (<color:green>yes)
+    #Red:throw new ArgumentException("String is null or empty!", argName);
+    kill
+endif
+stop
+@enduml

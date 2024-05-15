@@ -1,0 +1,8 @@
+@startuml StringExtensions.ContainsIgnoreCase
+title StringExtensions.ContainsIgnoreCase
+participant "ContainsIgnoreCase(this string source,string toCheck)" as ContainsIgnoreCase_p0_p1 #LightYellow
+participant "source.Contains(a0,a1)" as source_Contains_a0_a1 #LightGreen
+autonumber
+ContainsIgnoreCase_p0_p1 -[#grey]> source_Contains_a0_a1 : (toCheck, StringComparison.OrdinalIgnoreCase)
+source_Contains_a0_a1 -[#blue]-> ContainsIgnoreCase_p0_p1 : result
+@enduml

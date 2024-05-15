@@ -1,0 +1,9 @@
+@startuml TagHeader
+title TagHeader
+ class TagHeader #GhostWhite {
+- string _source
+---
++ string getSource()
+---
+}
+@enduml

@@ -1,0 +1,18 @@
+title:Application (CD)
+fileName:cd_Application.puml
+title:ConsoleApplication (CD)
+fileName:cd_ConsoleApplication.puml
+title:MenuItem (CD)
+fileName:cd_MenuItem.puml
+title:TemplatePath (CD)
+fileName:cd_TemplatePath.puml
+title:DivideInfo (CD)
+fileName:cd_DivideInfo.puml
+title:IEnumerableExtensions (CD)
+fileName:cd_IEnumerableExtensions.puml
+title:StringExtensions (CD)
+fileName:cd_StringExtensions.puml
+title:TagInfo (CD)
+fileName:cd_TagInfo.puml
+title:TagHeader (CD)
+fileName:cd_TagHeader.puml

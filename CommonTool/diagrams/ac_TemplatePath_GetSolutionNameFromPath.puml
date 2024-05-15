@@ -1,0 +1,7 @@
+@startuml TemplatePath.GetSolutionNameFromPath
+title TemplatePath.GetSolutionNameFromPath
+start
+#LightGreen:Params(string path);
+#Lavender:return GetSolutionItemDataFromPath(path, ".sln").Name;
+stop
+@enduml

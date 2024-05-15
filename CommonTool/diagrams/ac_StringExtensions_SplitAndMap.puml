@@ -1,0 +1,7 @@
+@startuml StringExtensions.SplitAndMap
+title StringExtensions.SplitAndMap
+start
+#LightGreen:Params(this IEnumerable<string> source,string separator,Func<string[], T> mapper);
+#Lavender:return source.Split(separator).Select(d => mapper(d));
+stop
+@enduml

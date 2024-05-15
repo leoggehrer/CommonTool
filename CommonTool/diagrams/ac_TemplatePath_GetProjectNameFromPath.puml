@@ -1,0 +1,7 @@
+@startuml TemplatePath.GetProjectNameFromPath
+title TemplatePath.GetProjectNameFromPath
+start
+#LightGreen:Params(string path);
+#Lavender:return GetSolutionItemDataFromPath(path, ".csproj").Name;
+stop
+@enduml

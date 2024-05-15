@@ -1,0 +1,6 @@
+@startuml ConsoleApplication.ReadLine
+title ConsoleApplication.ReadLine
+start
+#Lavender:return Console.ReadLine() ?? string.Empty;
+stop
+@enduml

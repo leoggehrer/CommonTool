@@ -1,0 +1,7 @@
+@startuml TemplatePath.IsProjectPath
+title TemplatePath.IsProjectPath
+start
+#LightGreen:Params(string path);
+#Lavender:return path.HasContent() && GetSolutionItemDataFromPath(path, ".csproj").Name.HasContent();
+stop
+@enduml

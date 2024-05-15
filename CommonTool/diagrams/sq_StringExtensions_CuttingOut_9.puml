@@ -1,0 +1,11 @@
+@startuml StringExtensions.CuttingOut
+title StringExtensions.CuttingOut
+participant "CuttingOut(this string source,int startIdx,int endIdx)" as CuttingOut_p0_p1_p2 #LightYellow
+participant "result.Append(a0)" as result_Append_a0 #LightGreen
+autonumber
+loop#LightCoral i < source.Length
+    alt#LightBlue i < startIdx || i > endIdx
+        CuttingOut_p0_p1_p2 -[#grey]> result_Append_a0 : (source[i])
+    end
+end
+@enduml

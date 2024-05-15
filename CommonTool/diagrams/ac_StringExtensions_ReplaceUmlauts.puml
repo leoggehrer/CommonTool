@@ -1,0 +1,43 @@
+@startuml StringExtensions.ReplaceUmlauts
+title StringExtensions.ReplaceUmlauts
+start
+#LightGreen:Params(this string text);
+#LightSkyBlue:StringBuilder sb = new();
+#LightYellow:if (text != null) then (<color:green>yes)
+        :iterator = text.GetIterator();
+        while (iterator.MoveNext()) is (<color:green>yes)
+        :item = iterator.Current();
+                            #LightYellow:if (item == 223) then (<color:green>yes)
+                                    #WhiteSmoke:sb.Append("ss");
+                                else (<color:red>no)
+                                    #LightYellow:if (item == 196) then (<color:green>yes)
+                                            #WhiteSmoke:sb.Append("Ae");
+                                        else (<color:red>no)
+                                            #LightYellow:if (item == 228) then (<color:green>yes)
+                                                    #WhiteSmoke:sb.Append("ae");
+                                                else (<color:red>no)
+                                                    #LightYellow:if (item == 214) then (<color:green>yes)
+                                                            #WhiteSmoke:sb.Append("Oe");
+                                                        else (<color:red>no)
+                                                            #LightYellow:if (item == 246) then (<color:green>yes)
+                                                                    #WhiteSmoke:sb.Append("oe");
+                                                                else (<color:red>no)
+                                                                    #LightYellow:if (item == 220) then (<color:green>yes)
+                                                                            #WhiteSmoke:sb.Append("Ue");
+                                                                        else (<color:red>no)
+                                                                            #LightYellow:if (item == 252) then (<color:green>yes)
+                                                                                    #WhiteSmoke:sb.Append("ue");
+                                                                                else (<color:red>no)
+                                                                                        #WhiteSmoke:sb.Append(item);
+                                                                            endif
+                                                                    endif
+                                                            endif
+                                                    endif
+                                            endif
+                                    endif
+                            endif
+        endwhile (<color:red>no)
+endif
+#Lavender:return sb.ToString();
+stop
+@enduml

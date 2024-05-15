@@ -1,0 +1,8 @@
+@startuml Application.GetSourceCodeFiles
+title Application.GetSourceCodeFiles
+start
+#LightGreen:Params(string path,string[] searchPatterns,int maxDeep);
+#LightSkyBlue:var ignoreFolders = new string[] { $"{Path.DirectorySeparatorChar}bin{Path.DirectorySeparatorChar}", $"{Path.DirectorySeparatorChar}obj{Path.DirectorySeparatorChar}" };
+#Lavender:return TemplatePath.GetFiles(path, searchPatterns, maxDeep, ignoreFolders);
+stop
+@enduml

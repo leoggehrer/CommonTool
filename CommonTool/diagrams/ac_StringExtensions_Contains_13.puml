@@ -1,0 +1,7 @@
+@startuml StringExtensions.Contains
+title StringExtensions.Contains
+start
+#LightGreen:Params(this string source,char toCheck,char quotationStart,char quotationEnd);
+#Lavender:return source.Contains(toCheck, [quotationStart], [quotationEnd]);
+stop
+@enduml

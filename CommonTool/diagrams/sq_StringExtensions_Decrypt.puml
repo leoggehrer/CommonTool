@@ -1,0 +1,23 @@
+@startuml StringExtensions.Decrypt
+title StringExtensions.Decrypt
+participant "Decrypt(this string cipherText,string keyString)" as Decrypt_p0_p1 #LightYellow
+participant "Convert.FromBase64String(a0)" as Convert_FromBase64String_a0 #LightGreen
+participant "Buffer.BlockCopy(a0,a1,a2,a3,a4)" as Buffer_BlockCopy_a0_a1_a2_a3_a4 #LightGreen
+participant "Encoding.UTF8.GetBytes(a0)" as Encoding_UTF8_GetBytes_a0 #LightGreen
+participant "Aes.Create()" as Aes_Create #LightGreen
+participant "aesAlg.CreateDecryptor(a0,a1)" as aesAlg_CreateDecryptor_a0_a1 #LightGreen
+participant "srDecrypt.ReadToEnd()" as srDecrypt_ReadToEnd #LightGreen
+autonumber
+Decrypt_p0_p1 -[#grey]> Convert_FromBase64String_a0 : (cipherText)
+Convert_FromBase64String_a0 -[#blue]-> Decrypt_p0_p1 : fullCipher
+Decrypt_p0_p1 -[#grey]> Buffer_BlockCopy_a0_a1_a2_a3_a4 : (fullCipher, 0, iv, 0, iv.Length)
+Decrypt_p0_p1 -[#grey]> Buffer_BlockCopy_a0_a1_a2_a3_a4 : (fullCipher, iv.Length, cipher, 0, iv.Length)
+Decrypt_p0_p1 -[#grey]> Encoding_UTF8_GetBytes_a0 : (keyString)
+Encoding_UTF8_GetBytes_a0 -[#blue]-> Decrypt_p0_p1 : key
+Decrypt_p0_p1 -[#grey]> Aes_Create
+Aes_Create -[#blue]-> Decrypt_p0_p1 : aesAlg
+Decrypt_p0_p1 -[#grey]> aesAlg_CreateDecryptor_a0_a1 : (key, iv)
+aesAlg_CreateDecryptor_a0_a1 -[#blue]-> Decrypt_p0_p1 : decryptor
+Decrypt_p0_p1 -[#grey]> srDecrypt_ReadToEnd
+srDecrypt_ReadToEnd -[#blue]-> Decrypt_p0_p1 : result
+@enduml

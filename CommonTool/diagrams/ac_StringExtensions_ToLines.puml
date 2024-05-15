@@ -1,0 +1,8 @@
+@startuml StringExtensions.ToLines
+title StringExtensions.ToLines
+start
+#LightGreen:Params(this string text);
+#LightSkyBlue:List<string> result = [.. text.Split(new string[] { Environment.NewLine }, StringSplitOptions.None)];
+#Lavender:return result;
+stop
+@enduml

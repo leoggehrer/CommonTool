@@ -1,0 +1,10 @@
+@startuml StringExtensions.RemoveAll
+title StringExtensions.RemoveAll
+participant "RemoveAll(this string source,params string[] removeItems)" as RemoveAll_p0_p1 #LightYellow
+participant "result.Replace(a0,a1)" as result_Replace_a0_a1 #LightGreen
+autonumber
+loop#LightCoral removeItems
+    RemoveAll_p0_p1 -[#grey]> result_Replace_a0_a1 : (item, string.Empty)
+    result_Replace_a0_a1 -[#blue]-> RemoveAll_p0_p1 : result
+end
+@enduml

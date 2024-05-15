@@ -1,0 +1,52 @@
+@startuml ConsoleApplication.ChangeTemplateSolutionPath
+title ConsoleApplication.ChangeTemplateSolutionPath
+participant "ChangeTemplateSolutionPath(string currentPath,int maxDeep,params string[] queryPaths)" as ChangeTemplateSolutionPath_p0_p1_p2 #LightYellow
+participant "GetCurrentSolutionPath()" as GetCurrentSolutionPath #LightGreen
+participant "queryPaths.ToList().ForEach(a0)" as queryPaths_ToList_ForEach_a0 #LightGreen
+participant "queryPaths.ToList()" as queryPaths_ToList #LightGreen
+participant "qtSolutionPaths.Add(a0)" as qtSolutionPaths_Add_a0 #LightGreen
+participant "qtSolutionPaths.Contains(a0)" as qtSolutionPaths_Contains_a0 #LightGreen
+participant "qtSolutionPaths.Distinct().OrderBy(e=>e).ToArray()" as qtSolutionPaths_Distinct_OrderBy_e_e_ToArray #LightGreen
+participant "qtSolutionPaths.Distinct()" as qtSolutionPaths_Distinct #LightGreen
+participant "PrintLine()" as PrintLine #LightGreen
+participant "PrintLine(a0)" as PrintLine_a0 #LightGreen
+participant "Print(a0)" as Print_a0 #LightGreen
+participant "ReadLine()" as ReadLine #LightGreen
+participant "int.TryParse(a0,a1)" as int_TryParse_a0_a1 #LightGreen
+participant "string.IsNullOrEmpty(a0)" as string_IsNullOrEmpty_a0 #LightGreen
+participant "Directory.Exists(a0)" as Directory_Exists_a0 #LightGreen
+autonumber
+ChangeTemplateSolutionPath_p0_p1_p2 -[#grey]> GetCurrentSolutionPath
+GetCurrentSolutionPath -[#blue]-> ChangeTemplateSolutionPath_p0_p1_p2 : solutionPath
+ChangeTemplateSolutionPath_p0_p1_p2 -[#grey]> queryPaths_ToList_ForEach_a0 : (qp => TemplatePath.GetTemplateSolutions(qp, maxDeep)
+                      .ToList().ForEach(s => qtSolutionPaths.Add(s)))
+alt#LightBlue qtSolutionPaths.Contains(solutionPath) == false && solutionPath != currentPath
+    ChangeTemplateSolutionPath_p0_p1_p2 -[#grey]> qtSolutionPaths_Contains_a0 : (solutionPath)
+    ChangeTemplateSolutionPath_p0_p1_p2 -[#grey]> qtSolutionPaths_Add_a0 : (solutionPath)
+end
+ChangeTemplateSolutionPath_p0_p1_p2 -[#grey]> qtSolutionPaths_Distinct_OrderBy_e_e_ToArray
+qtSolutionPaths_Distinct_OrderBy_e_e_ToArray -[#blue]-> ChangeTemplateSolutionPath_p0_p1_p2 : qtSelectSolutions
+loop#LightCoral i < qtSelectSolutions.Length
+    alt#LightBlue i == 0
+        ChangeTemplateSolutionPath_p0_p1_p2 -[#grey]> PrintLine
+    end
+    ChangeTemplateSolutionPath_p0_p1_p2 -[#grey]> PrintLine_a0 : ($"[{i + 1,3}] Change path to: {qtSelectSolutions[i]}")
+    PrintLine_a0 -[#blue]-> ChangeTemplateSolutionPath_p0_p1_p2 : result
+end
+ChangeTemplateSolutionPath_p0_p1_p2 -[#grey]> PrintLine
+ChangeTemplateSolutionPath_p0_p1_p2 -[#grey]> Print_a0 : ("Select or enter source path: ")
+Print_a0 -[#blue]-> ChangeTemplateSolutionPath_p0_p1_p2 : result
+ChangeTemplateSolutionPath_p0_p1_p2 -[#grey]> ReadLine
+ReadLine -[#blue]-> ChangeTemplateSolutionPath_p0_p1_p2 : selectOrPath
+alt#LightBlue int.TryParse(selectOrPath, out int number)
+    ChangeTemplateSolutionPath_p0_p1_p2 -[#grey]> int_TryParse_a0_a1 : (selectOrPath, out int number)
+    int_TryParse_a0_a1 -[#blue]-> ChangeTemplateSolutionPath_p0_p1_p2 : result
+    else
+        alt#LightBlue string.IsNullOrEmpty(selectOrPath) == false
+                     && Directory.Exists(selectOrPath)
+            ChangeTemplateSolutionPath_p0_p1_p2 -[#grey]> string_IsNullOrEmpty_a0 : (selectOrPath)
+            string_IsNullOrEmpty_a0 -[#blue]-> ChangeTemplateSolutionPath_p0_p1_p2 : result
+            ChangeTemplateSolutionPath_p0_p1_p2 -[#grey]> Directory_Exists_a0 : (selectOrPath)
+        end
+end
+@enduml

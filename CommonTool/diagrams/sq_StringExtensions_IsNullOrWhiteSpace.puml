@@ -1,0 +1,8 @@
+@startuml StringExtensions.IsNullOrWhiteSpace
+title StringExtensions.IsNullOrWhiteSpace
+participant "IsNullOrWhiteSpace(this string text)" as IsNullOrWhiteSpace_p0 #LightYellow
+participant "string.IsNullOrWhiteSpace(a0)" as string_IsNullOrWhiteSpace_a0 #LightGreen
+autonumber
+IsNullOrWhiteSpace_p0 -[#grey]> string_IsNullOrWhiteSpace_a0 : (text)
+string_IsNullOrWhiteSpace_a0 -[#blue]-> IsNullOrWhiteSpace_p0 : result
+@enduml

@@ -1,0 +1,9 @@
+@startuml StringExtensions.SetIndent
+title StringExtensions.SetIndent
+participant "SetIndent(this IEnumerable<string> lines,int count)" as SetIndent_p0_p1 #LightYellow
+participant "lines.ToArray().SetIndent(a0)" as lines_ToArray_SetIndent_a0 #LightGreen
+participant "lines.ToArray()" as lines_ToArray #LightGreen
+autonumber
+SetIndent_p0_p1 -[#grey]> lines_ToArray_SetIndent_a0 : (count)
+lines_ToArray_SetIndent_a0 -[#blue]-> SetIndent_p0_p1 : result
+@enduml

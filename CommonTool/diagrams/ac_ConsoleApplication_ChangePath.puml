@@ -1,0 +1,7 @@
+@startuml ConsoleApplication.ChangePath
+title ConsoleApplication.ChangePath
+start
+#LightGreen:Params(string path);
+#Lavender:return ChangePath("Enter path: ", path);
+stop
+@enduml

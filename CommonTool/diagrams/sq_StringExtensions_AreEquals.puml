@@ -1,0 +1,8 @@
+@startuml StringExtensions.AreEquals
+title StringExtensions.AreEquals
+participant "AreEquals(this string source,string value)" as AreEquals_p0_p1 #LightYellow
+participant "source.Equals(a0)" as source_Equals_a0 #LightGreen
+autonumber
+AreEquals_p0_p1 -[#grey]> source_Equals_a0 : (value)
+source_Equals_a0 -[#blue]-> AreEquals_p0_p1 : result
+@enduml

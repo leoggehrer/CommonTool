@@ -1,0 +1,11 @@
+@startuml ConsoleApplication.ChangeSourcePath
+title ConsoleApplication.ChangeSourcePath
+start
+#WhiteSmoke:PrintLine();
+#WhiteSmoke:Print("Enter source path: ");
+#LightSkyBlue:var newPath = ReadLine();
+#LightYellow:if (Directory.Exists(newPath)) then (<color:green>yes)
+        #WhiteSmoke:SourcePath = newPath;
+endif
+stop
+@enduml

@@ -1,0 +1,18 @@
+@startuml Application.FindFilesFromPathAndParentPath
+title Application.FindFilesFromPathAndParentPath
+participant "FindFilesFromPathAndParentPath(string path,string searchPattern)" as FindFilesFromPathAndParentPath_p0_p1 #LightYellow
+participant "Directory.Exists(a0)" as Directory_Exists_a0 #LightGreen
+participant "result.AddRange(a0)" as result_AddRange_a0 #LightGreen
+participant "GetParentFromPath(a0)" as GetParentFromPath_a0 #LightGreen
+autonumber
+alt#LightBlue Directory.Exists(path)
+    FindFilesFromPathAndParentPath_p0_p1 -[#grey]> Directory_Exists_a0 : (path)
+    FindFilesFromPathAndParentPath_p0_p1 -[#grey]> result_AddRange_a0 : (Directory.GetFiles(path, searchPattern, SearchOption.TopDirectoryOnly))
+end
+FindFilesFromPathAndParentPath_p0_p1 -[#grey]> GetParentFromPath_a0 : (path)
+GetParentFromPath_a0 -[#blue]-> FindFilesFromPathAndParentPath_p0_p1 : parentPath
+alt#LightBlue Directory.Exists(parentPath)
+    FindFilesFromPathAndParentPath_p0_p1 -[#grey]> Directory_Exists_a0 : (parentPath)
+    FindFilesFromPathAndParentPath_p0_p1 -[#grey]> result_AddRange_a0 : (Directory.GetFiles(parentPath, searchPattern, SearchOption.TopDirectoryOnly))
+end
+@enduml

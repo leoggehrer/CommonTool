@@ -1,0 +1,34 @@
+@startuml StringExtensions.Divide
+title StringExtensions.Divide
+participant "Divide(this string text,string[] tags)" as Divide_p0_p1 #LightYellow
+participant "text.GetAllTags(a0)" as text_GetAllTags_a0 #LightGreen
+participant "result.Add(a0)" as result_Add_a0 #LightGreen
+autonumber
+Divide_p0_p1 -[#grey]> text_GetAllTags_a0 : (tags)
+text_GetAllTags_a0 -[#blue]-> Divide_p0_p1 : tagInfos
+loop#LightCoral tagInfos
+    alt#LightBlue startIdx < tagInfo.StartTagIndex
+        Divide_p0_p1 -[#grey]> result_Add_a0 : (new DivideInfo(startIdx, tagInfo.StartTagIndex - 1)
+                    {
+                        Text = text.Partialstring(startIdx, tagInfo.StartTagIndex - 1),
+                    })
+        Divide_p0_p1 -[#grey]> result_Add_a0 : (new DivideInfo(tagInfo)
+                    {
+                        Text = text.Partialstring(tagInfo.StartTagIndex, tagInfo.EndTagIndex),
+                    })
+        else
+            alt#LightBlue startIdx == tagInfo.StartTagIndex
+                Divide_p0_p1 -[#grey]> result_Add_a0 : (new DivideInfo(tagInfo)
+                    {
+                        Text = text.Partialstring(tagInfo.StartTagIndex, tagInfo.EndTagIndex),
+                    })
+            end
+    end
+end
+alt#LightBlue startIdx < text.Length - 1
+    Divide_p0_p1 -[#grey]> result_Add_a0 : (new DivideInfo(startIdx, text.Length)
+                {
+                    Text = text.Partialstring(startIdx, text.Length - 1),
+                })
+end
+@enduml

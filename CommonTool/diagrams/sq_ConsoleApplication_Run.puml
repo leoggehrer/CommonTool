@@ -1,0 +1,44 @@
+@startuml ConsoleApplication.Run
+title ConsoleApplication.Run
+participant "Run(string[] args)" as Run_p0 #LightYellow
+participant "BeforeRun(a0)" as BeforeRun_a0 #LightGreen
+participant "PrintScreen()" as PrintScreen #LightGreen
+participant "ReadLine().ToLower().Split(a0,a1)" as ReadLine_ToLower_Split_a0_a1 #LightGreen
+participant "ReadLine().ToLower()" as ReadLine_ToLower #LightGreen
+participant "ReadLine()" as ReadLine #LightGreen
+participant "choose.GetEnumerator()" as choose_GetEnumerator #LightGreen
+participant "BeforeExecution()" as BeforeExecution #LightGreen
+participant "chooseIterator.MoveNext()" as chooseIterator_MoveNext #LightGreen
+participant "MenuItems.Where(a0)" as MenuItems_Where_a0 #LightGreen
+participant "actions.GetEnumerator()" as actions_GetEnumerator #LightGreen
+participant "actionIterator.MoveNext()" as actionIterator_MoveNext #LightGreen
+participant ".Action(a0)" as _Action_a0 #LightGreen
+participant "StopProgressBar()" as StopProgressBar #LightGreen
+participant "AfterExecution()" as AfterExecution #LightGreen
+participant "AfterRun()" as AfterRun #LightGreen
+autonumber
+Run_p0 -[#grey]> BeforeRun_a0 : (args)
+loop#LightCoral RunApp
+    Run_p0 -[#grey]> PrintScreen
+    Run_p0 -[#grey]> ReadLine_ToLower_Split_a0_a1 : (',', StringSplitOptions.RemoveEmptyEntries)
+    ReadLine_ToLower_Split_a0_a1 -[#blue]-> Run_p0 : choose
+    Run_p0 -[#grey]> choose_GetEnumerator
+    choose_GetEnumerator -[#blue]-> Run_p0 : chooseIterator
+    Run_p0 -[#grey]> BeforeExecution
+    loop#LightCoral RunApp && chooseIterator.MoveNext()
+        Run_p0 -[#grey]> chooseIterator_MoveNext
+        chooseIterator_MoveNext -[#blue]-> Run_p0 : result
+        Run_p0 -[#grey]> MenuItems_Where_a0 : (m => m.IsDisplayed && (m.Key.Equals(chooseIterator.Current) || m.OptionalKey.Equals(chooseIterator.Current)))
+        MenuItems_Where_a0 -[#blue]-> Run_p0 : actions
+        Run_p0 -[#grey]> actions_GetEnumerator
+        actions_GetEnumerator -[#blue]-> Run_p0 : actionIterator
+        loop#LightCoral RunApp && actionIterator.MoveNext()
+            Run_p0 -[#grey]> actionIterator_MoveNext
+            Run_p0 -[#grey]> _Action_a0 : (actionIterator.Current)
+        end
+        Run_p0 -[#grey]> StopProgressBar
+    end
+    Run_p0 -[#grey]> AfterExecution
+end
+Run_p0 -[#grey]> AfterRun
+@enduml

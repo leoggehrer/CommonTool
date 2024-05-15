@@ -1,0 +1,8 @@
+@startuml StringExtensions.SplitAndMap
+title StringExtensions.SplitAndMap
+participant "SplitAndMap(this IEnumerable<string> source,string separator,Func<string[], T> mapper)" as SplitAndMap_p0_p1_p2 #LightYellow
+participant "source.Split(separator).Select(a0)" as source_Split_separator_Select_a0 #LightGreen
+autonumber
+SplitAndMap_p0_p1_p2 -[#grey]> source_Split_separator_Select_a0 : (d => mapper(d))
+source_Split_separator_Select_a0 -[#blue]-> SplitAndMap_p0_p1_p2 : result
+@enduml

@@ -1,0 +1,12 @@
+@startuml StringExtensions.ToFileName
+title StringExtensions.ToFileName
+start
+#LightGreen:Params(this string text);
+:iterator = Path.GetInvalidFileNameChars().GetIterator();
+while (iterator.MoveNext()) is (<color:green>yes)
+:c = iterator.Current();
+            #WhiteSmoke:text = text.Replace(c, '_');
+endwhile (<color:red>no)
+#Lavender:return text ?? String.Empty;
+stop
+@enduml

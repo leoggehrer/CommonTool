@@ -1,0 +1,25 @@
+@startuml StringExtensions.Contains
+title StringExtensions.Contains
+start
+#LightGreen:Params(this string source,char toCheck,char[] quotationStarts,char[] quotationEnds);
+#LightSkyBlue:var result = false\nvar search = quotationStarts.Length == quotationEnds.Length\nvar quotationCounter = new int[quotationStarts.Length];
+#LightSkyBlue:int i = 0;
+while (i < source.Length && search) is (<color:green>yes)
+        #LightSkyBlue:var c = source[i];
+        #LightYellow:if (quotationStarts.FindIndex(q => q == c) > -1) then (<color:green>yes)
+                #WhiteSmoke:quotationCounter[quotationStarts.FindIndex(q => q == c)]++;
+            else (<color:red>no)
+                #LightYellow:if (quotationEnds.FindIndex(q => q == c) > -1) then (<color:green>yes)
+                        #WhiteSmoke:quotationCounter[quotationEnds.FindIndex(q => q == c)]--;
+                    else (<color:red>no)
+                        #LightYellow:if (quotationCounter.Sum(q => q % 2) == 0) then (<color:green>yes)
+                                #WhiteSmoke:result = c == toCheck;
+                                #WhiteSmoke:search = result == false;
+                        endif
+                endif
+        endif
+:i++;
+endwhile (<color:red>no)
+#Lavender:return result;
+stop
+@enduml

@@ -388,7 +388,7 @@ namespace CommonTool
             var solutionName = TemplatePath.GetSolutionNameFromPath(solutionPath);
 
             ForegroundColor = ConsoleColor.Green;
-
+            Clear();
             var count = PrintLine(solutionName);
             PrintLine('=', count);
             PrintLine();

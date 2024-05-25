@@ -1,9 +1,17 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<PackageId>CommonTool.Console</PackageId>
+		<Version>1.0.0</Version>
+		<Authors>Gerhard Gehrer</Authors>
+		<Company>HTBLA Leonding</Company>
+		<Description>This class library provides classes for creating console applications in C#.</Description>
+		<PackageTags>Console application</PackageTags>
+		<RepositoryUrl>https://github.com/leoggehrer/CommonTool</RepositoryUrl>
+		<IncludeSymbols>True</IncludeSymbols>
+	</PropertyGroup>
 
 </Project>

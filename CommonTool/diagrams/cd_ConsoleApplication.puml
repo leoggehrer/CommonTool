@@ -100,5 +100,5 @@ abstract class Application #White {
 + {static} List<string> GetSourceCodeFiles(string path, string[] searchPatterns, int maxDeep)
 }
 ConsoleApplication <|-- Application
-class Application #GhostWhite
+abstract class Application #GhostWhite
 @enduml

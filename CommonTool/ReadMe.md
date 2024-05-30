@@ -52,10 +52,9 @@ Enthält Hilfsmethoden zur Pfadverwaltung, die in der Konsolenanwendung verwende
 
 ## Beispielanwendungen
 
-Schritt-für-Schritt-Anleitung zur Erstellung einer Konsolenanwendung mit Auswahlmenü.
+Eine Schritt-für-Schritt-Anleitung einer Konsolenanwendung mit Auswahlmenü findet sich als Repository.
 
-- **Beispielcode**
-  - Detailliertes Beispiel aus der `ConsoleApplication.cs`, das die Einrichtung und Nutzung eines Menüs zur Steuerung der Anwendung zeigt.
+![SampleCommonTool.ConApp]()
 
 ## Erweiterte Funktionen
 
@@ -67,4 +66,3 @@ Häufig gestellte Fragen und Lösungen zu typischen Problemen, die Benutzer bei 
 
 - **Frage 1**: Wie integriere ich weitere Befehle in das Auswahlmenü?
 - **Antwort**: Schrittweise Anleitung zur Integration und Verwaltung zusätzlicher Befehle.
-

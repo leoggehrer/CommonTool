@@ -15,15 +15,60 @@ Anleitung zur Einrichtung und Installation der Bibliothek in einer Entwicklungs-
 
 ### Installationsprozess
 
-1. Klonen/Download des Repository
+#### Variante A - Verwendung der Quelldateien
+
+1. Klonen/Download des [Repository](https://github.com/leoggehrer/CommonTool)
 2. Öffnen der Solution-Datei (`CommonTool.sln`) in Visual Studio Code
 3. Build der Lösung zur Überprüfung auf Abhängigkeiten
+4. Einbinden der Klassenbibliothek in die Konsolen-Anwendung
+
+#### Variante B - Verwendung als nuget-Package
+
+1. Erstellen der Konsolen-Anwendung
+2. Hinzufügen des nuget-Package [CommonTool.Console](https://www.nuget.org/packages/CommonTool.Console/)
 
 ## Hauptklassen und Methoden
 
 ### Application
 
 Eine zentrale Klasse, die die Basisfunktionalitäten zur Verwaltung des Lebenszyklus einer Konsolenanwendung bereitstellt.
+
+```plantuml
+@startuml Application
+abstract class Application #White {
+- {static} bool _force
+- {static} string? _homepath
+- {static} string _userpath
+- {static} string _sourcepath
+- {static} string _solutionpath
+---
++ {static} bool getForce()
++ {static} Void setForce(bool value)
++ {static} string? getHomePath()
++ {static} Void setHomePath(string? value)
++ {static} string getUserPath()
++ {static} Void setUserPath(string value)
++ {static} string getSourcePath()
++ {static} Void setSourcePath(string value)
++ {static} string getSolutionPath()
++ {static} Void setSolutionPath(string value)
+---
+- {static} void ClassConstructing()
+- {static} void ClassConstructed()
+- void Constructing()
+- void Constructed()
++ {static} void ChangeForce()
++ {static} string GetCurrentSolutionPath()
++ {static} string GetParentFromPath(string path)
++ {static} List<string> FindFilesFromPathAndParentPath(string path, string searchPattern)
++ {static} List<string> GetSourceCodeFiles(string path, string[] searchPatterns)
++ {static} List<string> GetSourceCodePaths(string path, string[] searchPatterns)
++ {static} List<string> GetSourceCodeFiles(string path, string[] searchPatterns, int maxDeep)
+}
+@enduml
+```
+
+![Application (CD)](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/leoggehrer/CommonTool/master/CommonTool/diagrams/cd_Application.puml)
 
 - **Initialisierung**
   - `Initialisierung im statischen Konstruktor`: Initialisiert wichtige Eigenschaften der Anwendung wie den 'UserPath', 'SourcePath' und den 'SolutionPath'.

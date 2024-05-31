@@ -478,7 +478,6 @@ namespace CommonTool
                     Action = (self) =>
                     {
                         PageIndex = (PageIndex + 1) * PageSize < items.Length ? PageIndex + 1 : PageIndex;
-                        PrintScreen();
                     },
                     ForegroundColor = ConsoleColor.DarkGreen,
                 });
@@ -490,7 +489,6 @@ namespace CommonTool
                     Action = (self) =>
                     {
                         PageIndex = Math.Max(0, PageIndex - 1);
-                        PrintScreen();
                     },
                     ForegroundColor = ConsoleColor.DarkGreen,
                 });
@@ -532,7 +530,6 @@ namespace CommonTool
             var saveForegrondColor = ForegroundColor;
 
             MenuItems = CreateMenuItems();
-            Clear();
             ForegroundColor = saveForegrondColor;
             PrintHeader();
             MenuItems.Where(mi => mi.IsDisplayed).ToList().ForEach(m =>

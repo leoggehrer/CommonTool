@@ -54,15 +54,50 @@ Enthält Hilfsmethoden zur Pfadverwaltung, die in der Konsolenanwendung verwende
 
 Eine Schritt-für-Schritt-Anleitung einer Konsolenanwendung mit Auswahlmenü findet sich als Repository.
 
-![SampleCommonTool.ConApp]()
-
-## Erweiterte Funktionen
-
-Beschreibung spezieller Methoden und Erweiterungen, die für fortgeschrittene Anpassungen der Konsolenanwendungen verwendet werden können.
+![SampleCommonTool.ConApp](https://github.com/leoggehrer/CommonTool/tree/main/SampleCommonTool.ConApp)
 
 ## FAQ und Problembehandlung
 
 Häufig gestellte Fragen und Lösungen zu typischen Problemen, die Benutzer bei der Verwendung der Bibliothek erleben könnten.
 
 - **Frage 1**: Wie integriere ich weitere Befehle in das Auswahlmenü?
-- **Antwort**: Schrittweise Anleitung zur Integration und Verwaltung zusätzlicher Befehle.
+- **Antwort**: In der Methode ***CreateMenuItems()*** kann der Menüpunkt hinzugefügt werden.
+
+```csharp
+...
+var menuItems = new List<MenuItem>
+{
+    CreateMenuSeparator(),
+    new()
+    {
+        Key = $"{++mnuIdx}",
+        Text = ToLabelText("Force", "Change force flag"),
+        Action = (self) => ChangeForce(),
+    },
+    new()
+    {
+        Key = $"{++mnuIdx}",
+        Text = ToLabelText("Depth", "Change max sub path depth"),
+        Action = (self) => ChangeMaxSubPathDepth(),
+    },
+    new()
+    {
+        Key = $"{++mnuIdx}",
+        Text = ToLabelText("Projects path", "Change projects path"),
+        Action = (self) =>
+        {
+            var savePath = SourcePath;
+
+            SourcePath = SelectOrChangeToSubPath(SourcePath, MaxSubPathDepth, [ SourcePath ]);
+        },
+    },
+    new()
+    {
+        Key = $"{++mnuIdx}",
+        Text = ToLabelText("New short text", "New menu long text."),
+        Action = (self) => NewMenuAction(),
+    },
+    CreateMenuSeparator(),
+};
+...
+```

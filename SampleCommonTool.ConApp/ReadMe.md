@@ -1,12 +1,12 @@
-# Benutzeranleitung für die C# Klassenbibliothek
+# Konsole-Anwendung mit der C# Klassenbibliothek *CommonTool*
 
 ## Überblick
 
-Diese Bibliothek bietet Basisklassen zur schnellen Erstellung von Konsolenanwendungen mit integrierten Auswahlmenüs. Sie ermöglicht es Entwicklern, effizient robuste CLI-Tools zu entwickeln, die benutzerfreundliche Menüs für die Navigation und die Ausführung verschiedener Aufgaben bieten.
+Diese Konsolen-Anwendung zeigt den Einsatz von ***CommonTool*** für ein einfaches Auswahlmenü in der Konsole.
 
-## Installation
+## Verwendung der Klassenbibliothek
 
-Anleitung zur Einrichtung und Installation der Bibliothek in einer Entwicklungs- oder Produktionsumgebung.
+In diesem Beispiel wird die Klassenbibliothek als nuget-Package der Konsolen-Anwendung hinzugefügt.
 
 ### Voraussetzungen
 
@@ -15,56 +15,123 @@ Anleitung zur Einrichtung und Installation der Bibliothek in einer Entwicklungs-
 
 ### Installationsprozess
 
-#### Variante A - Verwendung der Quelldateien
-
-1. Klonen/Download des [Repository](https://github.com/leoggehrer/CommonTool)
-2. Öffnen der Solution-Datei (`CommonTool.sln`) in Visual Studio Code
-3. Build der Lösung zur Überprüfung auf Abhängigkeiten
-4. Einbinden der Klassenbibliothek in die Konsolen-Anwendung
-
-#### Variante B - Verwendung als nuget-Package
+#### Verwendung als nuget-Package
 
 1. Erstellen der Konsolen-Anwendung
 2. Hinzufügen des nuget-Package [CommonTool.Console](https://www.nuget.org/packages/CommonTool.Console/)
+3. Die Package-Reference kann auch händich in der Projekt-Datei (*.csproj) hinzugefügt werden
 
-## Hauptklassen und Methoden
+```code
+<Project Sdk="Microsoft.NET.Sdk">
+  ...
 
-### Application
+  <ItemGroup>
+    <PackageReference Include="CommonTool.Console" Version="1.0.0" />
+  </ItemGroup>
 
-Eine zentrale Klasse, die die Basisfunktionalitäten zur Verwaltung des Lebenszyklus einer Konsolenanwendung bereitstellt.
+</Project>
+```
 
-![Application (CD)](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/leoggehrer/CommonTool/master/CommonTool/diagrams/cd_Application.puml)
+## Hauptklassen Erstellen
 
-- **Initialisierung**
-  - `Initialisierung im statischen Konstruktor`: Initialisiert wichtige Eigenschaften der Anwendung wie den 'UserPath', 'SourcePath' und den 'SolutionPath'.
+Die Erstellung der Anwendung beginnt mit der Erstellung der Hauptklasse. Im vorliegenden Beispiel wird die Klasse mit ***SampleApp*** bezeichnet und von der Klasse ***ConsoleApplication*** abgeleitet. Die Klasse ***ConsoleApplication*** ist eine abstrakte Klasse und erfordert daher die Implementierung der Methode ***protected override MenuItem[] CreateMenuItems()***. Der folgende Programmcode zeigt die Implementierung der Klasse ***SampleApp***.
 
-### ConsoleApplication
+```csharp
+namespace SampleCommonTool.ConApp
+{
+    using CommonTool;
+    public partial class SampleApp : ConsoleApplication
+    {
+        #region override methods
+        /// <summary>
+        /// Creates an array of menu items for the application menu.
+        /// </summary>
+        /// <returns>An array of MenuItem objects representing the menu items.</returns>
+        protected override MenuItem[] CreateMenuItems()
+        {
+            var mnuIdx = 0;
+            var menuItems = new List<MenuItem>
+            {
+                CreateMenuSeparator(),
+                new()
+                {
+                    Key = $"{++mnuIdx}",
+                    Text = ToLabelText("Force", "Change force flag"),
+                    Action = (self) => ChangeForce(),
+                },
+                new()
+                {
+                    Key = $"{++mnuIdx}",
+                    Text = ToLabelText("Depth", "Change max sub path depth"),
+                    Action = (self) => ChangeMaxSubPathDepth(),
+                },
+                new()
+                {
+                    Key = $"{++mnuIdx}",
+                    Text = ToLabelText("Projects path", "Change projects path"),
+                    Action = (self) =>
+                    {
+                        var savePath = SourcePath;
 
-Diese Klasse stellt die Basis-Implementierung für die Konsolenanwendung mit einem Auswahlmenü zur Verfügung.
+                        SourcePath = SelectOrChangeToSubPath(SourcePath, MaxSubPathDepth, [ SourcePath ]);
+                    },
+                },
+                CreateMenuSeparator(),
+            };
 
-![ConsoleApplication (CD)](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/leoggehrer/CommonTool/master/CommonTool/diagrams/cd_ConsoleApplication.puml)
+            if (mnuIdx % 10 != 0)
+            {
+                mnuIdx += 10 - (mnuIdx % 10);
+            }
 
-### TemplatePath
+            var paths = TemplatePath.GetSubPaths(SourcePath, MaxSubPathDepth + 1)
+                                    .Where(p => TemplatePath.ContainsFiles(p, "*.cs"))
+                                    .OrderBy(p => p)
+                                    .ToArray();
 
-Enthält Hilfsmethoden zur Pfadverwaltung, die in der Konsolenanwendung verwendet werden können.
+            menuItems.AddRange(CreatePageMenuItems(ref mnuIdx, paths, (item, menuItem) =>
+            {
+                var subPath = item.Replace(SourcePath, string.Empty);
 
-![TemplatePath (CD)](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/leoggehrer/CommonTool/master/CommonTool/diagrams/cd_TemplatePath.puml)
+                PrintHeader();
+                menuItem.Text = ToLabelText("Path", $"{subPath}");
+                menuItem.Tag = "path";
+                menuItem.Action = (self) => {};
+                menuItem.Params = new() { { "sourcePath", item }, { "subPath", subPath } };
+            }));
+            return [.. menuItems.Union(CreateExitMenuItems())];
+        }
+        #endregion override methods
+    }
+}
+```
 
-## Beispielanwendungen
+Im Wesentlichen muss die Methode ***CreateMenuItems()*** implementiert werden, damit eine Instanz der Klasse ***SampleApp*** erstellt werden kann. Aufgabe der Methode ist die Erstellung einer Liste von Menü-Items, welche auf der Konsole angezeigt werden. Ein Menü-Item beinhaltet einen *Key*, einen *Kurztext* und einen *Langtext* für die Anzeige, einen *Tag* als Zusatzinformation, eine Lambda-Expression für die Menü-Aktion und Parameter über welche die Aktion versorgt werden kann.
 
-Schritt-für-Schritt-Anleitung zur Erstellung einer Konsolenanwendung mit Auswahlmenü.
+### Starten der Anwendung
 
-- **Beispielcode**
-  - Detailliertes Beispiel aus der `ConsoleApplication.cs`, das die Einrichtung und Nutzung eines Menüs zur Steuerung der Anwendung zeigt.
+Damit das Auswahlmenü auf der Konsole angezeigt wird, müssen nur wenige Programmzeilen in die Klasse ***Program*** eingefügt werden.
 
-## Erweiterte Funktionen
+```csharp
+namespace SampleCommonTool.ConApp
+{
+    /// <summary>
+    /// Represents the entry point of the application.
+    /// </summary>
+    public partial class Program
+    {
+        public static void Main(string[] args)
+        {
+            SampleApp app = new();
 
-Beschreibung spezieller Methoden und Erweiterungen, die für fortgeschrittene Anpassungen der Konsolenanwendungen verwendet werden können.
+            app.Run(args);
+        }
+    }
+}
+```
 
-## FAQ und Problembehandlung
+### Ausgabe
 
-Häufig gestellte Fragen und Lösungen zu typischen Problemen, die Benutzer bei der Verwendung der Bibliothek erleben könnten.
+![Konsole](Konsole.png)
 
-- **Frage 1**: Wie integriere ich weitere Befehle in das Auswahlmenü?
-- **Antwort**: Schrittweise Anleitung zur Integration und Verwaltung zusätzlicher Befehle.
-
+Viel Spaß beim Verwenden!

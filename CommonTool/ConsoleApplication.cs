@@ -1,5 +1,7 @@
 ﻿//@BaseCode
 //MdStart
+using CommonTool.Extensions;
+
 namespace CommonTool
 {
     /// <summary>
@@ -383,19 +385,43 @@ namespace CommonTool
         /// </summary>
         protected virtual void PrintHeader()
         {
-            var saveForeColor = ForegroundColor;
             var solutionPath = GetCurrentSolutionPath();
             var solutionName = TemplatePath.GetSolutionNameFromPath(solutionPath);
 
-            ForegroundColor = ConsoleColor.Green;
-            Clear();
-            var count = PrintLine(solutionName);
-            PrintLine('=', count);
-            PrintLine();
-            ForegroundColor = saveForeColor;
-            PrintLine($"Force flag:     {Force}");
-            PrintLine();
+            PrintHeader(solutionName, new("Force flag:", Force), 
+                                      new("Page index:", PageIndex),
+                                      new("Page size:", PageSize));
         }
+        /// <summary>
+        /// Prints the header information for the console application.
+        /// </summary>
+        /// <param name="title">The header text.</param>
+        /// <param name="keyValuePairs">The header text.</param>
+        protected virtual void PrintHeader(string title, params KeyValuePair<string, object>[] keyValuePairs)
+        {
+            var saveForeColor = ForegroundColor;
+
+            Clear();
+            ForegroundColor = ConsoleColor.Green;
+            PrintLine('=', title.Length);
+            PrintLine(title);
+            PrintLine('=', title.Length);
+            PrintLine();
+            ForegroundColor = ConsoleColor.DarkGreen;
+            if (keyValuePairs.Length > 0)
+            {
+                int maxLabel = keyValuePairs.Select(kv => kv.Key.Length).Max();
+
+                foreach (var (key, value) in keyValuePairs)
+                {
+                    PrintLine($"{key.PadRight(maxLabel)} {value}");
+                }
+                PrintLine();
+            }
+            ForegroundColor = saveForeColor;
+            
+        }
+
         /// <summary>
         /// Creates an array of menu items.
         /// </summary>
@@ -455,7 +481,7 @@ namespace CommonTool
                         Action = (self) =>
                         {
                         },
-                        ForegroundColor = i % 2 == 0 ? ForegroundColor : ConsoleColor.DarkYellow,
+                        ForegroundColor = i % 2 == 0 ? ForegroundColor : ConsoleColor.DarkGreen,
                     };
                     newMenuItemHandler?.Invoke(item, menuItem);
                     result.Add(menuItem);
@@ -507,6 +533,7 @@ namespace CommonTool
                         Action = (self) =>
                         {
                         },
+                        ForegroundColor = i % 2 == 0 ? ForegroundColor : ConsoleColor.DarkGreen,
                     };
                     newMenuItemHandler?.Invoke(item, menuItem);
                     result.Add(menuItem);
@@ -606,11 +633,16 @@ namespace CommonTool
         /// </summary>
         public void ChangeMaxSubPathDepth()
         {
-            PrintLine();
-            Print("Enter the maximum subpath depth: ");
-            var maxDepth = ReadLine();
+            var saveForegroundColor = ForegroundColor;
 
-            if (int.TryParse(maxDepth, out int depth))
+            ForegroundColor = ConsoleColor.DarkYellow;
+            PrintLine();
+            Print("Enter the maximum subpath depth [>= 0] : ");
+            ForegroundColor = saveForegroundColor;
+
+            var text = ReadLine();
+
+            if (int.TryParse(text, out int depth))
             {
                 MaxSubPathDepth = depth;
             }
@@ -620,13 +652,18 @@ namespace CommonTool
         /// </summary>
         public static void ChangeSolutionPath()
         {
+            var saveForegroundColor = ForegroundColor;
+
+            ForegroundColor = ConsoleColor.DarkYellow;
             PrintLine();
             Print("Enter solution path: ");
-            var newPath = ReadLine();
+            ForegroundColor = saveForegroundColor;
 
-            if (Directory.Exists(newPath))
+            var text = ReadLine();
+
+            if (Directory.Exists(text))
             {
-                SolutionPath = newPath;
+                SolutionPath = text;
             }
         }
         /// <summary>
@@ -634,13 +671,18 @@ namespace CommonTool
         /// </summary>
         public static void ChangeSourcePath()
         {
+            var saveForegroundColor = ForegroundColor;
+
+            ForegroundColor = ConsoleColor.DarkYellow;
             PrintLine();
             Print("Enter source path: ");
-            var newPath = ReadLine();
+            ForegroundColor = saveForegroundColor;
 
-            if (Directory.Exists(newPath))
+            var text = ReadLine();
+
+            if (Directory.Exists(text))
             {
-                SourcePath = newPath;
+                SourcePath = text;
             }
         }
         /// <summary>
@@ -655,13 +697,18 @@ namespace CommonTool
         /// </summary>
         public static string ChangePath(string title, string path)
         {
+            var saveForegroundColor = ForegroundColor;
+
+            ForegroundColor = ConsoleColor.DarkYellow;
             PrintLine();
             Print(title);
-            var newPath = ReadLine();
+            ForegroundColor = saveForegroundColor;
 
-            if (Directory.Exists(newPath))
+            var text = ReadLine();
+
+            if (Directory.Exists(text))
             {
-                path = newPath;
+                path = text;
             }
             return path;
         }
@@ -669,50 +716,55 @@ namespace CommonTool
         /// Changes the template solution path based on the provided parameters.
         /// </summary>
         /// <param name="currentPath">The current path.</param>
-        /// <param name="maxDeep">The maximum depth to search for template solutions.</param>
+        /// <param name="maxDepth">The maximum depth to search for template solutions.</param>
         /// <param name="queryPaths">The query paths to search for template solutions.</param>
         /// <returns>The updated template solution path.</returns>
-        public static string ChangeTemplateSolutionPath(string currentPath, int maxDeep, params string[] queryPaths)
+        public static string ChangeTemplateSolutionPath(string currentPath, int maxDepth, params string[] queryPaths)
         {
             var result = currentPath;
             var solutionPath = GetCurrentSolutionPath();
-            var qtSolutionPaths = new List<string>();
-            var saveForeColor = ForegroundColor;
+            var subPaths = new List<string>() { solutionPath };
+            var saveForegroundColor = ForegroundColor;
 
-            queryPaths.ToList().ForEach(qp => TemplatePath.GetTemplateSolutions(qp, maxDeep)
-                      .ToList().ForEach(s => qtSolutionPaths.Add(s)));
+            TemplatePath.GetTemplateSolutions(currentPath, maxDepth).Where(p => p != currentPath).ForEach(p => subPaths.Add(p));
+            queryPaths.ForEach(qp => TemplatePath.GetTemplateParentPaths(qp, maxDepth).ToList().ForEach(p => subPaths.Add(p)));
 
-            if (qtSolutionPaths.Contains(solutionPath) == false && solutionPath != currentPath)
-            {
-                qtSolutionPaths.Add(solutionPath);
-            }
+            var paths = subPaths.Distinct().OrderBy(e => e).ToArray();
 
-            var qtSelectSolutions = qtSolutionPaths.Distinct().OrderBy(e => e).ToArray();
+            var title = $"Change path: {currentPath}";
 
-            for (int i = 0; i < qtSelectSolutions.Length; i++)
+            ForegroundColor = ConsoleColor.DarkYellow;
+            Clear();
+            PrintLine('-', title.Length);
+            PrintLine(title);
+            PrintLine('-', title.Length);
+
+            for (int i = 0; i < paths.Length; i++)
             {
                 if (i == 0)
                     PrintLine();
 
-                ForegroundColor = i % 2 == 0 ? ConsoleColor.DarkYellow : saveForeColor;
-                PrintLine($"[{i + 1,3}] Change path to: {qtSelectSolutions[i]}");
+                ForegroundColor = i % 2 == 0 ? ConsoleColor.DarkGreen : saveForegroundColor;
+                PrintLine($"[{i + 1,3}] Change path to: {paths[i]}");
             }
-            ForegroundColor = saveForeColor;
-            PrintLine();
-            Print("Select or enter source path: ");
-            var selectOrPath = ReadLine();
 
-            if (int.TryParse(selectOrPath, out int number))
+            ForegroundColor = ConsoleColor.DarkYellow;
+            PrintLine();
+            Print("Select or enter target path: ");
+            ForegroundColor = saveForegroundColor;
+
+            var text = ReadLine();
+
+            if (int.TryParse(text, out int number))
             {
-                if ((number - 1) >= 0 && (number - 1) < qtSelectSolutions.Length)
+                if ((number - 1) >= 0 && (number - 1) < paths.Length)
                 {
-                    result = qtSelectSolutions[number - 1];
+                    result = paths[number - 1];
                 }
             }
-            else if (string.IsNullOrEmpty(selectOrPath) == false
-                     && Directory.Exists(selectOrPath))
+            else if (string.IsNullOrEmpty(text) == false && Directory.Exists(text))
             {
-                result = selectOrPath;
+                result = text;
             }
             return result;
         }
@@ -726,44 +778,50 @@ namespace CommonTool
         public static string SelectOrChangeToSubPath(string currentPath, int maxDepth, params string[] queryPaths)
         {
             var result = currentPath;
-            var solutionPath = GetCurrentSolutionPath();
             var subPaths = new List<string>();
-            var saveForeColor = ForegroundColor;
+            var saveForegroundColor = ForegroundColor;
 
-            queryPaths.ToList().ForEach(qp => TemplatePath.GetSubPaths(qp, maxDepth)
-                      .ToList().ForEach(s => subPaths.Add(s)));
+            TemplatePath.GetSubPaths(currentPath, maxDepth).Where(p => p != currentPath).ForEach(p => subPaths.Add(p));
+            queryPaths.ForEach(qp => TemplatePath.GetSubPaths(qp, maxDepth).ToList().ForEach(p => subPaths.Add(p)));
 
-            if (subPaths.Contains(solutionPath) == false && solutionPath != currentPath)
-            {
-                subPaths.Add(solutionPath);
-            }
+            var paths = subPaths.Distinct().OrderBy(p => p).ToArray();
 
-            var selectionPaths = subPaths.Distinct().OrderBy(e => e).ToArray();
+            var title = $"Change path: {currentPath}";
 
-            for (int i = 0; i < selectionPaths.Length; i++)
+            ForegroundColor = ConsoleColor.DarkYellow;
+            Clear();
+            PrintLine('-', title.Length);
+            PrintLine(title);
+            PrintLine('-', title.Length);
+
+            for (int i = 0; i < paths.Length; i++)
             {
                 if (i == 0)
+                {
                     PrintLine();
+                }
 
-                ForegroundColor = i % 2 == 0 ? ConsoleColor.DarkYellow : saveForeColor;
-                PrintLine($"[{i + 1,3}] Change path to: {selectionPaths[i]}");
+                ForegroundColor = i % 2 == 0 ? ConsoleColor.DarkGreen : saveForegroundColor;
+                PrintLine($"[{i + 1,3}] Change path to: {paths[i]}");
             }
-            ForegroundColor = saveForeColor;
+
+            ForegroundColor = ConsoleColor.DarkYellow;
             PrintLine();
             Print("Select or enter target path: ");
-            var selectOrPath = ReadLine();
+            ForegroundColor = saveForegroundColor;
 
-            if (int.TryParse(selectOrPath, out int number))
+            var text = ReadLine();
+
+            if (int.TryParse(text, out var result2))
             {
-                if ((number - 1) >= 0 && (number - 1) < selectionPaths.Length)
+                if (result2 - 1 >= 0 && result2 - 1 < paths.Length)
                 {
-                    result = selectionPaths[number - 1];
+                    result = paths[result2 - 1];
                 }
             }
-            else if (string.IsNullOrEmpty(selectOrPath) == false
-                     && Directory.Exists(selectOrPath))
+            else if (!string.IsNullOrEmpty(text) && Directory.Exists(text))
             {
-                result = selectOrPath;
+                result = text;
             }
             return result;
         }

@@ -141,7 +141,8 @@ namespace CommonTool
             {
                 try
                 {
-                    if (directoryInfo.Attributes.HasFlag(FileAttributes.Hidden) == false)
+                    if (directoryInfo.Attributes.HasFlag(FileAttributes.Hidden) == false
+                        && directoryInfo.FullName.Contains($"{Path.DirectorySeparatorChar}.") == false)
                     {
                         if (filter == null || filter(directoryInfo.Name))
                         {

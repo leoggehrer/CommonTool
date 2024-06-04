@@ -139,7 +139,7 @@ namespace CommonTool
         /// </summary>
         public static void Clear()
         {
-            if (Environment.OSVersion.Platform == PlatformID.Win32NT) 
+            if (Environment.OSVersion.Platform == PlatformID.Win32NT)
             {
                 Console.Clear();
             }
@@ -388,7 +388,7 @@ namespace CommonTool
             var solutionPath = GetCurrentSolutionPath();
             var solutionName = TemplatePath.GetSolutionNameFromPath(solutionPath);
 
-            PrintHeader(solutionName, new("Force flag:", Force), 
+            PrintHeader(solutionName, new("Force flag:", Force),
                                       new("Page index:", PageIndex),
                                       new("Page size:", PageSize));
         }
@@ -419,7 +419,7 @@ namespace CommonTool
                 PrintLine();
             }
             ForegroundColor = saveForeColor;
-            
+
         }
 
         /// <summary>
@@ -562,9 +562,9 @@ namespace CommonTool
             MenuItems.Where(mi => mi.IsDisplayed).ToList().ForEach(m =>
             {
                 var menuKey = m.Key;
-                
+
                 ForegroundColor = m.ForegroundColor;
-                PrintLine($"[{menuKey, MENU_KEY_WIDTH}] {m.Text}");
+                PrintLine($"[{menuKey,MENU_KEY_WIDTH}] {m.Text}");
             });
             ForegroundColor = saveForegrondColor;
             PrintFooter();
@@ -628,6 +628,31 @@ namespace CommonTool
         #endregion main-method
 
         #region file and path methods
+        /// <summary>
+        /// Changes the page index.
+        /// </summary>
+        public void ChangePageIndex()
+        {
+            PrintLine();
+            Print("Enter page index >= 0: ");
+            if (int.TryParse(ReadLine(), out var result) && result >= 0)
+            {
+                PageIndex = result;
+            }
+        }
+        /// <summary>
+        /// Changes the page size.
+        /// </summary>
+        public void ChangePageSize()
+        {
+            PrintLine();
+            Print("Enter page size > 0: ");
+            if (int.TryParse(ReadLine(), out var result) && result > 0)
+            {
+                PageIndex = 0;
+                PageSize = result;
+            }
+        }
         /// <summary>
         /// Changes the maximum subpath depth.
         /// </summary>

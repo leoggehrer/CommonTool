@@ -407,7 +407,7 @@ namespace CommonTool
             PrintLine(title);
             PrintLine('=', title.Length);
             PrintLine();
-            ForegroundColor = ConsoleColor.DarkGreen;
+            ForegroundColor = ConsoleColor.DarkYellow;
             if (keyValuePairs.Length > 0)
             {
                 int maxLabel = keyValuePairs.Select(kv => kv.Key.Length).Max();
@@ -419,7 +419,6 @@ namespace CommonTool
                 PrintLine();
             }
             ForegroundColor = saveForeColor;
-
         }
 
         /// <summary>
@@ -710,6 +709,7 @@ namespace CommonTool
                 SourcePath = text;
             }
         }
+
         /// <summary>
         /// Changes the path for the application.
         /// </summary>
@@ -737,6 +737,162 @@ namespace CommonTool
             }
             return path;
         }
+
+        /// <summary>
+        /// Selects or changes the current path to a path based on the provided query paths.
+        /// </summary>
+        /// <param name="currentPath">The current path.</param>
+        /// <param name="maxDepth">The maximum depth to search for subpaths.</param>
+        /// <param name="queryPaths">The query paths to search for subpaths.</param>
+        /// <returns>The selected or changed subpath.</returns>
+        public static string SelectOrChangeToPath(string currentPath, int maxDepth, params string[] queryPaths)
+        {
+            var result = currentPath;
+            var subPaths = new List<string>();
+            var saveForegroundColor = ForegroundColor;
+
+            TemplatePath.GetSubPaths(currentPath, maxDepth).Where(p => p != currentPath).ForEach(p => subPaths.Add(p));
+            queryPaths.ForEach(qp => TemplatePath.GetSubPaths(qp, maxDepth).ToList().ForEach(p => subPaths.Add(p)));
+
+            var paths = subPaths.Distinct().OrderBy(p => p).ToArray();
+
+            var title = $"Change path: {currentPath}";
+
+            ForegroundColor = ConsoleColor.DarkYellow;
+            Clear();
+            PrintLine('-', title.Length);
+            PrintLine(title);
+            PrintLine('-', title.Length);
+
+            for (int i = 0; i < paths.Length; i++)
+            {
+                if (i == 0)
+                {
+                    PrintLine();
+                }
+
+                ForegroundColor = i % 2 == 0 ? ConsoleColor.DarkGreen : saveForegroundColor;
+                PrintLine($"[{i + 1,3}] Change path to: {paths[i]}");
+            }
+
+            ForegroundColor = ConsoleColor.DarkYellow;
+            PrintLine();
+            Print("Select or enter target path: ");
+            ForegroundColor = saveForegroundColor;
+
+            var text = ReadLine();
+
+            if (int.TryParse(text, out var result2))
+            {
+                if (result2 - 1 >= 0 && result2 - 1 < paths.Length)
+                {
+                    result = paths[result2 - 1];
+                }
+            }
+            else if (!string.IsNullOrEmpty(text) && text.Equals(".."))
+            {
+                var parentPath = TemplatePath.GetParentDirectory(currentPath);
+
+                if (Directory.Exists(parentPath))
+                {
+                    result = parentPath;
+                }
+            }
+            else if (!string.IsNullOrEmpty(text) && text.Contains(Path.DirectorySeparatorChar) == false)
+            {
+                var subPath = Path.Combine(currentPath, text);
+
+                if (Directory.Exists(subPath))
+                {
+                    result = subPath;
+                }
+            }
+            else if (!string.IsNullOrEmpty(text) && Directory.Exists(text))
+            {
+                result = text;
+            }
+            return result;
+        }
+        /// <summary>
+        /// Selects or changes the current path to a path based on the provided query paths.
+        /// </summary>
+        /// <param name="currentPath">The current path.</param>
+        /// <param name="maxDepth">The maximum depth to search for subpaths.</param>
+        /// <param name="searchPattern">The search pattern used to filter the files.</param>
+        /// <param name="queryPaths">The query paths to search for subpaths.</param>
+        /// <returns>The selected or changed subpath.</returns>
+        public static string SelectOrChangeToPath(string currentPath, int maxDepth, string searchPattern, params string[] queryPaths)
+        {
+            var result = currentPath;
+            var subPaths = new List<string>();
+            var saveForegroundColor = ForegroundColor;
+
+            TemplatePath.GetSubPaths(currentPath, maxDepth).Where(p => p != currentPath).ForEach(p => subPaths.Add(p));
+            queryPaths.ForEach(qp => TemplatePath.GetSubPaths(qp, maxDepth).ToList().ForEach(p => subPaths.Add(p)));
+
+            var paths = subPaths.Distinct()
+                                .Where(p => Directory.GetFiles(p, searchPattern).Length > 0)
+                                .OrderBy(p => p)
+                                .ToArray();
+
+            var title = $"Change path: {currentPath}";
+
+            ForegroundColor = ConsoleColor.DarkYellow;
+            Clear();
+            PrintLine('-', title.Length);
+            PrintLine(title);
+            PrintLine('-', title.Length);
+
+            for (int i = 0; i < paths.Length; i++)
+            {
+                if (i == 0)
+                {
+                    PrintLine();
+                }
+
+                ForegroundColor = i % 2 == 0 ? ConsoleColor.DarkGreen : saveForegroundColor;
+                PrintLine($"[{i + 1,3}] Change path to: {paths[i]}");
+            }
+
+            ForegroundColor = ConsoleColor.DarkYellow;
+            PrintLine();
+            Print("Select or enter target path: ");
+            ForegroundColor = saveForegroundColor;
+
+            var text = ReadLine();
+
+            if (int.TryParse(text, out var result2))
+            {
+                if (result2 - 1 >= 0 && result2 - 1 < paths.Length)
+                {
+                    result = paths[result2 - 1];
+                }
+            }
+            else if (!string.IsNullOrEmpty(text) && text.Equals(".."))
+            {
+                var parentPath = TemplatePath.GetParentDirectory(currentPath);
+
+                if (Directory.Exists(parentPath))
+                {
+                    result = parentPath;
+                }
+            }
+            else if (!string.IsNullOrEmpty(text) && text.Contains(Path.DirectorySeparatorChar) == false)
+            {
+                var subPath = Path.Combine(currentPath, text);
+
+                if (Directory.Exists(subPath))
+                {
+                    result = subPath;
+                }
+            }
+            else if (!string.IsNullOrEmpty(text) && Directory.Exists(text))
+            {
+                result = text;
+            }
+            return result;
+        }
+
         /// <summary>
         /// Changes the template solution path based on the provided parameters.
         /// </summary>

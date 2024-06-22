@@ -26,7 +26,7 @@ In diesem Beispiel wird die Klassenbibliothek als nuget-Package der Konsolen-Anw
   ...
 
   <ItemGroup>
-    <PackageReference Include="CommonTool.Console" Version="1.0.0" />
+    <PackageReference Include="CommonTool.Console" Version="1.0.3" />
   </ItemGroup>
 
 </Project>

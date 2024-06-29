@@ -20,6 +20,7 @@ namespace CommonTool.Extensions
             
             return lines.FormatCSharpSource().ToText();
         }
+
         /// <summary>
         /// Formats the given C# code by applying appropriate indentation.
         /// </summary>
@@ -79,6 +80,7 @@ namespace CommonTool.Extensions
         {
             return IsXmlLineComment(line) || IsLineComment(line) || IsBlockCommentLine(line);
         }
+        
         /// <summary>
         /// Determines whether the given string represents a line comment.
         /// </summary>
@@ -89,7 +91,8 @@ namespace CommonTool.Extensions
         public static bool IsLineComment(this string line)
         {
             return line.Trim().StartsWith(@"//");
-        }
+        } 
+        
         /// <summary>
         /// Checks if the provided string line is a XML line comment.
         /// </summary>
@@ -99,6 +102,7 @@ namespace CommonTool.Extensions
         {
             return line.Trim().StartsWith(@"///");
         }
+
         /// <summary>
         /// Checks if a line of code contains a block comment.
         /// </summary>
@@ -153,7 +157,7 @@ namespace CommonTool.Extensions
             var result = new StringBuilder();
             var level = 0;
             var lastTagIndex = 0;
-            var tags = source.GetAllTags("<", ">");
+            var tags = source.GetAllTags("<", ">", '"', '\'');
 
             StringExtensions.IndentSpace = "  ";
 
@@ -207,10 +211,16 @@ namespace CommonTool.Extensions
             }
             if (lastTagIndex < source.Length)
             {
-                result.AppendLine(source[lastTagIndex..]);
+                var rest = source.Partialstring(lastTagIndex, source.Length - 1).Trim();
+
+                if (string.IsNullOrEmpty(rest) == false)
+                {
+                    result.AppendLine(rest);
+                }
             }
             return result.ToString();
         }
+
         /// <summary>
         /// Creates HTML tag items based on the provided <paramref name="tagInfo"/>.
         /// </summary>

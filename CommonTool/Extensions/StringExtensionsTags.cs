@@ -71,10 +71,10 @@ namespace CommonTool.Extensions
         /// <param name="parseIndex">The parse index indicating the starting position in the string to begin search from.</param>
         /// <param name="excludeBlocks">Optional characters that define excluded block sections, preventing tag extraction within those sections.</param>
         /// <returns>An IEnumerable collection of tag information objects representing each occurrence of the specified tag within the string.</returns>
-        public static IEnumerable<TagInfo> GetAllTags(this string text, string startTag, string endTag, int parseIndex, params char[] excludeBlocks)
-        {
-            return text.GetAllTags<TagInfo>(startTag, endTag, parseIndex, excludeBlocks);
-        }
+        //public static IEnumerable<TagInfo> GetAllTags(this string text, string startTag, string endTag, int parseIndex, params char[] excludeBlocks)
+        //{
+        //    return text.GetAllTags<TagInfo>(startTag, endTag, parseIndex, excludeBlocks);
+        //}
         /// <summary>
         /// Retrieves all tags from the given text that match the specified start and end tags.
         /// </summary>
@@ -85,8 +85,8 @@ namespace CommonTool.Extensions
         /// <param name="parseIndex">The starting index for parsing the text for tags.</param>
         /// <param name="excludeBlocks">Optional characters to exclude when determining the end of a tag.</param>
         /// <returns>An IEnumerable of tags matching the specified start and end tags.</returns>
-        public static IEnumerable<T> GetAllTags<T>(this string text, string startTag, string endTag, int parseIndex, params char[] excludeBlocks)
-        where T : TagInfo, new()
+        public static IEnumerable<T> _GetAllTags<T>(this string text, string startTag, string endTag, int parseIndex, params char[] excludeBlocks)
+                        where T : TagInfo, new()
         {
             int startTagIndex;
             int endTagIndex;
@@ -132,6 +132,146 @@ namespace CommonTool.Extensions
                     if (endTagSearchPosAt > endTagIndex && blockCounter.Sum() == 0)
                     {
                         endTagIndex = text.IndexOf(endTag, endTagSearchPosAt, StringComparison.CurrentCultureIgnoreCase);
+                    }
+                }
+
+                if (startTagIndex > -1 && endTagIndex > startTagIndex)
+                {
+                    result.Add(new T
+                    {
+                        Header = tagHeader,
+                        StartTag = startTag,
+                        StartTagIndex = startTagIndex,
+                        EndTag = endTag,
+                        EndTagIndex = endTagIndex,
+                    });
+                    parseIndex = startTagEndIndex;
+                }
+            } while (startTagIndex > -1 && endTagIndex > -1);
+            return result;
+        }
+
+        /// <summary>
+        /// Retrieves all tags within a string that are enclosed between a start tag and an end tag.
+        /// </summary>
+        /// <param name="text">The string to search for tags.</param>
+        /// <param name="startTag">The start tag of the tags.</param>
+        /// <param name="endTag">The end tag of the tags.</param>
+        /// <param name="ignoreQuotations">Optional characters to ignore if they are within quotation marks.</param>
+        /// <returns>An IEnumerable of TagInfo objects representing the tags found in the string.</returns>
+        public static IEnumerable<TagInfo> GetAllTags(this string text, string startTag, string endTag, params char[] ignoreQuotations)
+        {
+            return text.GetAllTags<TagInfo>(startTag, endTag, 0, ignoreQuotations);
+        }
+
+        /// <summary>
+        /// Counts the number of quotations in the specified text, ignoring specified quotation characters.
+        /// </summary>
+        /// <param name="text">The text to count quotations in.</param>
+        /// <param name="ignoreQuotations">The quotation characters to ignore.</param>
+        /// <returns>An array of <see cref="RangeInfo"/> objects representing the positions of the counted quotations.</returns>
+        public static RangeInfo[] CountQuotations(this string text, params char[] ignoreQuotations)
+        {
+            var result = new List<RangeInfo>();
+            var quotationCount = new int[ignoreQuotations.Length];
+
+            if (ignoreQuotations.Length > 0)
+            {
+                for (int i = 0; i < text.Length; i++)
+                {
+                    for (int j = 0; j < ignoreQuotations.Length; j++)
+                    {
+                        if (text[i] == ignoreQuotations[j])
+                        {
+                            quotationCount[j]++;
+                            if (quotationCount.Sum() % 2 != 0)
+                            {
+                                result.Add(new RangeInfo
+                                {
+                                    StartPosition = i,
+                                    EndPosition = i,
+                                });
+                            }
+                            else if (result.Count > 0)
+                            {
+                               result[^1].EndPosition = i;
+                            }
+                        }
+                    }
+                }
+            }
+            return [.. result];
+        }
+
+        /// <summary>
+        /// Searches for the specified value within a string, excluding specific ranges, starting from the specified index.
+        /// </summary>
+        /// <param name="text">The string to search within.</param>
+        /// <param name="value">The value to search for.</param>
+        /// <param name="startIndex">The starting index for the search.</param>
+        /// <param name="comparisonType">The type of string comparison to use.</param>
+        /// <param name="rangeInfos">The range information to exclude from the search.</param>
+        /// <returns>The index of the first occurrence of the value within the string, excluding the specified ranges; or -1 if the value is not found.</returns>
+        public static int IndexOfWithoutRange(this string text, string value, int startIndex, StringComparison comparisonType, params RangeInfo[] rangeInfos)
+        {
+            var index = 0;
+            var result = -1;
+
+            do
+            {
+                index = text.IndexOf(value, startIndex, comparisonType);
+                var rangeInfo = rangeInfos.FirstOrDefault(ri => index >= ri.StartPosition && index <= ri.EndPosition);
+                
+                if (rangeInfo == null)
+                {
+                    result = index;
+                }
+                else
+                {
+                    startIndex = rangeInfo.EndPosition + 1;
+                }
+            } while (index != -1 && result == -1 && startIndex < text.Length); 
+            return result;
+        }
+
+        /// <summary>
+        /// Retrieves all tags within a string that match the specified start and end tags.
+        /// </summary>
+        /// <typeparam name="T">The type of the tag information.</typeparam>
+        /// <param name="text">The string to search for tags.</param>
+        /// <param name="startTag">The start tag to identify the beginning of a tag.</param>
+        /// <param name="endTag">The end tag to identify the end of a tag.</param>
+        /// <param name="parseIndex">The index to start parsing from within the string.</param>
+        /// <param name="ignoreQuotations">Optional characters to ignore within quotations.</param>
+        /// <returns>An enumerable collection of tag information objects.</returns>
+        /// <remarks>
+        /// This method searches for tags within the given string, starting from the beginning and moving forward.
+        /// It ignores any tags that are nested within other tags.
+        /// The start and end tags are case-insensitive.
+        /// The <typeparamref name="T"/> type must inherit from the <see cref="TagInfo"/> class and have a parameterless constructor.
+        /// </remarks>
+        public static IEnumerable<T> GetAllTags<T>(this string text, string startTag, string endTag, int parseIndex, params char[] ignoreQuotations)
+                        where T : TagInfo, new()
+        {
+            int startTagIndex;
+            int endTagIndex;
+            var result = new List<T>();
+            var tagHeader = new TagInfo.TagHeader(text);
+            var rangeInfos = text.CountQuotations(ignoreQuotations);
+
+            do
+            {
+                startTagIndex = text.IndexOfWithoutRange(startTag, parseIndex, StringComparison.CurrentCultureIgnoreCase, rangeInfos);
+                var startTagEndIndex = startTagIndex > -1 ? startTagIndex + startTag.Length : parseIndex;
+                endTagIndex = startTagEndIndex >= 0 ? text.IndexOfWithoutRange(endTag, startTagEndIndex, StringComparison.CurrentCultureIgnoreCase, rangeInfos) : -1;
+
+                if (startTagIndex > -1 && endTagIndex > startTagIndex)
+                {
+                    int endTagSearchPosAt = startTagEndIndex;
+
+                    if (endTagSearchPosAt > endTagIndex)
+                    {
+                        endTagIndex = text.IndexOfWithoutRange(endTag, endTagSearchPosAt, StringComparison.CurrentCultureIgnoreCase, rangeInfos);
                     }
                 }
 

@@ -172,21 +172,21 @@ namespace CommonTool.Extensions
 
                 if (isCommentTag)
                 {
-                    newTag = tagItems.SetIndent(level).ToText();
+                    newTag = tagItems.SetIndent(level).ToHtmlTag();
                 }
                 else if (isOpenTag)
                 {
-                    newTag = tagItems.SetIndent(level).ToText();
+                    newTag = tagItems.SetIndent(level).ToHtmlTag();
                     level++;
                 }
                 else if (isSingleTag)
                 {
-                    newTag = tagItems.SetIndent(level).ToText();
+                    newTag = tagItems.SetIndent(level).ToHtmlTag();
                 }
                 else
                 {
                     level--;
-                    newTag = tagItems.SetIndent(level).ToText();
+                    newTag = tagItems.SetIndent(level).ToHtmlTag();
                 }
 
                 if (tag.StartTagIndex > lastTagIndex)
@@ -278,6 +278,35 @@ namespace CommonTool.Extensions
             }
             return [.. result];
         }
+
+        /// <summary>
+        /// This method converts a string array to a coherent text.
+        /// </summary>
+        /// <param name="lines">The String-Array.</param>
+        /// <returns>The compound text.</returns>
+        public static string ToHtmlTag(this IEnumerable<string> lines)
+        {
+            StringBuilder sb = new();
+
+            foreach (var line in lines)
+            {
+                if (sb.Length == 0)
+                {
+                    sb.Append(line);
+                }
+                else if (sb.Length + line.Length > 100)
+                {
+                    sb.AppendLine();
+                    sb.Append(line);
+                }
+                else
+                {
+                    sb.Append($" {line.RemoveLeftAndRight(' ')}");
+                }
+            }
+            return sb.ToString();
+        }
+
     }
 }
 //MdEnd

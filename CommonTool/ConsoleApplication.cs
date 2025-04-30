@@ -128,6 +128,7 @@ namespace CommonTool
         /// Gets or sets the page size for pagination.
         /// </summary>
         protected int PageSize { get; set; } = 10;
+        protected static Queue<string> CommandQueue { get; } = new();
         #endregion properties
 
         #region console-methods
@@ -361,7 +362,7 @@ namespace CommonTool
 
                             if (counter % 5 == 0)
                             {
-                                Write(65, Top, $"{counter / 5,5} [sec]");
+                                Write(70, Top, $"{counter / 5,5} [sec]");
                             }
                         }
                         counter++;
@@ -376,6 +377,7 @@ namespace CommonTool
         public static void StopProgressBar()
         {
             RunProgressBar = false;
+            Thread.Sleep(150);
         }
         #endregion progressbar-methods
 
@@ -586,7 +588,6 @@ namespace CommonTool
         /// <param name="args">The command-line arguments.</param>
         public virtual void Run(string[] args)
         {
-            var choose = default(string[]);
             var saveForegrondColor = ForegroundColor;
 
             BeforeRun(args);
@@ -595,21 +596,25 @@ namespace CommonTool
             {
                 PrintScreen();
 
-                choose = ReadLine().ToLower().Split(',', StringSplitOptions.RemoveEmptyEntries);
-                var chooseIterator = choose.GetEnumerator();
+                if (CommandQueue.Count == 0)
+                {
+                   ReadLine().ToLower().Split(',', StringSplitOptions.RemoveEmptyEntries).ForEach(equals => CommandQueue.Enqueue(equals));
+                }
 
                 BeforeExecution();
                 ForegroundColor = saveForegrondColor;
-                while (RunApp && chooseIterator.MoveNext())
+                while (RunApp && CommandQueue.Count > 0)
                 {
-                    var actions = MenuItems.Where(m => m.IsDisplayed && (m.Key.Equals(chooseIterator.Current) || m.OptionalKey.Equals(chooseIterator.Current)));
+                    var command = CommandQueue.Dequeue();
+                    var actions = MenuItems.Where(m => m.IsDisplayed && (m.Key.Equals(command) || m.OptionalKey.Equals(command)));
                     var actionIterator = actions.GetEnumerator();
 
                     while (RunApp && actionIterator.MoveNext())
                     {
                         actionIterator.Current?.Action(actionIterator.Current);
                     }
-                    RunApp = RunApp && chooseIterator.Current.Equals("x") == false;
+
+                    RunApp = RunApp && command.Equals("x") == false;
                     StopProgressBar();
                 }
                 AfterExecution();

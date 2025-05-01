@@ -5,7 +5,8 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 		<PackageId>CommonTool.Console</PackageId>
-		<Version>1.0.5</Version>
+		<GenerateAppxPackageOnBuild>True</GenerateAppxPackageOnBuild>
+		<Version>1.0.7</Version>
 		<Authors>Gerhard Gehrer</Authors>
 		<Company>HTBLA Leonding</Company>
 		<Description>This class library provides classes for creating console applications in C#.</Description>

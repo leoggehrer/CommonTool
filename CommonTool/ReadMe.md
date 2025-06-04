@@ -54,7 +54,7 @@ Enthält Hilfsmethoden zur Pfadverwaltung, die in der Konsolenanwendung verwende
 
 Eine Schritt-für-Schritt-Anleitung einer Konsolenanwendung mit Auswahlmenü findet sich als Repository.
 
-![SampleCommonTool.ConApp](https://github.com/leoggehrer/CommonTool/tree/main/SampleCommonTool.ConApp)
+[SampleCommonTool.ConApp](https://github.com/leoggehrer/CommonTool/tree/main/SampleCommonTool.ConApp)
 
 ## FAQ und Problembehandlung
 

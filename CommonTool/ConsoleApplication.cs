@@ -70,7 +70,7 @@ namespace CommonTool
             /// <summary>
             /// Gets or sets a value indicating whether the item is displayed.
             /// </summary>
-            public bool IsDisplayed { get; set; } = false;
+            public bool IsDisplayed { get; set; } = true;
             /// <summary>
             /// Gets or sets the key.
             /// </summary>

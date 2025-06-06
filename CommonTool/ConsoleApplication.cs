@@ -455,6 +455,7 @@ namespace CommonTool
                      new()
                      {
                         Key = "x|X",
+                        OptionalKey = "exit",
                         Text = ToLabelText("Exit", "Exits the application"),
                         Action = (self) => { RunApp = false; },
                      },

@@ -197,6 +197,31 @@ namespace CommonTool
             return TemplatePath.GetFiles(path, searchPatterns, maxDeep, ignoreFolders);
         }
         #endregion methods for changing the properties
+
+        #region methods
+        public static void AddAppArg(string arg, List<string> appArgs)
+        {
+            if (arg.HasContent() && arg.StartsWith('#') == false)
+            {
+                if (arg.StartsWith("commandfile=", StringComparison.CurrentCultureIgnoreCase))
+                {
+                    var argParts = arg.Split('=');
+
+                    if (argParts.Length > 1 && File.Exists(argParts[1]))
+                    {
+                        foreach (var line in File.ReadAllLines(argParts[1]))
+                        {
+                            AddAppArg(line, appArgs);
+                        }
+                    }
+                }
+                else
+                {
+                    appArgs.Add(arg);
+                }
+            }
+        }
+        #endregion methods
     }
 }
 //MdEnd

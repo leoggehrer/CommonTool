@@ -55,7 +55,6 @@ namespace SampleCommonTool.ConApp
             {
                 var subPath = item.Replace(SourcePath, string.Empty);
 
-                PrintHeader();
                 menuItem.Text = ToLabelText("Path", $"{subPath}");
                 menuItem.Tag = "path";
                 menuItem.Action = (self) => {};
